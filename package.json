@@ -1,0 +1,46 @@
+{
+  "name": "meal-planner-react",
+  "version": "1.0.0",
+  "description": "Meal Planner",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start:dev": "webpack-dev-server",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minischetti/meal-planner-react.git"
+  },
+  "author": "Dominic Minischetti III",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minischetti/meal-planner-react/issues"
+  },
+  "homepage": "https://github.com/minischetti/meal-planner-react#readme",
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "react-router": "^5.1.2",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "@storybook/addon-actions": "^5.3.12",
+    "@storybook/addon-links": "^5.3.12",
+    "@storybook/addons": "^5.3.12",
+    "@storybook/react": "^5.3.12",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "babel-loader": "^8.0.6",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
