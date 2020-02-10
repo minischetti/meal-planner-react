@@ -4,6 +4,10 @@ import * as firebase from "firebase/app";
 // Add the Firebase products that you want to use
 import "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
+// import {handleClientActions} from "./actionHandler";
+import {actionBuilder} from "./actionBuilder";
+import {requestClient} from "./requestClient";
+import {actionHandler} from "./actionHandler";
 
 const ACTION = {
     LOGIN: "LOGIN",
@@ -40,8 +44,13 @@ function reducer(state, action) {
             return state;
         case ACTION.LOGIN:
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-            .then((user) => {
-                state.user = user;
+            .then((data) => {
+                const payload = {
+                    profileId: data.user.uid
+                }
+                const builtAction = actionBuilder.getProfile(payload);
+                const newState = actionHandler(state, builtAction);
+                return newState;
             });
 
             return state;

@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
     mode: "development",
 
@@ -35,5 +37,11 @@ module.exports = {
     externals: {
         "react": "React",
         "react-dom": "ReactDOM"
-    }
+    },
+
+    // devServer: {
+    //     contentBase: path.join(__dirname, 'dist'),
+    //     compress: true,
+    //     port: 8080
+    //   }
 };

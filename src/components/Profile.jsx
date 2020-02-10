@@ -7,16 +7,6 @@ export function Login() {
     const { register, handleSubmit, errors } = useForm();
     const [user, initialising, error] = useAuthState(firebase.auth());
     const globalState = React.useContext(store);
-    const { dispatch } = globalState;
-    const login = ({ email, password }) => {
-        dispatch({
-            type: ACTION.LOGIN,
-            payload: { email, password }
-        });
-    };
-    const logout = () => {
-        dispatch({ type: ACTION.LOGOUT });
-    };
 
     if (initialising) {
         return (
