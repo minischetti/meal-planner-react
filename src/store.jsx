@@ -44,14 +44,16 @@ function reducer(state, action) {
             return state;
         case ACTION.LOGIN:
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-            .then((data) => {
-                const payload = {
-                    profileId: data.user.uid
-                }
-                const builtAction = actionBuilder.getProfile(payload);
-                const newState = actionHandler(state, builtAction);
-                return newState;
-            });
+                .then(data => {
+                    const payload = {
+                        profileId: data.user.uid
+                    }
+                    const builtAction = actionBuilder.getProfile(payload);
+                    const newState = actionHandler(state, builtAction);
+                    state = newState;
+                });
+
+                console.log("state after login", state);
 
             return state;
         default:

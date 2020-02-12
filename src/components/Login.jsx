@@ -39,8 +39,8 @@ export function Login() {
 
     return (
         <form onSubmit={handleSubmit(login)}>
-            <input type="text" placeholder="Email" name="email" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
-            <input type="password" placeholder="Password" name="password" ref={register({ required: true })} />
+            <input type="text" placeholder="Email" name="email" defaultValue="domminischetti@gmail.com" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
+            <input type="password" placeholder="Password" name="password" defaultValue="password" ref={register({ required: true })} />
 
             <input type="submit" />
         </form>

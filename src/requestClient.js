@@ -2,15 +2,9 @@ export const requestClient = {};
 const apiBaseUrl = "http://localhost:8000/api/";
 
 requestClient.getProfile = payload => {
-    console.log("requestClient.getProfile/payload", payload);
     const profileId = payload.profileId;
     fetch(apiBaseUrl + "people/" + profileId, fetchConfig(FETCH_METHOD.GET))
-    .then((response) => {
-        return response.json();
-    })
-    .then((data) => {
-        return data;
-    });
+    .then(response => response.json()).then(data => data);
 }
 
 /**

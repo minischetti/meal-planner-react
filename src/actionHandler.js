@@ -24,12 +24,10 @@ export const actionHandler = (state, action) => {
     switch (action.type) {
         case actionBuilder.GET_PROFILE:
             state.waiting = true;
-            requestClient.getProfile(action.payload)
-                .then(data => state.profile = data)
-                .catch(error => console.log(error));
+            state.profile = requestClient.getProfile(action.payload);
             return state;
 
         default:
-            return false;
+            return state;
     }
 }

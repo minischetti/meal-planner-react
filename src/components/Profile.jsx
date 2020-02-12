@@ -1,38 +1,35 @@
 import * as React from "react";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { store, firebase, ACTION } from "../store";
+import { store, firebase, ACTION, StateProvider } from "../store";
 
-export function Login() {
+export function Profile() {
     const { register, handleSubmit, errors } = useForm();
     const [user, initialising, error] = useAuthState(firebase.auth());
     const globalState = React.useContext(store);
 
-    if (initialising) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        );
-    }
-    if (error || errors) {
-        console.log({ error, errors });
-    }
-    if (user) {
-        return (
-            <div>
-                <span>{user.email}</span>
-                <button onClick={logout}>Log out</button>
-            </div>
-        );
-    }
+    console.log("globalState/profile", globalState.profile);
 
     return (
-        <form onSubmit={handleSubmit(login)}>
-            <input type="text" placeholder="Email" name="email" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
-            <input type="password" placeholder="Password" name="password" ref={register({ required: true })} />
+        <div>Profile</div>
+    )
 
-            <input type="submit" />
-        </form>
-    );
+    // if (globalState.waiting) {
+    //     return (
+    //         <div>
+    //             <p>Loading...</p>
+    //         </div>
+    //     );
+    // }
+    // if (error || errors) {
+    //     console.log({ error, errors });
+    // }
+    // if (user) {
+    //     return (
+    //         <div>
+    //             <span>{user.email}</span>
+    //             <button onClick={logout}>Log out</button>
+    //         </div>
+    //     );
+    // }
 };
