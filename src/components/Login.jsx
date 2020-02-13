@@ -1,20 +1,23 @@
 import React, {useContext} from "react";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { GlobalStateContext, firebase, ACTION } from "../GlobalStateContext";
+import { useSelector, useDispatch } from "react-redux";
+import {firebaseApp, firebaseAuth} from "../firebase";
+import * as ACTION from "../redux/actions";
+import {getProfile} from "../redux/selectors";
+import {login, logout} from "../redux/actions";
+
 
 export const Login = () => {
+    const dispatch = useDispatch();
     const { register, handleSubmit, errors } = useForm();
-    const [user, initialising, error] = useAuthState(firebase.auth());
-    const {state, dispatch} = useContext(GlobalStateContext);
-    const login = ({ email, password }) => {
-        dispatch({
-            type: ACTION.LOGIN,
-            payload: { email, password }
-        });
+    const [user, initialising, error] = useAuthState(firebaseAuth);
+    const profile = useSelector(state => getProfile(state));
+    const dispatchLoginAction = ({ email, password }) => {
+        dispatch(login({email, password}));
     };
-    const logout = () => {
-        dispatch({ type: ACTION.LOGOUT });
+    const dispatchLogoutAction = () => {
+        dispatch(logout());
     };
 
     if (initialising) {
@@ -25,19 +28,19 @@ export const Login = () => {
         );
     }
     if (error || errors) {
-        console.log({ error, errors });
     }
+
     if (user) {
         return (
             <div>
                 <span>{user.email}</span>
-                <button onClick={logout}>Log out</button>
+                <button onClick={dispatchLogoutAction}>Log out</button>
             </div>
         );
     }
 
     return (
-        <form onSubmit={handleSubmit(login)}>
+        <form onSubmit={handleSubmit(dispatchLoginAction)}>
             <input type="text" placeholder="Email" name="email" defaultValue="domminischetti@gmail.com" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
             <input type="password" placeholder="Password" name="password" defaultValue="password" ref={register({ required: true })} />
 

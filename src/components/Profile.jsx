@@ -1,13 +1,14 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 // import { useAuthState } from 'react-firebase-hooks/auth';
-import {GlobalStateContext} from "../GlobalStateContext";
+import { useSelector } from "react-redux";
+import { getProfile } from "../redux/selectors";
 
 export function Profile() {
-    const {state} = useContext(GlobalStateContext);
+    const profile = useSelector(state => getProfile(state));
 
-    if (state.profile) {
+    if (profile) {
         return (
-            <div>{state.profile.firstName} {state.profile.lastName}</div>
+            <div>{profile.firstName} {profile.lastName}</div>
         )
     }
 
