@@ -3,9 +3,14 @@ const apiBaseUrl = "http://localhost:8000/api/";
 
 requestClient.getProfile = payload => {
     const profileId = payload.profileId;
-    fetch(apiBaseUrl + "people/" + profileId, fetchConfig(FETCH_METHOD.GET))
-    .then(response => response.json()).then(data => data);
+    return fetch(apiBaseUrl + "people/" + profileId, fetchConfig(FETCH_METHOD.GET))
+        .then(json)
+        .then(data => {
+            return data;
+        });
 }
+
+const json = response => response.json();
 
 /**
  * Default fetch configuration.

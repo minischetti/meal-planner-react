@@ -1,35 +1,15 @@
-import * as React from "react";
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useForm } from "react-hook-form";
-import { store, firebase, ACTION, StateProvider } from "../store";
+import React, {useContext} from "react";
+// import { useAuthState } from 'react-firebase-hooks/auth';
+import {GlobalStateContext} from "../GlobalStateContext";
 
 export function Profile() {
-    const { register, handleSubmit, errors } = useForm();
-    const [user, initialising, error] = useAuthState(firebase.auth());
-    const globalState = React.useContext(store);
+    const {state} = useContext(GlobalStateContext);
 
-    console.log("globalState/profile", globalState.profile);
+    if (state.profile) {
+        return (
+            <div>{state.profile.firstName} {state.profile.lastName}</div>
+        )
+    }
 
-    return (
-        <div>Profile</div>
-    )
-
-    // if (globalState.waiting) {
-    //     return (
-    //         <div>
-    //             <p>Loading...</p>
-    //         </div>
-    //     );
-    // }
-    // if (error || errors) {
-    //     console.log({ error, errors });
-    // }
-    // if (user) {
-    //     return (
-    //         <div>
-    //             <span>{user.email}</span>
-    //             <button onClick={logout}>Log out</button>
-    //         </div>
-    //     );
-    // }
+    return null;
 };

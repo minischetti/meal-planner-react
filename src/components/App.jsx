@@ -1,12 +1,13 @@
 import * as React from "react";
 import {Login} from "./Login";
 import {Profile} from "./Profile";
+import {GlobalStateProvider} from "../GlobalStateContext";
 
 export const App = () => {
     return (
-        <React.Fragment>
+        <GlobalStateProvider>
             <Login/>
             <Profile/>
-        </React.Fragment>
+        </GlobalStateProvider>
     )
 }

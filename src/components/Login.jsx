@@ -1,13 +1,12 @@
-import * as React from "react";
+import React, {useContext} from "react";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { store, firebase, ACTION } from "../store";
+import { GlobalStateContext, firebase, ACTION } from "../GlobalStateContext";
 
-export function Login() {
+export const Login = () => {
     const { register, handleSubmit, errors } = useForm();
     const [user, initialising, error] = useAuthState(firebase.auth());
-    const globalState = React.useContext(store);
-    const { dispatch } = globalState;
+    const {state, dispatch} = useContext(GlobalStateContext);
     const login = ({ email, password }) => {
         dispatch({
             type: ACTION.LOGIN,
