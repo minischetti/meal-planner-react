@@ -1,2 +1,3 @@
-export const getProfile = state => state.authentication.profile;
-export const isWaiting = state => state.waiting;
+export const getProfileFrom = state => state.authentication.profile;
+export const getRecipesFrom = state => state.recipes.recipes;
+export const getWaitingStatusFrom = state => state.waiting;

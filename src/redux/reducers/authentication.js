@@ -14,7 +14,10 @@ export function authentication(previousState = initialState, action) {
         case LOGOUT:
             return firebase.auth().signOut()
                 .then(() => {
-                    return {...previousState, profile: null};
+                    return {
+                        ...previousState,
+                        profile: null
+                    };
                 });
         case REQUEST_PROFILE:
             return {

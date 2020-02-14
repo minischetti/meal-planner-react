@@ -1,7 +1,10 @@
 import * as firebase from "firebase/app";
+import {firebaseAuth} from "../firebase";
+
+const apiBaseUrl = "http://localhost:8000/api/";
 
 export const REQUEST_PROFILE = "REQUEST_PROFILE";
-export const requestProfile = payload => {
+export const requestProfile = () => {
     return {
         type: REQUEST_PROFILE,
     }
@@ -22,8 +25,6 @@ export const logout = () => {
     }
 }
 
-export const requestClient = {};
-const apiBaseUrl = "http://localhost:8000/api/";
 
 // fetchProfile = payload => {
 //     const profileId = payload.profileId;
@@ -38,46 +39,45 @@ export const LOGIN = "LOGIN";
 export function login(payload) {
     return function(dispatch) {
         dispatch(requestProfile())
-        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
         .then(data => {
             const profileId = data.user.uid;
 
             return fetch(apiBaseUrl + "people/" + profileId)
                 .then(response => response.json())
-                .then(data => {
-                    dispatch(recieveProfile(data));
-                });
+                .then(data => dispatch(recieveProfile(data)));
         });
     }
 }
 
-// export const RECIEVE_ACCOUNT = "RECIEVE_ACCOUNT";
-// export function recieveAccount(payload) {
-//     return {
-//         type: RECIEVE_ACCOUNT,
-//         payload
-//     }
-// }
-
-export function fetchProfile(payload) {
-    // Thunk middleware knows how to handle functions.
-    // It passes the dispatch method as an argument to the function,
-    // thus making it able to dispatch actions itself.
-    return function (dispatch) {
-        // First dispatch: the app state is updated to inform
-        // that the API call is starting.
-        // Dispatch the request profile
-        dispatch(requestProfile(payload))
-        // The function called by the thunk middleware can return a value,
-        // that is passed on as the return value of the dispatch method.
-        // In this case, we return a promise to wait for.
-        // This is not required by thunk middleware, but it is convenient for us.
-        const profileId = payload.profileId;
-
-        return fetch(apiBaseUrl + "people/" + profileId)
+export const GET_RECIPES = "GET_RECIPES";
+export function getRecipes(payload) {
+    const {profileId} = payload;
+    return function(dispatch) {
+        dispatch(requestRecipes());
+        return fetch(apiBaseUrl + "people/" + profileId + "/recipes")
             .then(response => response.json())
-            .then(data => {
-                dispatch(recieveProfile(data));
+            .then(recipes => {
+                const payload = {profileId, recipes};
+                dispatch(recieveRecipes(payload))
             });
+    }
+}
+
+export const REQUEST_RECIPES = "REQUEST_RECIPES";
+export const requestRecipes = () => {
+    return {
+        type: REQUEST_RECIPES
+    }
+}
+
+export const RECIEVE_RECIPES = "RECIEVE_RECIPES";
+export const recieveRecipes = payload => {
+    const {profileId, recipes} = payload;
+
+    return {
+        type: RECIEVE_RECIPES,
+        profileId,
+        recipes
     }
 }

@@ -39,6 +39,10 @@ module.exports = {
         "react-dom": "ReactDOM"
     },
 
+    devServer: {
+        historyApiFallback: true
+    }
+
     // devServer: {
     //     contentBase: path.join(__dirname, 'dist'),
     //     compress: true,
