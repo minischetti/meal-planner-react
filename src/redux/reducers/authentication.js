@@ -1,6 +1,5 @@
 import * as firebase from "firebase/app";
-import {requestClient} from "../../requestClient";
-import {fetchProfile, REQUEST_PROFILE, LOGOUT} from "../actions";
+import {REQUEST_PROFILE, LOGOUT, RECIEVE_PROFILE} from "../actions";
 
 const initialState = {
     user: null,
@@ -9,20 +8,24 @@ const initialState = {
 }
 
 export function authentication(previousState = initialState, action) {
-    const {type: actionType, payload} = action;
+    const {payload} = action;
 
-    switch (actionType) {
+    switch (action.type) {
         case LOGOUT:
-            firebase.auth().signOut()
+            return firebase.auth().signOut()
                 .then(() => {
                     return {...previousState, profile: null};
                 });
-
-            return previousState;
         case REQUEST_PROFILE:
             return {
                 ...previousState,
-                profile: payload
+                waiting: true
+            }
+        case RECIEVE_PROFILE:
+            return {
+                ...previousState,
+                profile: payload,
+                waiting: false
             }
         default:
             return previousState;

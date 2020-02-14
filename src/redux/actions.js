@@ -4,7 +4,6 @@ export const REQUEST_PROFILE = "REQUEST_PROFILE";
 export const requestProfile = payload => {
     return {
         type: REQUEST_PROFILE,
-        payload
     }
 }
 
@@ -35,20 +34,21 @@ const apiBaseUrl = "http://localhost:8000/api/";
 //         });
 // }
 
-const json = response => response.json();
-
 export const LOGIN = "LOGIN";
 export function login(payload) {
-    firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-    .then(json)
-    .then(data => {
-        const profileId = data.profileId;
-        return fetch(apiBaseUrl + "people/" + profileId)
-        .then(json)
+    return function(dispatch) {
+        dispatch(requestProfile())
+        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(data => {
-            dispatch(recieveProfile(data));
+            const profileId = data.user.uid;
+
+            return fetch(apiBaseUrl + "people/" + profileId)
+                .then(response => response.json())
+                .then(data => {
+                    dispatch(recieveProfile(data));
+                });
         });
-    });
+    }
 }
 
 // export const RECIEVE_ACCOUNT = "RECIEVE_ACCOUNT";
@@ -66,6 +66,7 @@ export function fetchProfile(payload) {
     return function (dispatch) {
         // First dispatch: the app state is updated to inform
         // that the API call is starting.
+        // Dispatch the request profile
         dispatch(requestProfile(payload))
         // The function called by the thunk middleware can return a value,
         // that is passed on as the return value of the dispatch method.
@@ -74,23 +75,9 @@ export function fetchProfile(payload) {
         const profileId = payload.profileId;
 
         return fetch(apiBaseUrl + "people/" + profileId)
-            .then(json)
+            .then(response => response.json())
             .then(data => {
                 dispatch(recieveProfile(data));
             });
-        return fetch(`https://www.reddit.com/r/${payload}.json`)
-            .then(
-                response => response.json(),
-                // Do not use catch, because that will also catch
-                // any errors in the dispatch and resulting render,
-                // causing a loop of 'Unexpected batch number' errors.
-                // https://github.com/facebook/react/issues/6895
-                error => console.log('An error occurred.', error)
-            )
-            .then(json =>
-                // We can dispatch many times!
-                // Here, we update the app state with the results of the API call.
-                dispatch(receivePosts(payload, json))
-            )
     }
 }
