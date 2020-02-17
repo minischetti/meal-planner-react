@@ -5,7 +5,7 @@ import { getRecipesFrom, getProfileFrom, getRecipeWaitingStatusFrom } from "../r
 import { getRecipes } from "../redux/actions";
 import { Recipe } from "./Recipe";
 
-export function Recipes() {
+export function RecipeList() {
     const dispatch = useDispatch();
 
     // Selectors

@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Containers
 import { Root } from "./containers/Root";
 import { ProfilePage } from "./containers/ProfilePage";
+import { RecipesPage } from "./containers/RecipesPage";
 import { RecipePage } from "./containers/RecipePage";
 
 // Selectors
@@ -41,7 +42,8 @@ const app = (
             <Switch>
                 {/* <Route path="/login" component={Login} /> */}
                 <Route path="/profile" component={ProfilePage} />
-                <Route path="/recipes" component={RecipePage} />
+                <Route path="/recipes" component={RecipesPage} />
+                <Route path="/recipe/:recipeId" component={RecipePage} />
                 <Route exact path="/" component={Root} />
             </Switch>
         </BrowserRouter>
