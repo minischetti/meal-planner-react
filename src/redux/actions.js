@@ -1,12 +1,13 @@
 import * as firebase from "firebase/app";
 import {firebaseAuth} from "../firebase";
 
-const apiBaseUrl = "http://localhost:8000/api/";
+export const apiBaseUrl = "http://localhost:8000/api/";
 
 export const REQUEST_PROFILE = "REQUEST_PROFILE";
-export const requestProfile = () => {
+export const requestProfile = profileId => {
     return {
         type: REQUEST_PROFILE,
+        profileId: profileId
     }
 }
 
@@ -35,17 +36,25 @@ export const logout = () => {
 //         });
 // }
 
+export const GET_PROFILE = "GET_PROFILE";
+export function getProfile(profileId) {
+    return function(dispatch) {
+        dispatch(requestProfile(profileId));
+
+        return fetch(apiBaseUrl + "people/" + profileId)
+            .then(response => response.json())
+            .then(data => dispatch(recieveProfile(data)));
+    }
+}
+
 export const LOGIN = "LOGIN";
 export function login(payload) {
     return function(dispatch) {
-        dispatch(requestProfile())
         firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
         .then(data => {
             const profileId = data.user.uid;
 
-            return fetch(apiBaseUrl + "people/" + profileId)
-                .then(response => response.json())
-                .then(data => dispatch(recieveProfile(data)));
+            dispatch(getProfile(profileId));
         });
     }
 }

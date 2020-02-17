@@ -1,22 +1,50 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store from "./redux/store";
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import { Home } from "./containers/Home";
+// Containers
+import { Root } from "./containers/Root";
+import { ProfilePage } from "./containers/ProfilePage";
+import { RecipePage } from "./containers/RecipePage";
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Recipes } from "./components/Recipes";
-import { Profile } from "./components/Profile";
+// Selectors
+// import { getAuthenticationStatusFrom } from "./redux/selectors";
+
+// const AuthenticatedRoute = ({ children, ...rest }) => {
+//     const isAuthenticated = useSelector(state => getAuthenticationStatusFrom(state));
+
+//     return (
+//         <Route
+//             {...rest}
+//             render={({ location }) =>
+//                 isAuthenticated ? (
+//                     children
+//                 ) : (
+//                         <Redirect
+//                             to={{
+//                                 pathname: "/login",
+//                                 state: { from: location }
+//                             }}
+//                         />
+//                     )
+//             }
+//         />
+//     );
+// }
 
 const app = (
     <Provider store={store}>
-        <Router>
-            <Route path="/" component={Home} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/recipes" component={Recipes} />
-        </Router>
+        <BrowserRouter>
+            <Switch>
+                {/* <Route path="/login" component={Login} /> */}
+                <Route path="/profile" component={ProfilePage} />
+                <Route path="/recipes" component={RecipePage} />
+                <Route exact path="/" component={Root} />
+            </Switch>
+        </BrowserRouter>
     </Provider>
 );
 

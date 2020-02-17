@@ -1,13 +1,13 @@
 import * as firebase from "firebase/app";
-import {REQUEST_PROFILE, LOGOUT, RECIEVE_PROFILE} from "../actions";
+import {REQUEST_PROFILE, LOGOUT, RECIEVE_PROFILE, GET_PROFILE} from "../actions";
 
 const initialState = {
-    user: null,
+    isAuthenticated: false,
     profile: null,
     waiting: false
 }
 
-export function authentication(previousState = initialState, action) {
+export function user(previousState = initialState, action) {
     const {payload} = action;
 
     switch (action.type) {
@@ -16,9 +16,14 @@ export function authentication(previousState = initialState, action) {
                 .then(() => {
                     return {
                         ...previousState,
-                        profile: null
+                        profile: null,
+                        isAuthenticated: false
                     };
                 });
+        case GET_PROFILE:
+            return {
+                ...previousState,
+            }
         case REQUEST_PROFILE:
             return {
                 ...previousState,
@@ -28,7 +33,8 @@ export function authentication(previousState = initialState, action) {
             return {
                 ...previousState,
                 profile: payload,
-                waiting: false
+                waiting: false,
+                isAuthenticated: true
             }
         default:
             return previousState;

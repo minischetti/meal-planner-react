@@ -1,9 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { getProfileFrom, getWaitingStatusFrom } from "../redux/selectors";
+import { getProfileFrom, getUserWaitingStatusFrom } from "../redux/selectors";
 import { login, logout } from "../redux/actions";
 import { Link } from "react-router-dom";
+import { jsx, css } from "@emotion/core";
 
 
 export const Header = () => {
@@ -11,7 +12,7 @@ export const Header = () => {
     const { register, handleSubmit, errors } = useForm();
     // const [user, initialising, error] = useAuthState(firebaseAuth);
     const profile = useSelector(state => getProfileFrom(state));
-    const waiting = useSelector(state => getWaitingStatusFrom(state));
+    const waiting = useSelector(state => getUserWaitingStatusFrom(state));
 
     const dispatchLoginAction = ({ email, password }) => {
         dispatch(login({ email, password }));
@@ -38,15 +39,29 @@ export const Header = () => {
     // if (error || errors) {
     // }
 
+    const header = css`
+        display: flex;
+    `;
+
+    const authPanel = css`
+        justify-self: end;
+        margin-left: auto;
+    `;
+
+
     if (profile) {
         return (
             <React.Fragment>
-                <Link to="/">Home</Link>
-                <Link to="/profile">Profile</Link>
-                <Link to="/recipes">Recipes</Link>
-                <div>
-                    <span>{profile.firstName}</span>
-                    <button onClick={dispatchLogoutAction}>Log out</button>
+                <div css={header}>
+                    <div>
+                        <Link to="/">Home</Link>
+                        <Link to="/profile">Profile</Link>
+                        <Link to="/recipes">Recipes</Link>
+                    </div>
+                    <div css={authPanel}>
+                        <span>{profile.firstName}</span>
+                        <button onClick={dispatchLogoutAction}>Log out</button>
+                    </div>
                 </div>
             </React.Fragment>
         );

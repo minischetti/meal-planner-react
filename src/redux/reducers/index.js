@@ -1,5 +1,14 @@
 import {combineReducers} from "redux";
-import {authentication} from "./authentication";
+import {user} from "./user";
 import {recipes} from "./recipes";
+import { LOGOUT } from "../actions";
 
-export default combineReducers({ authentication, recipes });
+const appReducer = combineReducers({ user, recipes });
+
+export default (state, action) => {
+    if (action.type === LOGOUT) {
+        state = undefined;
+    }
+
+    return appReducer(state, action);
+}

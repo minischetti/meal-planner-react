@@ -1,8 +1,9 @@
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 // import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSelector, useDispatch } from "react-redux";
-import { getRecipesFrom, getProfileFrom, getWaitingStatusFrom } from "../redux/selectors";
+import { getRecipesFrom, getProfileFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
 import { getRecipes } from "../redux/actions";
+import { Recipe } from "./Recipe";
 
 export function Recipes() {
     const dispatch = useDispatch();
@@ -10,7 +11,7 @@ export function Recipes() {
     // Selectors
     const profile = useSelector(state => getProfileFrom(state));
     const recipes = useSelector(state => getRecipesFrom(state));
-    const waiting = useSelector(state => getWaitingStatusFrom(state));
+    const waiting = useSelector(state => getRecipeWaitingStatusFrom(state));
 
     useEffect(() => {
         console.log("Recipes component mounted");
@@ -20,13 +21,24 @@ export function Recipes() {
         }
     }, []);
 
+    if (waiting) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+
     if (recipes.length) {
         const recipeList = recipes.map(recipe =>
-            <li key={recipe.id}>{recipe.name}</li>
+            <Recipe
+                key={recipe.id}
+                name={recipe.name}
+                authors={recipe.authors}
+                ingredients={recipe.ingredients}
+                instructions={recipe.instructions}
+            />
         );
         return (
             <React.Fragment>
-                <h1>Recipes</h1>
                 <ul>{recipeList}</ul>
             </React.Fragment>
         )
