@@ -1,11 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 // import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSelector, useDispatch } from "react-redux";
 import { getRecipesFrom, getProfileFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
 import { getRecipes } from "../redux/actions";
-import { Recipe } from "./Recipe";
+import { RecipeListEntry } from "./RecipeListEntry";
+import { css } from "@emotion/core";
 
 export function RecipeList() {
+    const recipeListStyle = css`
+        display: grid;
+        gap: 10px;
+    `;
     const dispatch = useDispatch();
 
     // Selectors
@@ -29,17 +34,15 @@ export function RecipeList() {
 
     if (recipes.length) {
         const recipeList = recipes.map(recipe =>
-            <Recipe
+            <RecipeListEntry
                 key={recipe.id}
                 name={recipe.name}
-                authors={recipe.authors}
-                ingredients={recipe.ingredients}
-                instructions={recipe.instructions}
+                id={recipe.id}
             />
         );
         return (
             <React.Fragment>
-                <ul>{recipeList}</ul>
+                <div css={recipeListStyle}>{recipeList}</div>
             </React.Fragment>
         )
     }

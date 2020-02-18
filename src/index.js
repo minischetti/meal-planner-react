@@ -42,8 +42,8 @@ const app = (
             <Switch>
                 {/* <Route path="/login" component={Login} /> */}
                 <Route path="/profile" component={ProfilePage} />
-                <Route path="/recipes" component={RecipesPage} />
-                <Route path="/recipe/:recipeId" component={RecipePage} />
+                <Route path="/recipes/:recipeId" component={RecipePage} />
+                <Route exact path="/recipes" component={RecipesPage} />
                 <Route exact path="/" component={Root} />
             </Switch>
         </BrowserRouter>
