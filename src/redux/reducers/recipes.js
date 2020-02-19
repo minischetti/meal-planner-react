@@ -1,4 +1,4 @@
-import {REQUEST_RECIPES, RECIEVE_RECIPES, REQUEST_RECIPE_NAME_EDIT, RECIPE_NAME_EDIT_SUCCESS} from "../actions";
+import { REQUEST_RECIPES, RECIEVE_RECIPES, REQUEST_RECIPE_NAME_EDIT, RECIPE_NAME_EDIT_SUCCESS } from "../actions";
 
 const initialState = {
     recipes: [],
@@ -6,7 +6,7 @@ const initialState = {
 }
 
 export function recipes(previousState = initialState, action) {
-    const {profileId, recipes} = action;
+    const { profileId, recipes } = action;
 
     switch (action.type) {
         case REQUEST_RECIPES:

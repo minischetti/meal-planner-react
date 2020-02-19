@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const Page = ({ children }) => {
+export const AbstractPage = ({ children }) => {
     const pageStyle = css `
         @media (min-width: 375px) {
             transition: .5s all ease-in-out;

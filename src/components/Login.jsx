@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { login } from "../redux/actions"
+import { requestAccount } from "../redux/actions"
 
 export function Login() {
     const dispatch = useDispatch();
     const { register, handleSubmit, errors } = useForm();
 
     const dispatchLoginAction = ({ email, password }) => {
-        dispatch(login({ email, password }));
+        dispatch(requestAccount({ email, password }));
     };
 
     return (

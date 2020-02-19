@@ -39,8 +39,17 @@ module.exports = {
         "react-dom": "ReactDOM"
     },
 
+    output: {
+        filename: 'main.js'
+    },
+
     devServer: {
-        historyApiFallback: true
+        historyApiFallback: true,
+        hot: false,
+        inline: false,
+        liveReload: false,
+        lazy: true,
+        filename: 'main.js'
     }
 
     // devServer: {

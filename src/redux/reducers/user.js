@@ -1,7 +1,8 @@
 import * as firebase from "firebase/app";
-import {REQUEST_PROFILE, LOGOUT, RECIEVE_PROFILE, GET_PROFILE} from "../actions";
+import {REQUEST_PROFILE, LOGOUT, RECIEVE_PROFILE, REQUEST_ACCOUNT, RECIEVE_ACCOUNT} from "../actions";
 
 const initialState = {
+    id: null,
     isAuthenticated: false,
     profile: null,
     waiting: false
@@ -20,10 +21,6 @@ export function user(previousState = initialState, action) {
                         isAuthenticated: false
                     };
                 });
-        case GET_PROFILE:
-            return {
-                ...previousState,
-            }
         case REQUEST_PROFILE:
             return {
                 ...previousState,
@@ -34,7 +31,18 @@ export function user(previousState = initialState, action) {
                 ...previousState,
                 profile: payload,
                 waiting: false,
-                isAuthenticated: true
+            }
+        case REQUEST_ACCOUNT:
+            return {
+                ...previousState,
+                waiting: true
+            }
+        case RECIEVE_ACCOUNT:
+            return {
+                ...previousState,
+                id: payload,
+                isAuthenticated: true,
+                waiting: false
             }
         default:
             return previousState;

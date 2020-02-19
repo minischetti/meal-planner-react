@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../redux/actions";
 import { EditableRecipe } from "../components/EditableRecipe";
-import { Page } from "./Page";
+import { AbstractPage } from "./AbstractPage";
 import { useSelector } from "react-redux";
 import { getProfileFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
 import { css } from "@emotion/core";
@@ -33,11 +33,9 @@ export const EditRecipePage = () => {
     }, [waiting]);
 
     return (
-        <Page>
+        <AbstractPage>
             <Header />
-            <div css={containerStyle}>
-                <EditableRecipe profileId={profile.id} recipeId={recipe.id} name={recipe.name} authors={recipe.authors} ingredients={recipe.ingredients} instructions={recipe.instructions} />
-            </div>
-        </Page>
+            <EditableRecipe profileId={profile.id} recipeId={recipe.id} name={recipe.name} authors={recipe.authors} ingredients={recipe.ingredients} instructions={recipe.instructions} />
+        </AbstractPage>
     )
 }

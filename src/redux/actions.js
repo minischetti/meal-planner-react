@@ -1,4 +1,3 @@
-import * as firebase from "firebase/app";
 import { firebaseAuth } from "../firebase";
 
 /**
@@ -25,11 +24,37 @@ const fetchConfig = (method, body) => {
 
 export const apiBaseUrl = "http://localhost:8000/api/";
 
+export const REQUEST_ACCOUNT = "REQUEST_ACCOUNT";
+export const requestAccount = payload => {
+    return dispatch => {
+        firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
+            .then(response => {
+                const userId = response.user.uid;
+
+                firebaseAuth.onAuthStateChanged(user => {
+                    if (user) {
+                        dispatch(recieveAccount(userId));
+                    }
+                })
+            }
+            );
+    }
+}
+
+export const RECIEVE_ACCOUNT = "RECIEVE_ACCOUNT";
+export const recieveAccount = userId => {
+    return {
+        type: RECIEVE_ACCOUNT,
+        payload: userId
+    }
+}
+
 export const REQUEST_PROFILE = "REQUEST_PROFILE";
 export const requestProfile = profileId => {
-    return {
-        type: REQUEST_PROFILE,
-        profileId: profileId
+    return function (dispatch) {
+        return fetch(apiBaseUrl + "people/" + profileId)
+            .then(response => response.json())
+            .then(profile => dispatch(recieveProfile(profile)));
     }
 }
 
@@ -48,57 +73,15 @@ export const logout = () => {
     }
 }
 
-
-// fetchProfile = payload => {
-//     const profileId = payload.profileId;
-//     return fetch(apiBaseUrl + "people/" + profileId)
-//         .then(json)
-//         .then(data => {
-//             return data;
-//         });
-// }
-
-export const GET_PROFILE = "GET_PROFILE";
-export function getProfile(profileId) {
-    return function (dispatch) {
-        dispatch(requestProfile(profileId));
-
-        return fetch(apiBaseUrl + "people/" + profileId)
-            .then(response => response.json())
-            .then(data => dispatch(recieveProfile(data)));
-    }
-}
-
-export const LOGIN = "LOGIN";
-export function login(payload) {
-    return function (dispatch) {
-        firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
-            .then(data => {
-                const profileId = data.user.uid;
-
-                dispatch(getProfile(profileId));
-            });
-    }
-}
-
-export const GET_RECIPES = "GET_RECIPES";
-export function getRecipes(payload) {
-    const { profileId } = payload;
-    return function (dispatch) {
-        dispatch(requestRecipes());
-        return fetch(apiBaseUrl + "people/" + profileId + "/recipes")
+export const REQUEST_RECIPES = "REQUEST_RECIPES";
+export const requestRecipes = userId => {
+    return dispatch => {
+        return fetch(apiBaseUrl + "people/" + userId + "/recipes")
             .then(response => response.json())
             .then(recipes => {
-                const payload = { profileId, recipes };
+                const payload = { profileId: userId, recipes };
                 dispatch(recieveRecipes(payload))
             });
-    }
-}
-
-export const REQUEST_RECIPES = "REQUEST_RECIPES";
-export const requestRecipes = () => {
-    return {
-        type: REQUEST_RECIPES
     }
 }
 
@@ -112,7 +95,6 @@ export const recieveRecipes = payload => {
         recipes
     }
 }
-
 
 export const REQUEST_RECIPE_NAME_EDIT = "REQUEST_RECIPE_NAME_EDIT";
 export const requestRecipeNameEdit = () => {
@@ -131,12 +113,11 @@ export const recipeNameEditSuccess = payload => {
 }
 
 export const EDIT_RECIPE_NAME = "EDIT_RECIPE_NAME";
-export function editRecipeName({profileId, recipeId, newRecipeName}) {
-    console.log(arguments);
+export function editRecipeName({ profileId, recipeId, newRecipeName }) {
     return function (dispatch) {
         dispatch(requestRecipeNameEdit());
 
-        return fetch(apiBaseUrl + "recipes/" + recipeId + "/name", fetchConfig("PUT", {profileId, newRecipeName: newRecipeName}))
+        return fetch(apiBaseUrl + "recipes/" + recipeId + "/name", fetchConfig("PUT", { profileId, newRecipeName: newRecipeName }))
             .then(response => response.json())
             .then(data => {
                 dispatch(recipeNameEditSuccess(data));

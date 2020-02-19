@@ -1,14 +1,12 @@
 import * as React from "react";
 import { Header } from "../components/Header";
-import { Profile } from "../components/Profile";
 import { AbstractPage } from "./AbstractPage";
 
-export const ProfilePage = () => {
+export const HomePage = () => {
     return (
         <AbstractPage>
             <Header />
-            <h1>Profile</h1>
-            <Profile />
+            <h1>Home</h1>
         </AbstractPage>
     )
 }

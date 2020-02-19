@@ -6,47 +6,38 @@ import store from "./redux/store";
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 // Containers
-import { Root } from "./containers/Root";
+import { RootPage } from "./containers/RootPage";
 import { ProfilePage } from "./containers/ProfilePage";
 import { RecipesPage } from "./containers/RecipesPage";
 import { RecipePage } from "./containers/RecipePage";
 import { EditRecipePage } from "./containers/EditRecipePage";
 
 // Selectors
-// import { getAuthenticationStatusFrom } from "./redux/selectors";
+import { getAuthenticationStatusFrom } from "./redux/selectors";
+import { LoginPage } from "./containers/LoginPage";
 
-// const AuthenticatedRoute = ({ children, ...rest }) => {
-//     const isAuthenticated = useSelector(state => getAuthenticationStatusFrom(state));
+const AuthenticatedRoute = ({ children }) => {
+    const isAuthenticated = useSelector(state => getAuthenticationStatusFrom(state));
 
-//     return (
-//         <Route
-//             {...rest}
-//             render={({ location }) =>
-//                 isAuthenticated ? (
-//                     children
-//                 ) : (
-//                         <Redirect
-//                             to={{
-//                                 pathname: "/login",
-//                                 state: { from: location }
-//                             }}
-//                         />
-//                     )
-//             }
-//         />
-//     );
-// }
+    return (
+        <React.Fragment>
+            {isAuthenticated ? children : <Redirect to="/login" />}
+        </React.Fragment>
+    )
+}
 
 const app = (
     <Provider store={store}>
         <BrowserRouter>
             <Switch>
-                {/* <Route path="/login" component={Login} /> */}
-                <Route path="/profile" component={ProfilePage} />
-                <Route path="/recipes/:recipeId/edit" component={EditRecipePage} />
-                <Route path="/recipes/:recipeId" component={RecipePage} />
-                <Route exact path="/recipes" component={RecipesPage} />
-                <Route exact path="/" component={Root} />
+                <Route exact path="/" component={RootPage} />
+                <Route exact path="/login" component={LoginPage} />
+                <AuthenticatedRoute>
+                    <Route exact path="/profile" component={ProfilePage} />
+                    <Route exact path="/recipes/:recipeId/edit" component={EditRecipePage} />
+                    <Route exact path="/recipes/:recipeId" component={RecipePage} />
+                    <Route exact path="/recipes" component={RecipesPage} />
+                </AuthenticatedRoute>
             </Switch>
         </BrowserRouter>
     </Provider>

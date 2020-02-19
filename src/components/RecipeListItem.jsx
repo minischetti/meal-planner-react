@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/core";
 
-export const RecipeListEntry = ({ name, id }) => {
+export const RecipeListItem = ({ name, id }) => {
     const containerStyle = css`
         display: flex;
         justify-content: space-between;
@@ -10,6 +10,7 @@ export const RecipeListEntry = ({ name, id }) => {
         border: 1px solid black;
         border-radius: 8px;
     `;
+
     const iconStyle = css`
         color: black;
     `;
