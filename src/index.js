@@ -6,11 +6,11 @@ import store from "./redux/store";
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 // Containers
-import { RootPage } from "./containers/RootPage";
 import { ProfilePage } from "./containers/ProfilePage";
 import { RecipesPage } from "./containers/RecipesPage";
 import { RecipePage } from "./containers/RecipePage";
 import { EditRecipePage } from "./containers/EditRecipePage";
+import { HomePage } from "./containers/HomePage";
 
 // Selectors
 import { getAuthenticationStatusFrom } from "./redux/selectors";
@@ -30,9 +30,9 @@ const app = (
     <Provider store={store}>
         <BrowserRouter>
             <Switch>
-                <Route exact path="/" component={RootPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <AuthenticatedRoute>
+                    <Route exact path="/" component={HomePage} />
                     <Route exact path="/profile" component={ProfilePage} />
                     <Route exact path="/recipes/:recipeId/edit" component={EditRecipePage} />
                     <Route exact path="/recipes/:recipeId" component={RecipePage} />
