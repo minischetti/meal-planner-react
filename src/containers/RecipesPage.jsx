@@ -1,13 +1,14 @@
 import * as React from "react";
-import {Header} from "../components/Header";
-import {RecipeList} from "../components/RecipeList";
+import { Header } from "../components/Header";
+import { RecipeList } from "../components/RecipeList";
+import { Page } from "./Page";
 
 export const RecipesPage = () => {
     return (
-        <React.Fragment>
-            <Header/>
+        <Page>
+            <Header />
             <h1>Recipes</h1>
-            <RecipeList/>
-        </React.Fragment>
+            <RecipeList />
+        </Page>
     )
 }

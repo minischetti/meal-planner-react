@@ -10,6 +10,7 @@ import { Root } from "./containers/Root";
 import { ProfilePage } from "./containers/ProfilePage";
 import { RecipesPage } from "./containers/RecipesPage";
 import { RecipePage } from "./containers/RecipePage";
+import { EditRecipePage } from "./containers/EditRecipePage";
 
 // Selectors
 // import { getAuthenticationStatusFrom } from "./redux/selectors";
@@ -42,6 +43,7 @@ const app = (
             <Switch>
                 {/* <Route path="/login" component={Login} /> */}
                 <Route path="/profile" component={ProfilePage} />
+                <Route path="/recipes/:recipeId/edit" component={EditRecipePage} />
                 <Route path="/recipes/:recipeId" component={RecipePage} />
                 <Route exact path="/recipes" component={RecipesPage} />
                 <Route exact path="/" component={Root} />

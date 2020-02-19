@@ -41,6 +41,9 @@ export const Header = () => {
 
     const header = css`
         display: flex;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: aliceblue;
     `;
 
     const authPanel = css`
@@ -48,31 +51,30 @@ export const Header = () => {
         margin-left: auto;
     `;
 
-
     if (profile) {
         return (
-            <React.Fragment>
-                <div css={header}>
-                    <div>
-                        <Link to="/">Home</Link>
-                        <Link to="/profile">Profile</Link>
-                        <Link to="/recipes">Recipes</Link>
-                    </div>
-                    <div css={authPanel}>
-                        <span>{profile.firstName}</span>
-                        <button onClick={dispatchLogoutAction}>Log out</button>
-                    </div>
+            <div css={header}>
+                <div>
+                    <Link to="/">Home</Link>
+                    <Link to="/profile">Profile</Link>
+                    <Link to="/recipes">Recipes</Link>
                 </div>
-            </React.Fragment>
+                <div css={authPanel}>
+                    <span>{profile.firstName}</span>
+                    <button onClick={dispatchLogoutAction}>Log out</button>
+                </div>
+            </div>
         );
     }
 
     return (
-        <form onSubmit={handleSubmit(dispatchLoginAction)}>
-            <input type="text" placeholder="Email" name="email" defaultValue="domminischetti@gmail.com" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
-            <input type="password" placeholder="Password" name="password" defaultValue="password" ref={register({ required: true })} />
+        <div css={header}>
+            <form onSubmit={handleSubmit(dispatchLoginAction)}>
+                <input type="text" placeholder="Email" name="email" defaultValue="domminischetti@gmail.com" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
+                <input type="password" placeholder="Password" name="password" defaultValue="password" ref={register({ required: true })} />
 
-            <input type="submit" name="login" />
-        </form>
+                <input type="submit" name="login" />
+            </form>
+        </div>
     );
 };
