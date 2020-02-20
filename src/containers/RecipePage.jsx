@@ -26,7 +26,7 @@ export const RecipePage = () => {
         <AbstractPage>
             <Header />
             <RecipeActionBar id={recipe.id}></RecipeActionBar>
-            <Recipe name={recipe.id} authors={recipe.authors} ingredients={recipe.ingredients} instructions={recipe.instructions} />
+            <Recipe name={recipe.name} authors={recipe.authors} ingredients={recipe.ingredients} instructions={recipe.instructions} />
         </AbstractPage>
     )
 }

@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
-// import { useAuthState } from 'react-firebase-hooks/auth';
-import { useSelector, useDispatch } from "react-redux";
-import { getRecipesFrom, getProfileFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
-import { getRecipes } from "../redux/actions";
+import React from "react";
 import { RecipeListItem } from "./RecipeListItem";
 import { css } from "@emotion/core";
+import { NewRecipeListItem } from "./NewRecipeListItem";
 
-export function RecipeList({recipes}) {
+export function RecipeList({ recipes }) {
     const recipeListStyle = css`
         display: grid;
         gap: 10px;
@@ -27,8 +24,9 @@ export function RecipeList({recipes}) {
     );
 
     return (
-        <React.Fragment>
-            <div css={recipeListStyle}>{recipeList}</div>
-        </React.Fragment>
+        <div css={recipeListStyle}>
+            <NewRecipeListItem />
+            {recipeList}
+        </div>
     )
 };

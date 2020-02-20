@@ -17,10 +17,10 @@ export const Recipe = ({ name, authors, ingredients, instructions }) => {
     const ingredientList = () => {
         if (!ingredients || !ingredients.length) return null;
 
-        return ingredients.map(ingredient => (
-            <li key={ingredient.name} css={ingredientStyle}>
-                <div>{ingredient.name}</div>
-                <div>{ingredient.amount}</div>
+        return ingredients.map((ingredient, index) => (
+            <li key={index} css={ingredientStyle}>
+                <div>{ingredient.description}</div>
+                <div>{ingredient.optional}</div>
             </li>
         ));
     }

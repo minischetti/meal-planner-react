@@ -1,13 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { css } from "@emotion/core";
+import { Link } from "react-router-dom";
 
-export const RecipeListItem = ({ name, id }) => {
+export const NewRecipeListItem = () => {
     const containerStyle = css`
         display: flex;
         justify-content: space-between;
         padding: 20px;
-        background-color: #e8e8e8;
+        background-color: #c9ecc3;
         border-radius: 8px;
     `;
 
@@ -16,11 +16,11 @@ export const RecipeListItem = ({ name, id }) => {
     `;
 
     return (
-        <Link to={{ pathname: `/recipes/${id}` }}>
+        <Link to={{ pathname: "/recipe/new" }}>
             <div css={containerStyle}>
-                <div>{name}</div>
-                <ion-icon name="arrow-forward-outline" css={iconStyle}></ion-icon>
+                <div>New Recipe</div>
+                <ion-icon name="add-outline" css={iconStyle}></ion-icon>
             </div>
         </Link>
-    );
+    )
 }

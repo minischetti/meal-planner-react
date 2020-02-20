@@ -1,13 +1,17 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { Author } from "./Author";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { editRecipeName } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 export const EditableRecipe = ({ profileId, recipeId, name, authors, ingredients, instructions }) => {
     const dispatch = useDispatch();
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors, control } = useForm();
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "ingredients"
+    })
 
     const ingredientStyle = css`
         display: flex;
@@ -24,12 +28,11 @@ export const EditableRecipe = ({ profileId, recipeId, name, authors, ingredients
     const editableIngredientList = () => {
         if (!ingredients || !ingredients.length) return null;
 
-        return ingredients.map(({ name, amount }, index) => (
-            <div key={index} css={ingredientStyle}>
-                <input key={name} defaultValue={name} />
-                <input key={amount} defaultValue={amount} />
-            </div>
-
+        return ingredients.map(({ description, optional }, index) => (
+            <fieldset key={index} css={ingredientStyle}>
+                <input key={description} defaultValue={description} name="description" ref={register({ required: true })} />
+                <input key={optional} type="checkbox" defaultValue={amount} name="optional" ref={register({ required: true })} />
+            </fieldset>
         ));
     }
     const editableInstructionList = () => {
@@ -44,18 +47,45 @@ export const EditableRecipe = ({ profileId, recipeId, name, authors, ingredients
         dispatch(editRecipeName({ profileId, recipeId, newRecipeName }));
     };
 
+
+    const dispatchEditRecipeIngredientsAction = (ingredients) => {
+        console.log(ingredients);
+        // dispatch(editRecipeName(ingredients));
+    };
+
     // if (errors && errors.length) {
-        console.log("EditableRecipe/formErrors", errors);
+    console.log("EditableRecipe/formErrors", errors);
     // }
 
     return (
         <div>
             <h1>Edit {name}</h1>
-            <h3>Name</h3>
             <form onSubmit={handleSubmit(dispatchEditRecipeNameAction)}>
+                <h3>Name</h3>
                 <input type="text" placeholder="Recipe Name" name="newRecipeName" defaultValue={name} ref={register({ required: true })} />
-                <input type="submit" name="SaveRecipe" />
+                <input type="submit" name="saveRecipeName" />
             </form>
+
+            <form onSubmit={handleSubmit(dispatchEditRecipeIngredientsAction)}>
+                <h3>Ingredients</h3>
+
+                {fields.map((field, index) => (
+                    <div key={field.id}>
+                        <input name={`ingredients[${index}]`} ref={register()} />
+                    </div>
+                ))}
+                {/* {editableIngredientList()} */}
+                <section>
+                    <button type="button" onClick={() => append({ name: "test" })}>append</button>
+                </section>
+                <input type="submit" name="saveRecipeIngredients" />
+            </form>
+
+            {/* <form onSubmit={handleSubmit(dispatchEditRecipeNameAction)}>
+                <h3>Instructions</h3>
+                {editableInstructionList()}
+                <input type="submit" name="saveRecipeInstructions" />
+            </form> */}
         </div>
     );
 }

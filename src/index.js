@@ -15,6 +15,7 @@ import { HomePage } from "./containers/HomePage";
 // Selectors
 import { getAuthenticationStatusFrom } from "./redux/selectors";
 import { LoginPage } from "./containers/LoginPage";
+import { NewRecipePage } from "./containers/NewRecipePage";
 
 const AuthenticatedRoute = ({ children }) => {
     const isAuthenticated = useSelector(state => getAuthenticationStatusFrom(state));
@@ -34,6 +35,7 @@ const app = (
                 <AuthenticatedRoute>
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/profile" component={ProfilePage} />
+                    <Route exact path="/recipe/new" component={NewRecipePage} />
                     <Route exact path="/recipes/:recipeId/edit" component={EditRecipePage} />
                     <Route exact path="/recipes/:recipeId" component={RecipePage} />
                     <Route exact path="/recipes" component={RecipesPage} />
