@@ -1,4 +1,4 @@
-import { REQUEST_RECIPES, RECIEVE_RECIPES, REQUEST_RECIPE_NAME_EDIT, RECIPE_NAME_EDIT_SUCCESS } from "../actions";
+import { REQUEST_RECIPES, RECIEVE_RECIPES, REQUEST_RECIPE_NAME_EDIT, RECIPE_NAME_EDIT_SUCCESS, CREATE_RECIPE_REQUEST, CREATE_RECIPE_RESPONSE } from "../actions";
 
 const initialState = {
     recipes: [],
@@ -6,7 +6,7 @@ const initialState = {
 }
 
 export function recipes(previousState = initialState, action) {
-    const { profileId, recipes } = action;
+    const { payload } = action;
 
     switch (action.type) {
         case REQUEST_RECIPES:
@@ -17,8 +17,8 @@ export function recipes(previousState = initialState, action) {
         case RECIEVE_RECIPES:
             return {
                 ...previousState,
-                profileId,
-                recipes,
+                profileId: payload.profileId,
+                recipes: payload.recipes,
                 waiting: false
             }
         case REQUEST_RECIPE_NAME_EDIT:
@@ -30,6 +30,20 @@ export function recipes(previousState = initialState, action) {
             return {
                 ...previousState,
                 waiting: false
+            }
+        case CREATE_RECIPE_REQUEST:
+            return {
+                ...previousState,
+                waiting: true
+            }
+        case CREATE_RECIPE_RESPONSE:
+            return {
+                ...previousState,
+                waiting: false
+                // recipes: {
+                //     ...previousState.recipes,
+                //     response: payload
+                // }
             }
         default:
             return previousState;

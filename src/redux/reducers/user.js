@@ -1,5 +1,5 @@
 import * as firebase from "firebase/app";
-import {REQUEST_PROFILE, LOGOUT, RECIEVE_PROFILE, REQUEST_ACCOUNT, RECIEVE_ACCOUNT} from "../actions";
+import { REQUEST_PROFILE, LOGOUT, RECIEVE_PROFILE, REQUEST_ACCOUNT, RECIEVE_ACCOUNT } from "../actions";
 
 const initialState = {
     id: null,
@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export function user(previousState = initialState, action) {
-    const {payload} = action;
+    const { payload } = action;
 
     switch (action.type) {
         case LOGOUT:

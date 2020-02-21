@@ -37,21 +37,21 @@ export const requestAccount = payload => {
                     }
                 })
             }
-            );
+        );
     }
 }
 
 export const RECIEVE_ACCOUNT = "RECIEVE_ACCOUNT";
-export const recieveAccount = userId => {
+export const recieveAccount = payload => {
     return {
         type: RECIEVE_ACCOUNT,
-        payload: userId
+        payload
     }
 }
 
 export const REQUEST_PROFILE = "REQUEST_PROFILE";
 export const requestProfile = profileId => {
-    return function (dispatch) {
+    return dispatch => {
         return fetch(apiBaseUrl + "people/" + profileId)
             .then(response => response.json())
             .then(profile => dispatch(recieveProfile(profile)));
@@ -87,12 +87,9 @@ export const requestRecipes = userId => {
 
 export const RECIEVE_RECIPES = "RECIEVE_RECIPES";
 export const recieveRecipes = payload => {
-    const { profileId, recipes } = payload;
-
     return {
         type: RECIEVE_RECIPES,
-        profileId,
-        recipes
+        payload
     }
 }
 
@@ -114,13 +111,30 @@ export const recipeNameEditSuccess = payload => {
 
 export const EDIT_RECIPE_NAME = "EDIT_RECIPE_NAME";
 export function editRecipeName({ profileId, recipeId, newRecipeName }) {
-    return function (dispatch) {
+    return dispatch => {
         dispatch(requestRecipeNameEdit());
 
         return fetch(apiBaseUrl + "recipes/" + recipeId + "/name", fetchConfig("PUT", { profileId, newRecipeName: newRecipeName }))
             .then(response => response.json())
-            .then(data => {
-                dispatch(recipeNameEditSuccess(data));
-            });
+            .then(data => dispatch(recipeNameEditSuccess(data)));
+    }
+}
+
+export const CREATE_RECIPE_REQUEST = "CREATE_RECIPE_REQUEST";
+export const createRecipe = payload => {
+    return dispatch => {
+        const profileId = firebaseAuth.currentUser.uid;
+        return fetch(apiBaseUrl + "people/" + profileId + "/recipes", fetchConfig("POST", payload))
+        .then(response => response.json())
+        .then (data => dispatch(createRecipeResponse(data)))
+        .catch(error => dispatch(createRecipeResponse(error)))
+    }
+}
+
+export const CREATE_RECIPE_RESPONSE = "CREATE_RECIPE_RESPONSE";
+export const createRecipeResponse = payload => {
+    return {
+        type: CREATE_RECIPE_RESPONSE,
+        payload
     }
 }
