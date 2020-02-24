@@ -20,7 +20,7 @@ export const Recipe = ({ name, authors, ingredients, instructions }) => {
         return ingredients.map((ingredient, index) => (
             <li key={index} css={ingredientStyle}>
                 <div>{ingredient.description}</div>
-                <div>{ingredient.optional}</div>
+                <div>{String(ingredient.optional)}</div>
             </li>
         ));
     }
@@ -29,7 +29,8 @@ export const Recipe = ({ name, authors, ingredients, instructions }) => {
 
         return instructions.map((instruction, index) => (
             <li key={index} css={instruction}>
-                <div>{instruction.body}</div>
+                <div>{instruction.description}</div>
+                <div>{String(instruction.optional)}</div>
             </li>
         ));
     }

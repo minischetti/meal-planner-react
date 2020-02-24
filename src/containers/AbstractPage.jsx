@@ -7,7 +7,7 @@ export const AbstractPage = ({ children }) => {
             transition: .5s all ease-in-out;
             display: grid;
             gap: 20px;
-            width: 50%;
+            width: 60%;
             margin: 0 auto;
         }
     `;

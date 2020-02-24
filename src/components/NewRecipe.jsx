@@ -1,39 +1,56 @@
-import React from "react";
+import React, { useReducer, useState } from "react";
 import { css } from "@emotion/core";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { CREATE_RECIPE_REQUEST, createRecipe } from "../redux/actions";
 import { Button, BUTTON_TYPE } from "../components/global/Button";
 import { TextField } from "./global/TextField";
+import { ListRow } from "./global/ListRow";
+
+const INGREDIENT_ACTION = {
+    ADD: "ADD",
+    REMOVE: "REMOVE"
+};
+
+const INSTRUCTION_ACTION = {
+    ADD: "ADD",
+    REMOVE: "REMOVE"
+};
+
+export const ingredientReducer = (previousState, action) => {
+    switch (action.type) {
+        case INGREDIENT_ACTION.ADD:
+            return [...previousState, action.value];
+        case INGREDIENT_ACTION.REMOVE:
+            return previousState.filter((_, index) => index !== action.value);
+        default:
+            return previousState;
+    }
+};
+
+export const instructionReducer = (previousState, action) => {
+    switch (action.type) {
+        case INSTRUCTION_ACTION.ADD:
+            return [...previousState, action.value];
+        case INSTRUCTION_ACTION.REMOVE:
+            return previousState.filter((_, index) => index !== action.value);
+        default:
+            return previousState;
+    }
+};
 
 export const NewRecipe = () => {
     const dispatch = useDispatch();
     const { register, handleSubmit, errors, control } = useForm();
 
-    // Ingredient State
-    const [ingredientIndices, setIngredientIndices] = React.useState([]);
-    const [ingredientCounter, setIngredientCounter] = React.useState(0);
+    const [recipeName, setRecipeName] = useState("");
+    const [ingredientName, setIngredientName] = useState("");
+    const [isIngredientOptional, setIsIngredientOptional] = useState(false);
+    const [ingredients, dispatchIngredientAction] = useReducer(ingredientReducer, []);
 
-    // Ingredient Methods
-    const addIngredient = () => {
-        setIngredientIndices(prevIndices => [...prevIndices, ingredientCounter]);
-        setIngredientCounter(prevCounter => prevCounter + 1);
-    };
-
-    const removeIngredient = index => () => {
-        setIngredientIndices(prevIndices => [...prevIndices.filter(item => item !== index)]);
-        setIngredientCounter(prevCounter => prevCounter - 1);
-    };
-
-    const clearIngredients = () => {
-        setIngredientIndices([]);
-    };
-
-    const headerStyle = css`
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    `;
+    const [instructionName, setInstructionName] = useState("");
+    const [isInstructionOptional, setIsInstructionOptional] = useState(false);
+    const [instructions, dispatchInstructionAction] = useReducer(instructionReducer, []);
 
     const listStyle = css`
         // display: grid;
@@ -41,9 +58,10 @@ export const NewRecipe = () => {
         // border: 1px solid #e8e8e8;
     `;
 
-    const listItemStyle = css`
-        display: flex;
-        justify-content: space-between;
+    const listRowStyle = css`
+        display: grid;
+        grid-template-columns: 1fr 4fr 1fr 1fr;
+        gap: 20px;
         align-items: center;
         padding: 20px;
         // background-color: #e8e8e8;
@@ -53,7 +71,7 @@ export const NewRecipe = () => {
     `;
 
     const formSectionStyle = css`
-        &:not(:first-child) {
+        &:not(:first-of-type) {
             margin-top: 20px;
         }
     `;
@@ -63,86 +81,95 @@ export const NewRecipe = () => {
         gap: 10px;
     `;
 
-    // Instruction State
-    const [instructionIndices, setInstructionIndices] = React.useState([]);
-    const [instructionCounter, setInstructionCounter] = React.useState(0);
-
-    // Instruction Methods
-    const addInstruction = () => {
-        setInstructionIndices(prevIndices => [...prevIndices, instructionCounter]);
-        setInstructionCounter(prevCounter => prevCounter + 1);
-    };
-
-    const removeInstruction = index => () => {
-        setInstructionIndices(prevIndices => [...prevIndices.filter(item => item !== index)]);
-        setInstructionCounter(prevCounter => prevCounter - 1);
-    };
-
-    const clearInstructions = () => {
-        setInstructionIndices([]);
-    };
-
     // if (errors && errors.length) {
     console.log("NewRecipe/formErrors", errors);
     // }
 
-    const onSubmit = data => dispatch(createRecipe(data));
+    const onSubmit = event => {
+        event.preventDefault();
+        const payload = {
+            name: recipeName,
+            ingredients,
+            instructions
+        };
+
+        dispatch(createRecipe(payload));
+    }
 
     return (
-        <form css={formStyle} onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
             {/* Name */}
-            <div>
-                <div css={headerStyle}>
+            <div css={formSectionStyle}>
+                <div>
                     <h2>Name</h2>
                 </div>
-                <TextField name="name" ref={register} />
+                <TextField value={recipeName} onChange={event => setRecipeName(event.target.value)} />
             </div>
 
-            {/* Ingredients */}
-            <div>
-                <div css={headerStyle}>
-                    <h2>Ingredients</h2>
-                    <Button type={BUTTON_TYPE.BUTTON} onClick={addIngredient}>Add Ingredient<ion-icon name="add-circle-outline"></ion-icon></Button>
-                </div>
-                <div css={listStyle}>
-                    {ingredientIndices.map(index => {
-                        const fieldName = `ingredients[${index}]`;
-                        const displayIndex = index + 1;
+            {/* Ingredients Section */}
 
+            <div css={formSectionStyle}>
+                <h2>Ingredients</h2>
+                {/* Ingredient List */}
+                <div>
+                    {/* Form Header */}
+                    <ListRow>
+                        <div>Number</div>
+                        <div>Description</div>
+                        <div>Optional</div>
+                        <div></div>
+                    </ListRow>
+                    {/* New Ingredient Form */}
+                    <ListRow>
+                        <div>{ingredients.length + 1}</div>
+                        <TextField name="ingredientName" placeholder="Name" value={ingredientName} onChange={event => setIngredientName(event.target.value)} />
+                        <input type="checkbox" name="isIngredientOptional" checked={isIngredientOptional} onChange={event => setIsIngredientOptional(event.target.checked)} />
+                        <Button type={BUTTON_TYPE.BUTTON} onClick={() => dispatchIngredientAction({ type: INGREDIENT_ACTION.ADD, value: { description: ingredientName, optional: isIngredientOptional } })}>Add<ion-icon name="add-circle-outline"></ion-icon></Button>
+                    </ListRow>
+                    {/* Existing Ingredient List */}
+                    {ingredients.map((ingredient, index) => {
                         return (
-                            <div css={listItemStyle} name={fieldName} key={fieldName}>
-                                <div>{displayIndex}.</div>
-                                <TextField type="text" name={`${fieldName}.description`} placeholder="Name" ref={register}/>
-                                <label>Optional <input type="checkbox" name={`${fieldName}.optional`} ref={register} /></label>
-                                <ion-icon name="trash-outline" onClick={removeIngredient(index)}></ion-icon>
-                            </div>
-                        );
+                            <ListRow key={index}>
+                                <div>{index + 1}</div>
+                                <div>{ingredient.description}</div>
+                                <div>{String(ingredient.optional)}</div>
+                                <Button type={BUTTON_TYPE.BUTTON} onClick={() => dispatchIngredientAction({ type: INGREDIENT_ACTION.REMOVE, value: index })}>Remove<ion-icon name="trash-outline"></ion-icon></Button>
+                            </ListRow>
+                        )
                     })}
                 </div>
             </div>
-
-            {/* Instructions */}
-            <div>
-                <div css={headerStyle}>
-                    <h2>Instructions</h2>
-                    <Button type={BUTTON_TYPE.BUTTON} onClick={addInstruction}>Add Instruction<ion-icon name="add-circle-outline"></ion-icon></Button>
-                </div>
-                <div css={listStyle}>
-                    {instructionIndices.map(index => {
-                        const fieldName = `instructions[${index}]`;
-                        const displayIndex = index + 1;
-
+            <div css={formSectionStyle}>
+                <h2>Instructions</h2>
+                {/* Instruction List */}
+                <div>
+                    {/* Form Header */}
+                    <ListRow>
+                        <div>Number</div>
+                        <div>Description</div>
+                        <div>Optional</div>
+                        <div></div>
+                    </ListRow>
+                    {/* New Instruction Form */}
+                    <ListRow>
+                        <div>{instructions.length + 1}</div>
+                        <TextField name="instructionName" placeholder="Name" value={instructionName} onChange={event => setInstructionName(event.target.value)} />
+                        <input type="checkbox" name="isInstructionOptional" checked={isInstructionOptional} onChange={event => setIsInstructionOptional(event.target.checked)} />
+                        <Button type={BUTTON_TYPE.BUTTON} onClick={() => dispatchInstructionAction({ type: INSTRUCTION_ACTION.ADD, value: { description: instructionName, optional: isInstructionOptional } })}>Add<ion-icon name="add-circle-outline"></ion-icon></Button>
+                    </ListRow>
+                    {/* Existing Ingredient List */}
+                    {instructions.map((instruction, index) => {
                         return (
-                            <div css={listItemStyle} name={fieldName} key={fieldName}>
-                                <div>{displayIndex}.</div>
-                                <TextField type="text" name={`${fieldName}.description`} placeholder="Description" ref={register}/>
-                                <ion-icon name="trash-outline" onClick={removeInstruction(index)}></ion-icon>
-                            </div>
-                        );
+                            <ListRow key={index}>
+                                <div>{index + 1}</div>
+                                <div>{instruction.description}</div>
+                                <div>{String(instruction.optional)}</div>
+                                <Button type={BUTTON_TYPE.BUTTON} onClick={() => dispatchInstructionAction({ type: INSTRUCTION_ACTION.REMOVE, value: index })}>Remove<ion-icon name="trash-outline"></ion-icon></Button>
+                            </ListRow>
+                        )
                     })}
                 </div>
             </div>
-
             {/* Save */}
             <div>
                 <Button type="submit">Save Recipe<ion-icon name="save-outline"></ion-icon></Button>
