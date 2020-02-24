@@ -7,6 +7,7 @@ import { AbstractPage } from "./AbstractPage";
 import { useSelector } from "react-redux";
 import { getProfileFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
 import { css } from "@emotion/core";
+import { NewRecipe } from "../components/NewRecipe";
 
 export const EditRecipePage = () => {
     const profile = useSelector(state => getProfileFrom(state));
@@ -35,7 +36,7 @@ export const EditRecipePage = () => {
     return (
         <AbstractPage>
             <Header />
-            <EditableRecipe profileId={profile.id} recipeId={recipe.id} name={recipe.name} authors={recipe.authors} ingredients={recipe.ingredients} instructions={recipe.instructions} />
+            {waiting ? "Loading..." : <NewRecipe recipe={recipe}/>}
         </AbstractPage>
     )
 }

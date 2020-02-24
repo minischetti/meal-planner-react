@@ -93,30 +93,23 @@ export const recieveRecipes = payload => {
     }
 }
 
-export const REQUEST_RECIPE_NAME_EDIT = "REQUEST_RECIPE_NAME_EDIT";
-export const requestRecipeNameEdit = () => {
-    return {
-        type: REQUEST_RECIPE_NAME_EDIT
-
-    }
-}
-
-export const RECIPE_NAME_EDIT_SUCCESS = "RECIPE_NAME_EDIT_SUCCESS";
-export const recipeNameEditSuccess = payload => {
-    return {
-        type: RECIPE_NAME_EDIT_SUCCESS,
-        payload
-    }
-}
-
-export const EDIT_RECIPE_NAME = "EDIT_RECIPE_NAME";
-export function editRecipeName({ profileId, recipeId, newRecipeName }) {
+export const EDIT_RECIPE_NAME_REQUEST = "EDIT_RECIPE_NAME_REQUEST";
+export function editRecipeName({ recipeId, newRecipeName }) {
     return dispatch => {
         dispatch(requestRecipeNameEdit());
+        const profileId = firebaseAuth.currentUser.uid;
 
         return fetch(apiBaseUrl + "recipes/" + recipeId + "/name", fetchConfig("PUT", { profileId, newRecipeName: newRecipeName }))
             .then(response => response.json())
-            .then(data => dispatch(recipeNameEditSuccess(data)));
+            .then(data => dispatch(recipeNameEditResponse(data)));
+    }
+}
+
+export const EDIT_RECIPE_NAME_RESPONSE = "EDIT_RECIPE_NAME_RESPONSE";
+export const recipeNameEditResponse = payload => {
+    return {
+        type: EDIT_RECIPE_NAME_RESPONSE,
+        payload
     }
 }
 
