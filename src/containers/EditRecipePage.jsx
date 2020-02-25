@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Header } from "../components/Header";
+import { GlobalHeader } from "../components/GlobalHeader";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../redux/actions";
 import { AbstractPage } from "./AbstractPage";
@@ -36,8 +36,8 @@ export const EditRecipePage = () => {
 
     return (
         <AbstractPage>
-            <Header />
-            {waiting ? "Loading..." : <ComposableRecipe initialName={recipe.name} initialAuthors={[]} initialIngredients={recipe.ingredients} initialInstructions={recipe.instructions} />}
+            <GlobalHeader />
+            {waiting ? "Loading..." : <ComposableRecipe recipeId={recipe.id} initialName={recipe.name} initialAuthors={[]} initialIngredients={recipe.ingredients} initialInstructions={recipe.instructions} />}
         </AbstractPage>
     )
 }

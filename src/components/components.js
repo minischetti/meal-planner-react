@@ -1,6 +1,6 @@
 export { Author } from "./Author";
 export { ComposableRecipe } from "./ComposableRecipe";
-export { Header } from "./Header";
+export { GlobalHeader as Header } from "./GlobalHeader";
 export { Login } from "./Login";
 export { NewRecipeListItem } from "./NewRecipeListItem";
 export { Profile } from "./Profile";

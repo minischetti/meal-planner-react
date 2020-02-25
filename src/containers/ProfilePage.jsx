@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Header } from "../components/Header";
-import { Profile } from "../components/Profile";
+import { Header, Profile } from "../components/components";
+import { PageActionBar } from "../components/global/global";
 import { AbstractPage } from "./containers";
 
 export const ProfilePage = () => {
     return (
         <AbstractPage>
             <Header />
-            <h1>Profile</h1>
+            <PageActionBar title="Profile" />
             <Profile />
         </AbstractPage>
     )

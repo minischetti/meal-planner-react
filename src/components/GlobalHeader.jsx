@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { css } from "@emotion/core";
 
 
-export const Header = () => {
+export const GlobalHeader = () => {
     const dispatch = useDispatch();
     const userId = useSelector(state => getUserIdFrom(state));
     const profile = useSelector(state => getProfileFrom(state));

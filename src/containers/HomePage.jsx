@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Header } from "../components/Header";
+import { GlobalHeader } from "../components/GlobalHeader";
 import { AbstractPage } from "./containers";
+import { PageActionBar } from "../components/global/global";
 
 export const HomePage = () => {
     return (
         <AbstractPage>
-            <Header />
-            <h1>Home</h1>
+            <GlobalHeader />
+            <PageActionBar title="Home"/>
         </AbstractPage>
     )
 }

@@ -6,7 +6,14 @@ export const BUTTON_TYPE = {
     SUBMIT: "submit"
 }
 
-export const Button = ({children, type, onClick}) => {
+export const BUTTON_COLOR = {
+    RED: "#ff4040",
+    BLUE: "#40b5ff",
+    GREEN: "#40ffbf",
+    DEFAULT: "#e5e5e5"
+}
+
+export const Button = ({children, type, onClick, color = BUTTON_COLOR.DEFAULT}) => {
     const buttonStyle = css`
         display: flex;
         justify-content: center;
@@ -16,7 +23,7 @@ export const Button = ({children, type, onClick}) => {
         -webkit-appearance: none;
         border: 0;
         padding: 10px 20px;
-        background-color: aquamarine;
+        background-color: ${color};
         border-radius: 200px;
         color: black;
         font-size: 14px;
@@ -25,6 +32,10 @@ export const Button = ({children, type, onClick}) => {
             color: black;
             font-size: 16px;
         }
+    `;
+
+    const buttonColor = css`
+
     `;
 
     return (

@@ -4,6 +4,7 @@ import { Login } from "../components/components";
 import { getAuthenticationStatusFrom } from "../redux/selectors";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { PageActionBar } from "../components/global/global";
 
 export const LoginPage = () => {
     const isAuthenticated = useSelector(state => getAuthenticationStatusFrom(state));
@@ -16,7 +17,7 @@ export const LoginPage = () => {
 
     return (
         <AbstractPage>
-            <h1>Login</h1>
+            <PageActionBar title="Login"/>
             <Login />
         </AbstractPage>
     )

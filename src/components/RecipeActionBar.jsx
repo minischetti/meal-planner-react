@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { css } from "@emotion/core";
+import { Button } from "./global/Button";
 
 export const RecipeActionBar = ({id, role}) => {
     const containerStyle = css`
@@ -16,9 +17,12 @@ export const RecipeActionBar = ({id, role}) => {
 
     return (
         <div css={containerStyle}>
-            <div>Your Role: {role}</div>
+            {role ? <div>Your Role: {role}</div> : ""}
             <Link to={{pathname: `/recipes/${id}/edit`}}>
-                <ion-icon name="create-outline" class={iconStyle}></ion-icon>
+                <Button>
+                    Edit Recipe
+                    <ion-icon name="create-outline" class={iconStyle}></ion-icon>
+                </Button>
             </Link>
         </div>
     )

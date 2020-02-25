@@ -1,9 +1,11 @@
 import React, { useReducer, useState } from "react";
 import { css } from "@emotion/core";
 import { useDispatch } from "react-redux";
-import { createRecipe } from "../redux/actions";
-import { BUTTON_TYPE } from "./global/Button";
+import { createRecipe, deleteRecipe } from "../redux/actions";
+import { BUTTON_TYPE, BUTTON_COLOR } from "./global/Button";
 import { Button, TextField, ListRow, FormSection } from "./global/global";
+import { FormSectionHeader } from "./global/FormSectionHeader";
+import { useHistory } from "react-router";
 
 const ACTION = {
     ADD: "ADD",
@@ -21,8 +23,9 @@ export const reducer = (previousState, action) => {
     }
 };
 
-export const ComposableRecipe = ({initialName = "", initialIngredients = [], initialInstructions = []}) => {
+export const ComposableRecipe = ({ recipeId = "", initialName = "", initialIngredients = [], initialInstructions = [] }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     // New Recipe Name
     const [recipeName, setRecipeName] = useState(initialName);
@@ -52,17 +55,39 @@ export const ComposableRecipe = ({initialName = "", initialIngredients = [], ini
         dispatch(createRecipe(payload));
     }
 
+    const onCancel = event => {
+        event.preventDefault();
+
+        return (
+            history.push("/recipes")
+        )
+    }
+
+    const onDelete = event => {
+        event.preventDefault();
+
+        dispatch(deleteRecipe(recipeId));
+        history.push("/recipes");
+    }
+
+    const buttonActionBarStyle = css`
+        display: grid;
+        gap: 10px;
+        padding: 20px;
+        grid-template-columns: repeat(4, 1fr);
+    `;
+
     return (
         <form onSubmit={onSubmit}>
             {/* Name */}
             <FormSection>
-                <h2>Name</h2>
+                <FormSectionHeader>Name</FormSectionHeader>
                 <TextField value={recipeName} onChange={event => setRecipeName(event.target.value)} />
             </FormSection>
 
             {/* Ingredients Form Section */}
             <FormSection>
-                <h2>Ingredients</h2>
+                <FormSectionHeader>Ingredients</FormSectionHeader>
                 {/* Ingredient List */}
                 <ListRow>
                     <div>Number</div>
@@ -92,7 +117,7 @@ export const ComposableRecipe = ({initialName = "", initialIngredients = [], ini
 
             {/* Instructions Form Section */}
             <FormSection>
-                <h2>Instructions</h2>
+                <FormSectionHeader>Instructions</FormSectionHeader>
                 {/* Header */}
                 <ListRow>
                     <div>Number</div>
@@ -119,9 +144,12 @@ export const ComposableRecipe = ({initialName = "", initialIngredients = [], ini
                     )
                 })}
             </FormSection>
-            {/* Save */}
-            <div>
-                <Button type="submit">Save Recipe<ion-icon name="save-outline"></ion-icon></Button>
+            {/* Cancel and Save */}
+            <div css={buttonActionBarStyle}>
+                {/* Show the delete recipe button if this recipe already exists */}
+                {recipeId ? <Button color={BUTTON_COLOR.RED} onClick={onDelete}>Delete<ion-icon name="trash-outline" /></Button> : ""}
+                <Button color={BUTTON_COLOR.BLUE} onClick={onCancel}>Cancel<ion-icon name="arrow-back-outline" /></Button>
+                <Button type={BUTTON_TYPE.SUBMIT} color={BUTTON_COLOR.GREEN}>Save<ion-icon name="save-outline" /></Button>
             </div>
         </form>
     );

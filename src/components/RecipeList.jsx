@@ -24,7 +24,6 @@ export function RecipeList({ recipes }) {
 
     return (
         <div css={recipeListStyle}>
-            <NewRecipeListItem />
             {recipeList}
         </div>
     )

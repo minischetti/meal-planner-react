@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { requestAccount } from "../redux/actions";
-import { Button, BUTTON_TYPE } from "./global/Button";
-import { TextField } from "./global/TextField";
+import { BUTTON_TYPE, BUTTON_COLOR } from "./global/Button";
+import { TextField, Button } from "./global/global";
 import { css } from "@emotion/core";
 
 export function Login() {
@@ -24,7 +24,7 @@ export function Login() {
         <form css={formStyle} onSubmit={handleSubmit(dispatchLoginAction)}>
             <TextField type="text" placeholder="Email" name="email" defaultValue="domminischetti@gmail.com" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
             <TextField type="password" placeholder="Password" name="password" defaultValue="password" ref={register({ required: true })} />
-            <Button name="login" type={BUTTON_TYPE.SUBMIT}>Log in</Button>
+            <Button name="login" type={BUTTON_TYPE.SUBMIT} color={BUTTON_COLOR.GREEN}>Log in</Button>
         </form>
     );
 };
