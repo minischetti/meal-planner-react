@@ -34,10 +34,6 @@ export const Button = ({children, type, onClick, color = BUTTON_COLOR.DEFAULT}) 
         }
     `;
 
-    const buttonColor = css`
-
-    `;
-
     return (
         <button css={buttonStyle} type={type} onClick={onClick}>{children}</button>
     )

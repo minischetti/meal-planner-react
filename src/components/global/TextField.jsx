@@ -6,9 +6,8 @@ export const TextField = forwardRef(({ name, placeholder, value, defaultValue, o
         display: flex;
         -webkit-appearance: none;
         appearance: none;
-        border: 1px solid cadetblue;
+        border: 1px solid #ddd;
         border-radius: 4px;
-        background-color: 1px solid aliceblue;
         padding: 10px 20px;
         font-size: 14px;
     `;

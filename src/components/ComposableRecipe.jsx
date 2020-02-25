@@ -77,6 +77,13 @@ export const ComposableRecipe = ({ recipeId = "", initialName = "", initialIngre
         grid-template-columns: repeat(4, 1fr);
     `;
 
+    const columnLabelStyle = css`
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 10px;
+    `;
+
     return (
         <form onSubmit={onSubmit}>
             {/* Name */}
@@ -89,7 +96,7 @@ export const ComposableRecipe = ({ recipeId = "", initialName = "", initialIngre
             <FormSection>
                 <FormSectionHeader>Ingredients</FormSectionHeader>
                 {/* Ingredient List */}
-                <ListRow>
+                <ListRow css={columnLabelStyle}>
                     <div>Number</div>
                     <div>Description</div>
                     <div>Optional</div>

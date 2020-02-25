@@ -2,6 +2,7 @@ import { css } from "@emotion/core"
 
 export const FormSectionHeader = ({ children }) => {
     const headerStyle = css`
+        font-family: "Barlow", sans-serif;
         margin: 0;
     `;
 

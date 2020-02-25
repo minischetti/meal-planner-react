@@ -38,12 +38,23 @@ export const GlobalHeader = () => {
         margin-left: auto;
     `;
 
+    const linkContainer = css`
+        display: grid;
+        grid-auto-flow: column;
+        gap: 10px;
+        text-decoration: none;
+    `;
+
+    const link = css`
+        text-decoration: none;
+    `;
+
     return (
         <div css={header}>
-            <div>
-                <Link to="/">Home</Link>
-                <Link to="/profile">Profile</Link>
-                <Link to="/recipes">Recipes</Link>
+            <div css={linkContainer}>
+                <Link css={link} to="/">Home</Link>
+                <Link css={link} to="/profile">Profile</Link>
+                <Link css={link} to="/recipes">Recipes</Link>
             </div>
             <div css={authPanel}>
                 {profile ? <span>{profile.firstName}</span> : ""}

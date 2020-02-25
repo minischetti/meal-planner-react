@@ -4,3 +4,4 @@ export { ListRow } from "./ListRow";
 export { TextField } from "./TextField";
 export { PageHeader } from "./PageHeader";
 export { PageActionBar } from "./PageActionBar";
+export { LinkWrapper } from "./LinkWrapper";
