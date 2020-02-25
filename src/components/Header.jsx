@@ -26,17 +26,6 @@ export const Header = () => {
         )
     }
 
-    // if (initialising) {
-    //     return (
-    //         <div>
-    //             <p>Loading...</p>
-    //         </div>
-    //     );
-    // }
-
-    // if (error || errors) {
-    // }
-
     const header = css`
         display: flex;
         padding: 20px;

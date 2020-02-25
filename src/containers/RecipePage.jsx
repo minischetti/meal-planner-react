@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Header } from "../components/Header";
-import { Recipe } from "../components/Recipe";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../redux/actions";
-import { RecipeActionBar } from "../components/RecipeActionBar";
-import { AbstractPage } from "./AbstractPage";
+import { Header, Recipe, RecipeActionBar } from "../components/components";
+import { AbstractPage } from "./containers";
 
 export const RecipePage = () => {
     const [recipe, setRecipe] = useState({});

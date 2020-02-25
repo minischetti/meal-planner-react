@@ -2,16 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../redux/actions";
-import { EditableRecipe } from "../components/EditableRecipe";
 import { AbstractPage } from "./AbstractPage";
-import { useSelector } from "react-redux";
-import { getProfileFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
 import { css } from "@emotion/core";
-import { NewRecipe } from "../components/NewRecipe";
+import { ComposableRecipe } from "../components/components";
 
 export const EditRecipePage = () => {
-    const profile = useSelector(state => getProfileFrom(state));
-    const waiting = useSelector(state => getRecipeWaitingStatusFrom(state));
+    const [waiting, setWaiting] = useState(true);
     const [recipe, setRecipe] = useState({});
     let { recipeId } = useParams();
 
@@ -23,20 +19,25 @@ export const EditRecipePage = () => {
 
     useEffect(() => {
         const abortController = new AbortController();
+        setWaiting(true);
 
         fetch(apiBaseUrl + "recipes/" + recipeId, { signal: abortController.signal })
             .then(response => response.json())
-            .then(data => setRecipe(data));
+            .then(data => {
+                setRecipe(data);
+                setWaiting(false);
+            });
 
         return () => {
+            setWaiting(false);
             abortController.abort();
         }
-    }, [waiting]);
+    }, []);
 
     return (
         <AbstractPage>
             <Header />
-            {waiting ? "Loading..." : <NewRecipe recipe={recipe}/>}
+            {waiting ? "Loading..." : <ComposableRecipe initialName={recipe.name} initialAuthors={[]} initialIngredients={recipe.ingredients} initialInstructions={recipe.instructions} />}
         </AbstractPage>
     )
 }

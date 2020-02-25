@@ -1,5 +1,4 @@
-import React, {useContext, useEffect} from "react";
-// import { useAuthState } from 'react-firebase-hooks/auth';
+import React from "react";
 import { useSelector } from "react-redux";
 import { getProfileFrom, getUserWaitingStatusFrom } from "../redux/selectors";
 

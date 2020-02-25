@@ -1,6 +1,6 @@
 import React from "react";
 import { css } from "@emotion/core";
-import {Author} from "./Author";
+import { Author } from "./components";
 
 export const Recipe = ({ name, authors, ingredients, instructions }) => {
     const ingredientStyle = css`

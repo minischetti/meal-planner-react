@@ -1,7 +1,6 @@
 import React from "react";
-import { RecipeListItem } from "./RecipeListItem";
+import { NewRecipeListItem, RecipeListItem } from "./components";
 import { css } from "@emotion/core";
-import { NewRecipeListItem } from "./NewRecipeListItem";
 
 export function RecipeList({ recipes }) {
     const recipeListStyle = css`

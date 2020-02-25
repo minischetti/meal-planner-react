@@ -2,10 +2,8 @@ import React, { useReducer, useState } from "react";
 import { css } from "@emotion/core";
 import { useDispatch } from "react-redux";
 import { createRecipe } from "../redux/actions";
-import { Button, BUTTON_TYPE } from "../components/global/Button";
-import { TextField } from "./global/TextField";
-import { ListRow } from "./global/ListRow";
-import { FormSection } from "./global/FormSection";
+import { BUTTON_TYPE } from "./global/Button";
+import { Button, TextField, ListRow, FormSection } from "./global/global";
 
 const ACTION = {
     ADD: "ADD",
@@ -23,25 +21,25 @@ export const reducer = (previousState, action) => {
     }
 };
 
-export const NewRecipe = () => {
+export const ComposableRecipe = ({initialName = "", initialIngredients = [], initialInstructions = []}) => {
     const dispatch = useDispatch();
 
     // New Recipe Name
-    const [recipeName, setRecipeName] = useState("");
+    const [recipeName, setRecipeName] = useState(initialName);
 
     // New Ingredient State
     const [ingredientName, setIngredientName] = useState("");
     const [isIngredientOptional, setIsIngredientOptional] = useState(false);
 
     // Ingredient List Reducer
-    const [ingredients, dispatchIngredientAction] = useReducer(reducer, []);
+    const [ingredients, dispatchIngredientAction] = useReducer(reducer, initialIngredients);
 
     // New Instruction State
     const [instructionName, setInstructionName] = useState("");
     const [isInstructionOptional, setIsInstructionOptional] = useState(false);
 
     // Instruction List Reducer
-    const [instructions, dispatchInstructionAction] = useReducer(reducer, []);
+    const [instructions, dispatchInstructionAction] = useReducer(reducer, initialInstructions);
 
     const onSubmit = event => {
         event.preventDefault();

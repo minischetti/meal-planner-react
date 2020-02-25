@@ -1,6 +1,6 @@
 import * as React from "react";
-import { AbstractPage } from "./AbstractPage";
-import { Login } from "../components/Login";
+import { AbstractPage } from "./containers";
+import { Login } from "../components/components";
 import { getAuthenticationStatusFrom } from "../redux/selectors";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";

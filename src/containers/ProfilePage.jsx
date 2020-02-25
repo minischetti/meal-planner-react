@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Header } from "../components/Header";
 import { Profile } from "../components/Profile";
-import { AbstractPage } from "./AbstractPage";
+import { AbstractPage } from "./containers";
 
 export const ProfilePage = () => {
     return (

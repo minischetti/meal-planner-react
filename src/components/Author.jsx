@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { css } from "@emotion/core";
 import { useDispatch } from "react-redux";
 import { apiBaseUrl } from "../redux/actions";
 

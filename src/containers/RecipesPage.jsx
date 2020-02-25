@@ -1,9 +1,8 @@
-import React, {useEffect} from "react";
-import { Header } from "../components/Header";
-import { RecipeList } from "../components/RecipeList";
-import { AbstractPage } from "./AbstractPage";
+import React, { useEffect } from "react";
+import { Header, RecipeList } from "../components/components";
+import { AbstractPage } from "./containers";
 import { useSelector, useDispatch } from "react-redux";
-import { getRecipesFrom, getProfileFrom, getRecipeWaitingStatusFrom, getUserIdFrom } from "../redux/selectors";
+import { getRecipesFrom, getUserIdFrom } from "../redux/selectors";
 import { requestRecipes } from "../redux/actions";
 
 export const RecipesPage = () => {
@@ -12,7 +11,6 @@ export const RecipesPage = () => {
     // Selectors
     const userId = useSelector(state => getUserIdFrom(state));
     const recipeList = useSelector(state => getRecipesFrom(state));
-    // const waiting = useSelector(state => getRecipeWaitingStatusFrom(state));
 
     useEffect(() => {
         dispatch(requestRecipes(userId));
@@ -22,7 +20,7 @@ export const RecipesPage = () => {
         <AbstractPage>
             <Header />
             <h1>Recipes</h1>
-            <RecipeList recipes={recipeList}/>
+            <RecipeList recipes={recipeList} />
         </AbstractPage>
     )
 }
