@@ -21,11 +21,6 @@ export const RecipesPage = () => {
         dispatch(requestRecipes(userId));
     }, []);
 
-    const recipeListStyle = css`
-        display: grid;
-        gap: 10px;
-    `;
-
     const recipeListItems = recipes.map(recipe =>
         <RecipeListItem
             key={recipe.id}

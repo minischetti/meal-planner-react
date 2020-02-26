@@ -27,20 +27,24 @@ export const GlobalHeader = () => {
     }
 
     const header = css`
-        display: flex;
+        display: grid;
+        grid-auto-flow: column;
         padding: 20px;
         border-radius: 8px;
-        background-color: aliceblue;
+        border: 1px solid #ddd;
     `;
 
     const authPanel = css`
+        display: grid;
+        grid-auto-flow: column;
+        gap: 10px;
         justify-self: end;
-        margin-left: auto;
     `;
 
     const linkContainer = css`
         display: grid;
         grid-auto-flow: column;
+        grid-auto-columns: max-content;
         gap: 10px;
         text-decoration: none;
     `;
