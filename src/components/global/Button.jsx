@@ -27,10 +27,15 @@ export const Button = ({children, type, onClick, color = BUTTON_COLOR.DEFAULT}) 
         border-radius: 200px;
         color: black;
         font-size: 14px;
+        transition: .15s all ease-in-out;
         & ion-icon {
             margin-left: 5px;
             color: black;
             font-size: 16px;
+        }
+        &:hover {
+            transform: scale(1.025);
+            box-shadow: 0 0 20px rgba(0,0,0,.1);
         }
     `;
 

@@ -145,8 +145,8 @@ export const createRecipe = payload => {
         const profileId = firebaseAuth.currentUser.uid;
         return fetch(apiBaseUrl + "people/" + profileId + "/recipes", fetchConfig("POST", payload))
         .then(response => response.json())
-        .then (data => dispatch(createRecipeResponse(data)))
-        .catch(error => dispatch(createRecipeResponse(error)))
+        .then (response => dispatch(createRecipeResponse(response)))
+        .catch(response => dispatch(createRecipeResponse(response)))
     }
 }
 
@@ -155,6 +155,13 @@ export const createRecipeResponse = payload => {
     return {
         type: CREATE_RECIPE_RESPONSE,
         payload
+    }
+}
+
+export const RESET_RECIPE_RESPONSE = "RESET_RECIPE_RESPONSE";
+export const resetRecipeResponse = () => {
+    return {
+        type: RESET_RECIPE_RESPONSE
     }
 }
 

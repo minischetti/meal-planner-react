@@ -1,24 +1,38 @@
 import React, { useEffect } from "react";
-import { Header, RecipeList } from "../components/components";
+import { Header, RecipeList, RecipeListItem } from "../components/components";
 import { AbstractPage } from "./containers";
 import { useSelector, useDispatch } from "react-redux";
-import { getRecipesFrom, getUserIdFrom } from "../redux/selectors";
+import { getRecipesFrom, getUserIdFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
 import { requestRecipes } from "../redux/actions";
 import { Button, BUTTON_COLOR } from "../components/global/Button";
 import { css } from "@emotion/core";
-import { LinkWrapper } from "../components/global/global";
-import { PageActionBar } from "../components/global/PageActionBar";
+import { LinkWrapper, Spinner } from "../components/global/global";
+import { PageActionBar } from "../components/global/global";
 
 export const RecipesPage = () => {
     const dispatch = useDispatch();
 
     // Selectors
     const userId = useSelector(state => getUserIdFrom(state));
-    const recipeList = useSelector(state => getRecipesFrom(state));
+    const recipes = useSelector(state => getRecipesFrom(state));
+    const waiting = useSelector(state => getRecipeWaitingStatusFrom(state));
 
     useEffect(() => {
         dispatch(requestRecipes(userId));
     }, []);
+
+    const recipeListStyle = css`
+        display: grid;
+        gap: 10px;
+    `;
+
+    const recipeListItems = recipes.map(recipe =>
+        <RecipeListItem
+            key={recipe.id}
+            name={recipe.name}
+            id={recipe.id}
+        />
+    );
 
     return (
         <AbstractPage>
@@ -28,7 +42,7 @@ export const RecipesPage = () => {
                     <Button color={BUTTON_COLOR.GREEN}>New Recipe<ion-icon name="create-outline" /></Button>
                 </LinkWrapper>
             </PageActionBar>
-            <RecipeList recipes={recipeList} />
+            {waiting ? <Spinner/> : <RecipeList>{recipeListItems}</RecipeList>}
         </AbstractPage>
     )
 }

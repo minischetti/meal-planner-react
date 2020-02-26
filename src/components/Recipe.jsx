@@ -3,51 +3,68 @@ import { css } from "@emotion/core";
 import { Author } from "./components";
 
 export const Recipe = ({ name, authors, ingredients, instructions }) => {
-    const ingredientStyle = css`
-        display: flex;
-        justify-content: space-between;
+    const readOnlyListStyle = css`
+        display: grid;
+        gap: 10px;
+        margin-top: 20px;
     `;
+
+    const readOnlyListItemStyle = css`
+        display: grid;
+        gap: 10px;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+    `;
+
+    const readOnlyListHeaderStyle = css`
+        margin: 0;
+    `;
+
     const authorList = () => {
-        if (!authors || !authors.length) return null;
+        if (!authors || !authors.length) return <div>No authors</div>;
 
         return authors.map(author => (
             <Author key={author.id} id={author.id} role={author.role} />
         ));
     }
+
     const ingredientList = () => {
-        if (!ingredients || !ingredients.length) return null;
+        if (!ingredients || !ingredients.length) return <div>No ingredients</div>;
 
         return ingredients.map((ingredient, index) => (
-            <li key={index} css={ingredientStyle}>
+            <div key={index} css={readOnlyListItemStyle}>
+                {ingredient.optional ? <div>(Optional)</div> : ""}
                 <div>{ingredient.description}</div>
-                <div>{String(ingredient.optional)}</div>
-            </li>
+            </div>
         ));
     }
+
     const instructionList = () => {
-        if (!instructions || !instructions.length) return null;
+        if (!instructions || !instructions.length) return <div>No instructions</div>;
 
         return instructions.map((instruction, index) => (
-            <li key={index} css={instruction}>
+            <div key={index} css={readOnlyListItemStyle}>
+                <div>{index + 1}.</div>
+                {instruction.optional ? <div>(Optional)</div> : ""}
                 <div>{instruction.description}</div>
-                <div>{String(instruction.optional)}</div>
-            </li>
+            </div>
         ));
     }
+
     return (
         <div>
             <h2>{name}</h2>
-            <div>
-                <h3>Authors</h3>
-                <ul>{authorList()}</ul>
+            <div css={readOnlyListStyle}>
+                <h3 css={readOnlyListHeaderStyle}>Authors</h3>
+                {authorList()}
             </div>
-            <div>
-                <h3>Ingredients</h3>
-                <ul>{ingredientList()}</ul>
+            <div css={readOnlyListStyle}>
+                <h3 css={readOnlyListHeaderStyle}>Ingredients</h3>
+                {ingredientList()}
             </div>
-            <div>
-                <h3>Instructions</h3>
-                <ol>{instructionList()}</ol>
+            <div css={readOnlyListStyle}>
+                <h3 css={readOnlyListHeaderStyle}>Instructions</h3>
+                {instructionList()}
             </div>
         </div>
     );

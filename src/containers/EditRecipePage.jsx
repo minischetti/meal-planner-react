@@ -5,6 +5,7 @@ import { apiBaseUrl } from "../redux/actions";
 import { AbstractPage } from "./AbstractPage";
 import { css } from "@emotion/core";
 import { ComposableRecipe } from "../components/components";
+import { PageActionBar, Spinner } from "../components/global/global";
 
 export const EditRecipePage = () => {
     const [waiting, setWaiting] = useState(true);
@@ -37,7 +38,8 @@ export const EditRecipePage = () => {
     return (
         <AbstractPage>
             <GlobalHeader />
-            {waiting ? "Loading..." : <ComposableRecipe recipeId={recipe.id} initialName={recipe.name} initialAuthors={[]} initialIngredients={recipe.ingredients} initialInstructions={recipe.instructions} />}
+            <PageActionBar title="Edit Recipe" />
+            {waiting ? <Spinner /> : <ComposableRecipe recipeId={recipe.id} initialName={recipe.name} initialAuthors={[]} initialIngredients={recipe.ingredients} initialInstructions={recipe.instructions} />}
         </AbstractPage>
     )
 }

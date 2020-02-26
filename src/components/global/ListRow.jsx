@@ -7,10 +7,10 @@ export const ListRow = ({ children }) => {
         grid-template-columns: 1fr 4fr 1fr 1fr;
         gap: 20px;
         align-items: center;
-        padding: 20px;
-        // background-color: #e8e8e8;
+        padding-top: 20px;
         &:not(:last-child) {
-            border-bottom: 1px solid #e8e8e8;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
         }
     `;
 

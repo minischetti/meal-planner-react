@@ -5,6 +5,6 @@ export { Login } from "./Login";
 export { NewRecipeListItem } from "./NewRecipeListItem";
 export { Profile } from "./Profile";
 export { Recipe } from "./Recipe";
-export { RecipeActionBar } from "./RecipeActionBar";
+export { EditRecipeButton } from "./EditRecipeButton";
 export { RecipeList } from "./RecipeList";
 export { RecipeListItem } from "./RecipeListItem";

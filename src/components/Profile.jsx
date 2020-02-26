@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { getProfileFrom, getUserWaitingStatusFrom } from "../redux/selectors";
+import { Spinner } from "./global/global";
 
 export function Profile() {
     const profile = useSelector(state => getProfileFrom(state));
@@ -8,7 +9,7 @@ export function Profile() {
 
     if (waiting) {
         return (
-            <div>Loading...</div>
+            <Spinner/>
         )
     }
 

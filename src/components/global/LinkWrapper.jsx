@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export const LinkWrapper = ({to, children}) => {
     const linkStyle = css`
+        color: inherit;
         text-decoration: none;
     `;
 

@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 
 import { Provider, useSelector } from "react-redux";
 import store from "./redux/store";
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 // Containers
 import { ProfilePage } from "./containers/ProfilePage";
@@ -20,11 +20,11 @@ import { NewRecipePage } from "./containers/NewRecipePage";
 const AuthenticatedRoute = ({ children }) => {
     const isAuthenticated = useSelector(state => getAuthenticationStatusFrom(state));
 
-    return (
-        <React.Fragment>
-            {isAuthenticated ? children : <Redirect to="/login" />}
-        </React.Fragment>
-    )
+        return(
+            <React.Fragment>
+                {isAuthenticated ? children : <Redirect to="/login" />}
+            </React.Fragment>
+        )
 }
 
 const app = (

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../redux/actions";
-import { Header, Recipe, RecipeActionBar } from "../components/components";
+import { Header, Recipe, EditRecipeButton } from "../components/components";
+import { PageActionBar } from "../components/global/global";
 import { AbstractPage } from "./containers";
 
 export const RecipePage = () => {
@@ -23,7 +24,9 @@ export const RecipePage = () => {
     return (
         <AbstractPage>
             <Header />
-            <RecipeActionBar id={recipe.id}></RecipeActionBar>
+            <PageActionBar title="Recipe">
+                <EditRecipeButton id={recipe.id}></EditRecipeButton>
+            </PageActionBar>
             <Recipe name={recipe.name} authors={recipe.authors} ingredients={recipe.ingredients} instructions={recipe.instructions} />
         </AbstractPage>
     )
