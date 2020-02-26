@@ -7,7 +7,6 @@ export const PageActionBar = ({ title, children }) => {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 20px;
         padding: 20px 0;
         border-bottom: 1px solid #ddd;
     `;

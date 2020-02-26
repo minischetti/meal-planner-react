@@ -218,7 +218,7 @@ export const ComposableRecipe = ({ recipeId = "", initialName = "", initialPrepT
                                 <div></div>
                             </FormListHeader>
                             <FormListContent>
-                                {!ingredients.length ? <div css={emptyListText}>No ingredients</div> : ingredients.map((ingredient, index) => {
+                                {!ingredients.length ? <div css={emptyListText}>Ingredients will appear in this list.</div> : ingredients.map((ingredient, index) => {
                                     return (
                                         <FormListRow key={index}>
                                             <div>{index + 1}</div>
@@ -252,7 +252,7 @@ export const ComposableRecipe = ({ recipeId = "", initialName = "", initialPrepT
                                 <div></div>
                             </FormListHeader>
                             <FormListContent>
-                                {!instructions.length ? <div css={emptyListText}>No instructions</div> : instructions.map((instruction, index) => {
+                                {!instructions.length ? <div css={emptyListText}>Instructions will appear in this list.</div> : instructions.map((instruction, index) => {
                                     return (
                                         <FormListRow key={index}>
                                             <div>{index + 1}</div>
