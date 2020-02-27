@@ -42,9 +42,9 @@ const ACTION = {
 };
 
 export const COMPOSABLE_RECIPE_MODE = {
-    NEW: "NEW",
-    EDIT: "EDIT"
-}
+    CREATE: "CREATE",
+    UPDATE: "UPDATE"
+};
 
 const reducer = (previousState, action) => {
     switch (action.type) {
@@ -62,10 +62,10 @@ export const ComposableRecipe = ({
     initialName = "",
     initialPrepTime = "",
     initialCookTime = "",
-    initialAuthors = [],
+    initialContributors = [],
     initialIngredients = [],
     initialInstructions = [],
-    mode = COMPOSABLE_RECIPE_MODE.NEW
+    mode = COMPOSABLE_RECIPE_MODE.CREATE
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -81,13 +81,13 @@ export const ComposableRecipe = ({
     // New Recipe Cook Time
     const [cookTime, setCookTime] = useState(initialCookTime);
 
-    // New Author State
+    // New Contributor State
     const [contributor, setContributor] = useState({});
 
-    // Author List Reducer
-    const [authors, dispatchAuthorAction] = useReducer(
+    // Contributor List Reducer
+    const [contributors, dispatchContributorAction] = useReducer(
         reducer,
-        initialAuthors
+        initialContributors
     );
 
     // New Ingredient State
@@ -129,18 +129,19 @@ export const ComposableRecipe = ({
 
         let action;
 
-        switch(mode) {
-            case COMPOSABLE_RECIPE_MODE.NEW:
+        switch (mode) {
+            case COMPOSABLE_RECIPE_MODE.CREATE:
                 action = createRecipe;
                 break;
-            case COMPOSABLE_RECIPE_MODE.EDIT:
-                action = updateRecipe;
+            case COMPOSABLE_RECIPE_MODE.UPDATE:
+                action = updateRecipe
                 break;
         }
 
         dispatch(action(payload));
 
         if (!hasError) {
+            // TODO: Push to the new recipe's page
             history.push("/recipes");
         }
     };
@@ -148,7 +149,7 @@ export const ComposableRecipe = ({
     const onCancel = event => {
         event.preventDefault();
 
-        return history.push("/recipes");
+        return history.push("/recipes/" + recipeId);
     };
 
     const onDelete = event => {
@@ -224,14 +225,15 @@ export const ComposableRecipe = ({
                     </FormSectionContent>
                 </FormSection>
 
-                {/* Authors Form Section */}
+                {/* Contributor Form Section */}
+                {/*
                 <FormSection>
                     <FormSectionHeader>
                         <FormSectionTitle>
-                            Authors
-                            {authors.length ? (
+                            Contributors
+                            {contributors.length ? (
                                 <span css={itemCount}>
-                                    ({authors.length})
+                                    ({contributors.length})
                                 </span>
                             ) : (
                                 ""
@@ -239,21 +241,20 @@ export const ComposableRecipe = ({
                         </FormSectionTitle>
                         <FormSectionActionBar>
                             <TextField
-                                name="authorName"
-                                placeholder="Author"
-                                value={ingredientName}
+                                name="contributorName"
+                                placeholder="Contributor"
+                                value={contributor}
                                 onChange={event =>
-                                    setIngredientName(event.target.value)
+                                    setContributor(event.target.value)
                                 }
                             />
                             <Button
                                 type={BUTTON_TYPE.BUTTON}
                                 onClick={() =>
-                                    dispatchIngredientAction({
+                                    dispatchContributorAction({
                                         type: ACTION.ADD,
                                         value: {
-                                            description: ingredientName,
-                                            optional: isIngredientOptional
+                                            id: contributor,
                                         }
                                     })
                                 }
@@ -311,6 +312,7 @@ export const ComposableRecipe = ({
                         </FormList>
                     </FormSectionContent>
                 </FormSection>
+                */}
 
                 {/* Ingredients Form Section */}
                 <FormSection>

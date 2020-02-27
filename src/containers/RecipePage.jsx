@@ -39,6 +39,8 @@ export const RecipePage = () => {
             ) : (
                 <Recipe
                     name={recipe.name}
+                    prepTime={recipe.prepTime}
+                    cookTime={recipe.cookTime}
                     authors={recipe.authors}
                     ingredients={recipe.ingredients}
                     instructions={recipe.instructions}

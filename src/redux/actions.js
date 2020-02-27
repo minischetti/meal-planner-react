@@ -148,11 +148,7 @@ export const deleteRecipeResponse = payload => {
 export const CREATE_RECIPE_REQUEST = "CREATE_RECIPE_REQUEST";
 export const createRecipe = payload => {
     return dispatch => {
-        const profileId = firebaseAuth.currentUser.uid;
-        return fetch(
-            apiBaseUrl + "people/" + profileId + "/recipes",
-            fetchConfig("POST", payload)
-        )
+        return fetch(apiBaseUrl + "recipes", fetchConfig("POST", withProfileId(payload)))
             .then(response => response.json())
             .then(response => dispatch(createRecipeResponse(response)))
             .catch(response => dispatch(createRecipeResponse(response)));

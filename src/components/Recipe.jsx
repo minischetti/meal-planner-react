@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Author } from "../components";
 
-export const Recipe = ({ name, authors, ingredients, instructions }) => {
+export const Recipe = ({ name, prepTime, cookTime, authors, ingredients, instructions }) => {
     const readOnlyListStyle = css`
         display: grid;
         gap: 10px;
@@ -54,6 +54,8 @@ export const Recipe = ({ name, authors, ingredients, instructions }) => {
     return (
         <div>
             <h2>{name}</h2>
+            <div>Prep Time: {prepTime}</div>
+            <div>Cook Time: {cookTime}</div>
             <div css={readOnlyListStyle}>
                 <h3 css={readOnlyListHeaderStyle}>Authors</h3>
                 {authorList()}

@@ -40,10 +40,12 @@ export const EditRecipePage = () => {
                 <ComposableRecipe
                     recipeId={recipe.id}
                     initialName={recipe.name}
-                    initialAuthors={[]}
+                    initialPrepTime={recipe.prepTime}
+                    initialCookTime={recipe.cookTime}
+                    initialContributors={[]}
                     initialIngredients={recipe.ingredients}
                     initialInstructions={recipe.instructions}
-                    mode={COMPOSABLE_RECIPE_MODE.EDIT}
+                    mode={COMPOSABLE_RECIPE_MODE.UPDATE}
                 />
             )}
         </AbstractPage>
