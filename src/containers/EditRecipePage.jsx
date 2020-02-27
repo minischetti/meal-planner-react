@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { GlobalHeader } from "../components/GlobalHeader";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../redux/actions";
-import { AbstractPage } from "./AbstractPage";
-import { css } from "@emotion/core";
-import { ComposableRecipe } from "../components/components";
-import { PageActionBar, Spinner } from "../components/global/global";
+import { AbstractPage } from "../containers";
+import { GlobalHeader, ComposableRecipe, COMPOSABLE_RECIPE_MODE } from "../components";
+import { PageActionBar } from "../components/ui/page";
+import { Spinner } from "../components/ui/general";
 
 export const EditRecipePage = () => {
     const [waiting, setWaiting] = useState(true);
     const [recipe, setRecipe] = useState({});
     let { recipeId } = useParams();
 
-    const containerStyle = waiting ? css`
-    transition: .5s all ease-in-out;
-    opacity: .5;
-    cursor: not-allowed;
-    ` : css`transition: .5s all ease-in-out;`;
-
     useEffect(() => {
         const abortController = new AbortController();
         setWaiting(true);
 
-        fetch(apiBaseUrl + "recipes/" + recipeId, { signal: abortController.signal })
+        fetch(apiBaseUrl + "recipes/" + recipeId, {
+            signal: abortController.signal
+        })
             .then(response => response.json())
             .then(data => {
                 setRecipe(data);
@@ -32,14 +27,25 @@ export const EditRecipePage = () => {
         return () => {
             setWaiting(false);
             abortController.abort();
-        }
+        };
     }, []);
 
     return (
         <AbstractPage>
             <GlobalHeader />
             <PageActionBar title="Edit Recipe" />
-            {waiting ? <Spinner /> : <ComposableRecipe recipeId={recipe.id} initialName={recipe.name} initialAuthors={[]} initialIngredients={recipe.ingredients} initialInstructions={recipe.instructions} />}
+            {waiting ? (
+                <Spinner />
+            ) : (
+                <ComposableRecipe
+                    recipeId={recipe.id}
+                    initialName={recipe.name}
+                    initialAuthors={[]}
+                    initialIngredients={recipe.ingredients}
+                    initialInstructions={recipe.instructions}
+                    mode={COMPOSABLE_RECIPE_MODE.EDIT}
+                />
+            )}
         </AbstractPage>
-    )
-}
+    );
+};

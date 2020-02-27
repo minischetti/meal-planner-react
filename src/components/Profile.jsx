@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { getProfileFrom, getUserWaitingStatusFrom } from "../redux/selectors";
-import { Spinner } from "./global/global";
+import { Spinner } from "./ui/general";
 
 export function Profile() {
     const profile = useSelector(state => getProfileFrom(state));

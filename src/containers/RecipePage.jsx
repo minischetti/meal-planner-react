@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../redux/actions";
-import { Header, Recipe, EditRecipeButton } from "../components/components";
-import { PageActionBar, Spinner } from "../components/global/global";
-import { AbstractPage } from "./containers";
+import { GlobalHeader, Recipe, EditRecipeButton } from "../components";
+import { Spinner } from "../components/ui/general";
+import { PageActionBar } from "../components/ui/page";
+import { AbstractPage } from "../containers";
 
 export const RecipePage = () => {
     const [recipe, setRecipe] = useState({});
@@ -13,7 +14,9 @@ export const RecipePage = () => {
     useEffect(() => {
         const abortController = new AbortController();
 
-        fetch(apiBaseUrl + "recipes/" + recipeId, { signal: abortController.signal })
+        fetch(apiBaseUrl + "recipes/" + recipeId, {
+            signal: abortController.signal
+        })
             .then(response => response.json())
             .then(data => {
                 setRecipe(data);
@@ -22,16 +25,25 @@ export const RecipePage = () => {
 
         return () => {
             abortController.abort();
-        }
+        };
     }, []);
 
     return (
         <AbstractPage>
-            <Header />
+            <GlobalHeader />
             <PageActionBar title="Recipe">
                 <EditRecipeButton id={recipe.id}></EditRecipeButton>
             </PageActionBar>
-            {waiting ? <Spinner/> : <Recipe name={recipe.name} authors={recipe.authors} ingredients={recipe.ingredients} instructions={recipe.instructions} />}
+            {waiting ? (
+                <Spinner />
+            ) : (
+                <Recipe
+                    name={recipe.name}
+                    authors={recipe.authors}
+                    ingredients={recipe.ingredients}
+                    instructions={recipe.instructions}
+                />
+            )}
         </AbstractPage>
-    )
-}
+    );
+};

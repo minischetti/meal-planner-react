@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-import { Header, RecipeList, RecipeListItem } from "../components/components";
-import { AbstractPage } from "./containers";
 import { useSelector, useDispatch } from "react-redux";
-import { getRecipesFrom, getUserIdFrom, getRecipeWaitingStatusFrom } from "../redux/selectors";
+import {
+    getRecipesFrom,
+    getUserIdFrom,
+    getRecipeWaitingStatusFrom
+} from "../redux/selectors";
 import { requestRecipes } from "../redux/actions";
-import { Button, BUTTON_COLOR } from "../components/global/Button";
-import { css } from "@emotion/core";
-import { LinkWrapper, Spinner } from "../components/global/global";
-import { PageActionBar } from "../components/global/global";
+import { AbstractPage } from "../containers";
+import { GlobalHeader, RecipeList, RecipeListItem } from "../components";
+import { Button, BUTTON_COLOR, LinkWrapper } from "../components/ui/controls";
+import { Spinner } from "../components/ui/general";
+import { PageActionBar } from "../components/ui/page";
 
 export const RecipesPage = () => {
     const dispatch = useDispatch();
@@ -21,23 +24,22 @@ export const RecipesPage = () => {
         dispatch(requestRecipes(userId));
     }, []);
 
-    const recipeListItems = recipes.map(recipe =>
-        <RecipeListItem
-            key={recipe.id}
-            name={recipe.name}
-            id={recipe.id}
-        />
-    );
+    const recipeListItems = recipes.map(recipe => (
+        <RecipeListItem key={recipe.id} name={recipe.name} id={recipe.id} />
+    ));
 
     return (
         <AbstractPage>
-            <Header />
+            <GlobalHeader />
             <PageActionBar title="Recipes">
                 <LinkWrapper to="/recipe/new">
-                    <Button color={BUTTON_COLOR.GREEN}>New Recipe<ion-icon name="create-outline" /></Button>
+                    <Button color={BUTTON_COLOR.GREEN}>
+                        New Recipe
+                        <ion-icon name="create-outline" />
+                    </Button>
                 </LinkWrapper>
             </PageActionBar>
-            {waiting ? <Spinner/> : <RecipeList>{recipeListItems}</RecipeList>}
+            {waiting ? <Spinner /> : <RecipeList>{recipeListItems}</RecipeList>}
         </AbstractPage>
-    )
-}
+    );
+};

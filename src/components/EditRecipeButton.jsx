@@ -1,5 +1,5 @@
 import { css } from "@emotion/core";
-import { Button, LinkWrapper } from "./global/global";
+import { Button, LinkWrapper } from "./ui/controls";
 
 export const EditRecipeButton = ({id}) => {
     const iconStyle = css`

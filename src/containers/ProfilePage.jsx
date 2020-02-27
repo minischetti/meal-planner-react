@@ -1,12 +1,12 @@
 import * as React from "react";
-import { Header, Profile } from "../components/components";
-import { PageActionBar } from "../components/global/global";
-import { AbstractPage } from "./containers";
+import { GlobalHeader, Profile } from "../components";
+import { PageActionBar } from "../components/ui/page";
+import { AbstractPage } from "../containers";
 
 export const ProfilePage = () => {
     return (
         <AbstractPage>
-            <Header />
+            <GlobalHeader />
             <PageActionBar title="Profile" />
             <Profile />
         </AbstractPage>

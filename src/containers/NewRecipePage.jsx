@@ -1,11 +1,9 @@
 import React from "react";
-import { GlobalHeader } from "../components/GlobalHeader";
-import { AbstractPage } from "./AbstractPage";
-import { ComposableRecipe } from "../components/components";
-import { PageActionBar } from "../components/global/global";
+import { ComposableRecipe, GlobalHeader } from "../components";
+import { AbstractPage } from "../containers";
+import { PageActionBar } from "../components/ui/page";
 
 export const NewRecipePage = () => {
-
     return (
         <AbstractPage>
             <GlobalHeader />

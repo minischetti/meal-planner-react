@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { requestAccount } from "../redux/actions";
-import { BUTTON_TYPE, BUTTON_COLOR } from "./global/Button";
-import { TextField, Button } from "./global/global";
+import { BUTTON_TYPE, BUTTON_COLOR } from "./ui/controls/Button";
+import { TextField, Button } from "./ui/controls";
 import { css } from "@emotion/core";
 
 export function Login() {
