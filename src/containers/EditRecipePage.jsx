@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { AbstractPage } from "../containers";
 import { GlobalHeader, ComposableRecipe, COMPOSABLE_RECIPE_MODE } from "../components";
-import { PageActionBar } from "../components/ui/page";
+import { PageHeader } from "../components/ui/page";
 import { Spinner } from "../components/ui/general";
 import { apiBaseUrl } from "../configuration";
 
@@ -33,7 +33,7 @@ export const EditRecipePage = () => {
     return (
         <AbstractPage>
             <GlobalHeader />
-            <PageActionBar title="Edit Recipe" />
+            <PageHeader title="Edit Recipe" />
             {waiting ? (
                 <Spinner />
             ) : (

@@ -3,10 +3,12 @@ import { useParams } from "react-router";
 import { apiBaseUrl } from "../configuration";
 import { GlobalHeader, Recipe, EditRecipeButton } from "../components";
 import { Spinner } from "../components/ui/general";
-import { PageActionBar } from "../components/ui/page";
+import { PageHeader } from "../components/ui/page";
 import { AbstractPage } from "../containers";
+import { useAuthSession } from "../hooks/useAuthSession";
 
 export const RecipePage = () => {
+    const { user } = useAuthSession();
     const [recipe, setRecipe] = useState({});
     const [waiting, setWaiting] = useState(true);
     let { recipeId } = useParams();
@@ -28,12 +30,25 @@ export const RecipePage = () => {
         };
     }, []);
 
+    const canEditRecipe = () => {
+        if (!user || !recipe?.members) {
+            return false;
+        }
+
+        return recipe.members.find(member => {
+            return (
+                (member.role === "owner" || member.role === "contributor") &&
+                member.id === user.uid
+            );
+        });
+    };
+
     return (
         <AbstractPage>
             <GlobalHeader />
-            <PageActionBar title="Recipe">
-                <EditRecipeButton id={recipe.id}></EditRecipeButton>
-            </PageActionBar>
+            <PageHeader title="Recipe">
+                {canEditRecipe() ? <EditRecipeButton id={recipe.id} /> : null}
+            </PageHeader>
             {waiting ? (
                 <Spinner />
             ) : (
@@ -41,7 +56,7 @@ export const RecipePage = () => {
                     name={recipe.name}
                     prepTime={recipe.prepTime}
                     cookTime={recipe.cookTime}
-                    authors={recipe.authors}
+                    authors={recipe.members}
                     ingredients={recipe.ingredients}
                     instructions={recipe.instructions}
                 />

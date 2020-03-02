@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { AbstractPage } from "../containers";
 import { SignIn } from "../components";
-import { PageActionBar } from "../components/ui/page";
+import { PageHeader } from "../components/ui/page";
 import { Spinner } from "../components/ui/general";
 import { useAuthSession } from "../hooks";
 
@@ -15,7 +15,7 @@ export const SignInPage = () => {
 
     return (
         <AbstractPage>
-            <PageActionBar title="Sign In" />
+            <PageHeader title="Sign In" />
             {authInProgress ? <Spinner /> : <SignIn />}
         </AbstractPage>
     );

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { GlobalHeader, Profile } from "../components";
-import { PageActionBar } from "../components/ui/page";
+import { PageHeader } from "../components/ui/page";
 import { AbstractPage } from "../containers";
 import { useState } from "react";
 import { Spinner } from "../components/ui/general";
@@ -32,7 +32,7 @@ export const ProfilePage = () => {
     return (
         <AbstractPage>
             <GlobalHeader />
-            <PageActionBar title="Profile" />
+            <PageHeader title="Profile" />
             {waiting ? (
                 <Spinner />
             ) : (

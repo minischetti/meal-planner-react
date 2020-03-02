@@ -10,7 +10,7 @@ import { AbstractPage } from "../containers";
 import { GlobalHeader, RecipeList, RecipeListItem } from "../components";
 import { Button, BUTTON_COLOR, LinkWrapper } from "../components/ui/controls";
 import { Spinner } from "../components/ui/general";
-import { PageActionBar } from "../components/ui/page";
+import { PageHeader } from "../components/ui/page";
 import { useParams } from "react-router";
 
 export const RecipesPage = () => {
@@ -32,14 +32,14 @@ export const RecipesPage = () => {
     return (
         <AbstractPage>
             <GlobalHeader />
-            <PageActionBar title="Recipes">
+            <PageHeader title="Recipes">
                 <LinkWrapper to="/recipe/new">
                     <Button color={BUTTON_COLOR.GREEN}>
                         New Recipe
                         <ion-icon name="create-outline" />
                     </Button>
                 </LinkWrapper>
-            </PageActionBar>
+            </PageHeader>
             {waiting ? <Spinner /> : <RecipeList>{recipeListItems}</RecipeList>}
         </AbstractPage>
     );

@@ -120,7 +120,7 @@ export const GlobalHeader = () => {
                 <Spinner />
             ) : (
                 <Fragment>
-                    <Link css={(link, titleStyle)} to="/">
+                    <Link css={[link, titleStyle]} to="/">
                         Meal Planner
                     </Link>
                     {user ? linkContainer() : null}

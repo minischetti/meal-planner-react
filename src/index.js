@@ -21,7 +21,8 @@ import { HomePage } from "./containers/HomePage";
 // Selectors
 import { SignInPage } from "./containers/SignInPage";
 import { NewRecipePage } from "./containers/NewRecipePage";
-import { Spinner } from "./components/ui/general";
+
+// Authentication
 import { useAuth } from "./hooks/useAuth";
 
 const AuthenticatedRoute = ({ children }) => {
