@@ -11,17 +11,18 @@ import { GlobalHeader, RecipeList, RecipeListItem } from "../components";
 import { Button, BUTTON_COLOR, LinkWrapper } from "../components/ui/controls";
 import { Spinner } from "../components/ui/general";
 import { PageActionBar } from "../components/ui/page";
+import { useParams } from "react-router";
 
 export const RecipesPage = () => {
     const dispatch = useDispatch();
 
     // Selectors
-    const userId = useSelector(state => getUserIdFrom(state));
     const recipes = useSelector(state => getRecipesFrom(state));
     const waiting = useSelector(state => getRecipeWaitingStatusFrom(state));
+    let { profileId } = useParams();
 
     useEffect(() => {
-        dispatch(requestRecipes(userId));
+        dispatch(requestRecipes(profileId));
     }, []);
 
     const recipeListItems = recipes.map(recipe => (

@@ -1,9 +1,15 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import React, { useContext } from "react";
+import { render } from "react-dom";
 
-import { Provider, useSelector } from "react-redux";
+import { Provider as StoreProvider } from "react-redux";
+import { authContext } from "./context";
 import store from "./redux/store";
-import { BrowserRouter, Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import {
+    BrowserRouter,
+    Route,
+    Switch,
+    Redirect
+} from "react-router-dom";
 
 // Containers
 import { ProfilePage } from "./containers/ProfilePage";
@@ -13,36 +19,65 @@ import { EditRecipePage } from "./containers/EditRecipePage";
 import { HomePage } from "./containers/HomePage";
 
 // Selectors
-import { getAuthenticationStatusFrom } from "./redux/selectors";
-import { LoginPage } from "./containers/LoginPage";
+import { SignInPage } from "./containers/SignInPage";
 import { NewRecipePage } from "./containers/NewRecipePage";
+import { Spinner } from "./components/ui/general";
+import { useAuth } from "./hooks/useAuth";
 
 const AuthenticatedRoute = ({ children }) => {
-    const isAuthenticated = useSelector(state => getAuthenticationStatusFrom(state));
+    const { user } = useContext(authContext);
+    const isAuthenticated = !!user;
 
-        return(
-            <React.Fragment>
-                {isAuthenticated ? children : <Redirect to="/login" />}
-            </React.Fragment>
-        )
+    return (
+        <React.Fragment>
+            {isAuthenticated ? children : <Redirect to="/sign-in" />}
+        </React.Fragment>
+    );
+};
+
+function App() {
+    const {authState, signIn, signOut} = useAuth();
+    const { user, authInProgress, authError } = authState;
+
+    return (
+        <authContext.Provider value={{ user, authInProgress, authError, signIn, signOut }}>
+            <StoreProvider store={store}>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path="/sign-in" component={SignInPage} />
+                        <Route
+                            exact
+                            path="/profile/:profileId"
+                            component={ProfilePage}
+                        />
+                        <Route
+                            exact
+                            path="/profile/:profileId/recipes"
+                            component={RecipesPage}
+                        />
+                        <Route
+                            exact
+                            path="/recipes/:recipeId"
+                            component={RecipePage}
+                        />
+                        <AuthenticatedRoute>
+                            <Route exact path="/" component={HomePage} />
+                            <Route
+                                exact
+                                path="/recipe/new"
+                                component={NewRecipePage}
+                            />
+                            <Route
+                                exact
+                                path="/recipes/:recipeId/edit"
+                                component={EditRecipePage}
+                            />
+                        </AuthenticatedRoute>
+                    </Switch>
+                </BrowserRouter>
+            </StoreProvider>
+        </authContext.Provider>
+    );
 }
 
-const app = (
-    <Provider store={store}>
-        <BrowserRouter>
-            <Switch>
-                <Route exact path="/login" component={LoginPage} />
-                <AuthenticatedRoute>
-                    <Route exact path="/" component={HomePage} />
-                    <Route exact path="/profile" component={ProfilePage} />
-                    <Route exact path="/recipe/new" component={NewRecipePage} />
-                    <Route exact path="/recipes/:recipeId/edit" component={EditRecipePage} />
-                    <Route exact path="/recipes/:recipeId" component={RecipePage} />
-                    <Route exact path="/recipes" component={RecipesPage} />
-                </AuthenticatedRoute>
-            </Switch>
-        </BrowserRouter>
-    </Provider>
-);
-
-ReactDOM.render(app, document.getElementById('app'));
+render(<App />, document.getElementById("app"));

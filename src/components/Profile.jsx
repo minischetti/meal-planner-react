@@ -3,23 +3,11 @@ import { useSelector } from "react-redux";
 import { getProfileFrom, getUserWaitingStatusFrom } from "../redux/selectors";
 import { Spinner } from "./ui/general";
 
-export function Profile() {
-    const profile = useSelector(state => getProfileFrom(state));
-    const waiting = useSelector(state => getUserWaitingStatusFrom(state));
+export function Profile({id, firstName, lastName}) {
+    return (
+        <React.Fragment>
+            <div>{firstName} {lastName}</div>
+        </React.Fragment>
+    )
 
-    if (waiting) {
-        return (
-            <Spinner/>
-        )
-    }
-
-    if (profile) {
-        return (
-            <React.Fragment>
-                <div>{profile.firstName} {profile.lastName}</div>
-            </React.Fragment>
-        )
-    }
-
-    return null;
 };

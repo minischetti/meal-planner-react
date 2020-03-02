@@ -1,4 +1,4 @@
-import { firebaseAuth } from "../configuration";
+import { firebaseAuth, apiBaseUrl } from "../configuration";
 
 const FETCH_METHOD = {
     GET: "GET",
@@ -29,8 +29,6 @@ const fetchConfig = (method, body) => {
     };
 };
 
-export const apiBaseUrl = "http://localhost:8000/api/";
-
 export const REQUEST_ACCOUNT = "REQUEST_ACCOUNT";
 export const requestAccount = payload => {
     return dispatch => {
@@ -38,12 +36,7 @@ export const requestAccount = payload => {
             .signInWithEmailAndPassword(payload.email, payload.password)
             .then(response => {
                 const userId = response.user.uid;
-
-                firebaseAuth.onAuthStateChanged(user => {
-                    if (user) {
-                        dispatch(recieveAccount(userId));
-                    }
-                });
+                dispatch(recieveAccount(userId));
             });
     };
 };

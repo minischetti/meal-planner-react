@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { apiBaseUrl } from "../redux/actions";
+import { apiBaseUrl } from "../configuration";
 import { GlobalHeader, Recipe, EditRecipeButton } from "../components";
 import { Spinner } from "../components/ui/general";
 import { PageActionBar } from "../components/ui/page";

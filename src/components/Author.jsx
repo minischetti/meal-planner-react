@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { apiBaseUrl } from "../redux/actions";
+import { apiBaseUrl } from "../configuration";
 
 export const Author = ({ id, role }) => {
     const [profile, setProfile] = useState({});
-    const dispatch = useDispatch();
 
     useEffect(() => {
         const abortController = new AbortController();
