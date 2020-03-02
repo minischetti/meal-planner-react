@@ -1,13 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { getProfileFrom, getUserWaitingStatusFrom } from "../redux/selectors";
-import { Spinner } from "./ui/general";
+import { LinkWrapper } from "./ui/controls";
 
-export function Profile({id, firstName, lastName}) {
+export function Profile({ profileId, firstName, lastName }) {
     return (
         <React.Fragment>
-            <div>{firstName} {lastName}</div>
+            <div>
+                {firstName} {lastName}
+            </div>
+            <LinkWrapper to={`/profile/${profileId}/recipes`}>
+                Recipes
+            </LinkWrapper>
         </React.Fragment>
-    )
-
-};
+    );
+}

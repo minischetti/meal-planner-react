@@ -8,5 +8,5 @@ export const LinkWrapper = ({ to, children }) => {
         text-decoration: none;
     `;
 
-    return <Link to={to}>{children}</Link>;
+    return <Link css={linkStyle} to={to}>{children}</Link>;
 };

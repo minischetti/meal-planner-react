@@ -58,10 +58,10 @@ export const GlobalHeader = () => {
         return (
             <div css={linkContainerStyle}>
                 <Link css={link} to={`/profile/${user.uid}`}>
-                    Profile
+                    My Profile
                 </Link>
                 <Link css={link} to={`/profile/${user.uid}/recipes/`}>
-                    Recipes
+                    My Recipes
                 </Link>
             </div>
         );

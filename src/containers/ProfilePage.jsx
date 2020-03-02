@@ -37,7 +37,7 @@ export const ProfilePage = () => {
                 <Spinner />
             ) : (
                 <Profile
-                    id={profile.id}
+                    profileId={profile.id}
                     firstName={profile.firstName}
                     lastName={profile.lastName}
                 />

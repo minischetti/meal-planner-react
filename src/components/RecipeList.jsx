@@ -9,7 +9,7 @@ export function RecipeList({ children }) {
 
     return (
         <div css={recipeListStyle}>
-            {children ? children : <div>No recipes</div>}
+            {children ? children : <div>Recipes will appear in this list.</div>}
         </div>
     )
 };
