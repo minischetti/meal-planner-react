@@ -32,7 +32,6 @@ export const EditRecipePage = () => {
 
     return (
         <AbstractPage>
-            <GlobalHeader />
             <PageHeader title="Edit Recipe" />
             {waiting ? (
                 <Spinner />

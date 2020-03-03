@@ -31,7 +31,6 @@ export const ProfilePage = () => {
 
     return (
         <AbstractPage>
-            <GlobalHeader />
             <PageHeader title="Profile" />
             {waiting ? (
                 <Spinner />

@@ -1,8 +1,7 @@
-import React from "react";
+import { LinkWrapper } from "../controls/LinkWrapper";
 import { css } from "@emotion/core";
-import { LinkWrapper } from "./ui/controls";
 
-export const RecipeListItem = ({ name, id }) => {
+export const ListItemLink = ({ to, children }) => {
     const containerStyle = css`
         display: flex;
         justify-content: space-between;
@@ -21,9 +20,9 @@ export const RecipeListItem = ({ name, id }) => {
     `;
 
     return (
-        <LinkWrapper to={{ pathname: `/recipes/${id}` }}>
+        <LinkWrapper to={to}>
             <div css={containerStyle}>
-                <div>{name}</div>
+                {children}
                 <ion-icon
                     name="arrow-forward-outline"
                     css={iconStyle}

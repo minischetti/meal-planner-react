@@ -4,26 +4,25 @@ import { render } from "react-dom";
 import { Provider as StoreProvider } from "react-redux";
 import { authContext } from "./context";
 import store from "./redux/store";
-import {
-    BrowserRouter,
-    Route,
-    Switch,
-    Redirect
-} from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // Containers
-import { ProfilePage } from "./containers/ProfilePage";
-import { RecipesPage } from "./containers/RecipesPage";
-import { RecipePage } from "./containers/RecipePage";
-import { EditRecipePage } from "./containers/EditRecipePage";
-import { HomePage } from "./containers/HomePage";
-
-// Selectors
-import { SignInPage } from "./containers/SignInPage";
-import { NewRecipePage } from "./containers/NewRecipePage";
+import {
+    HomePage,
+    ProfilePage,
+    RecipeListPage,
+    RecipePage,
+    NewRecipePage,
+    EditRecipePage,
+    GroupListPage,
+    GroupPage,
+    SignInPage
+} from "./containers";
 
 // Authentication
 import { useAuth } from "./hooks/useAuth";
+import { GroupRecipeListPage } from "./containers/GroupRecipeListPage";
+import { GroupMemberListPage } from "./containers/GroupMemberListPage";
 
 const AuthenticatedRoute = ({ children }) => {
     const { user } = useContext(authContext);
@@ -37,29 +36,51 @@ const AuthenticatedRoute = ({ children }) => {
 };
 
 function App() {
-    const {authState, signIn, signOut} = useAuth();
+    const { authState, signIn, signOut } = useAuth();
     const { user, authInProgress, authError } = authState;
 
     return (
-        <authContext.Provider value={{ user, authInProgress, authError, signIn, signOut }}>
+        <authContext.Provider
+            value={{ user, authInProgress, authError, signIn, signOut }}
+        >
             <StoreProvider store={store}>
                 <BrowserRouter>
                     <Switch>
                         <Route exact path="/sign-in" component={SignInPage} />
                         <Route
                             exact
-                            path="/profile/:profileId"
+                            path="/profiles/:profileId"
                             component={ProfilePage}
                         />
                         <Route
                             exact
-                            path="/profile/:profileId/recipes"
-                            component={RecipesPage}
+                            path="/profiles/:profileId/recipes"
+                            component={RecipeListPage}
                         />
                         <Route
                             exact
                             path="/recipes/:recipeId"
                             component={RecipePage}
+                        />
+                        <Route
+                            exact
+                            path="/profiles/:profileId/groups"
+                            component={GroupListPage}
+                        />
+                        <Route
+                            exact
+                            path="/groups/:groupId"
+                            component={GroupPage}
+                        />
+                        <Route
+                            exact
+                            path="/groups/:groupId/recipes"
+                            component={GroupRecipeListPage}
+                        />
+                        <Route
+                            exact
+                            path="/groups/:groupId/members"
+                            component={GroupMemberListPage}
                         />
                         <AuthenticatedRoute>
                             <Route exact path="/" component={HomePage} />

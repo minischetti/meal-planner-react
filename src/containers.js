@@ -1,8 +1,10 @@
 export { AbstractPage } from "./containers/AbstractPage";
 export { EditRecipePage } from "./containers/EditRecipePage";
 export { HomePage } from "./containers/HomePage";
-export { SignIn } from "./components/SignIn";
+export { SignInPage } from "./containers/SignInPage";
 export { NewRecipePage } from "./containers/NewRecipePage";
 export { ProfilePage } from "./containers/ProfilePage";
 export { RecipePage } from "./containers/RecipePage";
-export { RecipesPage } from "./containers/RecipesPage";
+export { RecipeListPage } from "./containers/RecipeListPage";
+export { GroupListPage } from "./containers/GroupListPage";
+export { GroupPage } from "./containers/GroupPage";

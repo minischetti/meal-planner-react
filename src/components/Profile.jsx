@@ -7,7 +7,7 @@ export function Profile({ profileId, firstName, lastName }) {
             <div>
                 {firstName} {lastName}
             </div>
-            <LinkWrapper to={`/profile/${profileId}/recipes`}>
+            <LinkWrapper to={`/profiles/${profileId}/recipes`}>
                 Recipes
             </LinkWrapper>
         </React.Fragment>

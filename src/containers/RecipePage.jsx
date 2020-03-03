@@ -45,7 +45,6 @@ export const RecipePage = () => {
 
     return (
         <AbstractPage>
-            <GlobalHeader />
             <PageHeader title="Recipe">
                 {canEditRecipe() ? <EditRecipeButton id={recipe.id} /> : null}
             </PageHeader>

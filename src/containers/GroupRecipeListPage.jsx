@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { AbstractPage } from "../containers";
-import { GlobalHeader, RecipeList, RecipeListItem } from "../components";
-import { Button, BUTTON_COLOR, LinkWrapper } from "../components/ui/controls";
+import { GlobalHeader } from "../components";
+import { List } from "../components/ui/list";
 import { Spinner } from "../components/ui/general";
 import { PageHeader } from "../components/ui/page";
 import { useParams } from "react-router";
@@ -9,8 +9,8 @@ import { useAuthSession } from "../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../configuration";
 
-export const RecipesPage = () => {
-    const { profileId } = useParams();
+export const GroupRecipeListPage = () => {
+    const { groupId } = useParams();
     const [recipes, setRecipes] = useState([]);
     const [waiting, setWaiting] = useState(true);
     const { user } = useAuthSession();
@@ -18,7 +18,7 @@ export const RecipesPage = () => {
     useEffect(() => {
         const abortController = new AbortController();
 
-        fetch(apiBaseUrl + "people/" + profileId + "/recipes", {
+        fetch(apiBaseUrl + "groups/" + groupId + "/recipes", {
             signal: abortController.signal
         })
             .then(response => response.json())
@@ -38,29 +38,30 @@ export const RecipesPage = () => {
         }
 
         return recipes.map(recipe => (
-            <RecipeListItem key={recipe.id} name={recipe.name} id={recipe.id} />
+            <ListItemLink key={recipe.id} to={`/recipes/${recipe.id}`}>
+                <div>{name}</div>
+            </ListItemLink>
         ));
     };
 
-    const newRecipeButton = () => {
-        if (!user || !user.uid === profileId) {
-            return null;
-        }
-        return (
-            <LinkWrapper to="/recipe/new">
-                <Button color={BUTTON_COLOR.GREEN}>
-                    New Recipe
-                    <ion-icon name="create-outline" />
-                </Button>
-            </LinkWrapper>
-        );
-    };
+    // const newRecipeButton = () => {
+    //     if (!user || !user.uid === groupId) {
+    //         return null;
+    //     }
+    //     return (
+    //         <LinkWrapper to="/recipe/new">
+    //             <Button color={BUTTON_COLOR.GREEN}>
+    //                 New Recipe
+    //                 <ion-icon name="add-circle-outline" />
+    //             </Button>
+    //         </LinkWrapper>
+    //     );
+    // };
 
     return (
         <AbstractPage>
-            <GlobalHeader />
-            <PageHeader title="Recipes">{newRecipeButton()}</PageHeader>
-            {waiting ? <Spinner /> : <RecipeList>{recipeListItems()}</RecipeList>}
+            <PageHeader title="Group Recipes"></PageHeader>
+            {waiting ? <Spinner /> : <List emptyText="Recipes will appear in this list.">{recipeListItems()}</List>}
         </AbstractPage>
     );
 };

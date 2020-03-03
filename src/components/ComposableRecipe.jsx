@@ -134,7 +134,7 @@ export const ComposableRecipe = ({
                 action = createRecipe;
                 break;
             case COMPOSABLE_RECIPE_MODE.UPDATE:
-                action = updateRecipe
+                action = updateRecipe;
                 break;
         }
 
@@ -395,7 +395,7 @@ export const ComposableRecipe = ({
                                                                 }
                                                             )
                                                         }
-                                                        name="trash-outline"
+                                                        name="remove-circle-outline"
                                                     />
                                                 </div>
                                             </FormListRow>
@@ -447,7 +447,7 @@ export const ComposableRecipe = ({
                                 }
                             >
                                 Add
-                                <ion-icon name="add-circle-outline"></ion-icon>
+                                <ion-icon name="add-circle-outline" />
                             </Button>
                         </FormSectionActionBar>
                     </FormSectionHeader>
@@ -488,7 +488,7 @@ export const ComposableRecipe = ({
                                                                 }
                                                             )
                                                         }
-                                                        name="trash-outline"
+                                                        name="remove-circle-outline"
                                                     />
                                                 </div>
                                             </FormListRow>
@@ -501,8 +501,8 @@ export const ComposableRecipe = ({
                 </FormSection>
                 {/* Cancel and Save */}
                 <div css={buttonActionBarStyle}>
-                    {/* Show the delete recipe button if this recipe already exists */}
-                    {recipeId ? (
+                    {/* Show the delete recipe button if this recipe is being edited */}
+                    {mode === COMPOSABLE_RECIPE_MODE.UPDATE ? (
                         <Button color={BUTTON_COLOR.RED} onClick={onDelete}>
                             Delete
                             <ion-icon name="trash-outline" />

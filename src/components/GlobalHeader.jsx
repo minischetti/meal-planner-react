@@ -52,11 +52,14 @@ export const GlobalHeader = () => {
     const linkContainer = () => {
         return (
             <div css={linkContainerStyle}>
-                <Link css={link} to={`/profile/${user.uid}`}>
+                <Link css={link} to={`/profiles/${user.uid}`}>
                     My Profile
                 </Link>
-                <Link css={link} to={`/profile/${user.uid}/recipes/`}>
+                <Link css={link} to={`/profiles/${user.uid}/recipes/`}>
                     My Recipes
+                </Link>
+                <Link css={link} to={`/profiles/${user.uid}/groups/`}>
+                    My Groups
                 </Link>
             </div>
         );
@@ -67,6 +70,7 @@ export const GlobalHeader = () => {
         return (
             <Button name="signIn" onClick={handleSignIn}>
                 Sign In
+                <ion-icon name="log-in-outline"></ion-icon>
             </Button>
         );
     };
@@ -76,6 +80,7 @@ export const GlobalHeader = () => {
         return (
             <Button name="signOut" onClick={handleSignOut}>
                 Sign Out
+                <ion-icon name="log-out-outline"></ion-icon>
             </Button>
         );
     };

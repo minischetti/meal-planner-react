@@ -6,7 +6,6 @@ import { PageHeader } from "../components/ui/page";
 export const HomePage = () => {
     return (
         <AbstractPage>
-            <GlobalHeader />
             <PageHeader title="Home" />
         </AbstractPage>
     );

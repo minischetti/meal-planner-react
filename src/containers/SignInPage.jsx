@@ -14,7 +14,7 @@ export const SignInPage = () => {
     }
 
     return (
-        <AbstractPage>
+        <AbstractPage disableHeader={true}>
             <PageHeader title="Sign In" />
             {authInProgress ? <Spinner /> : <SignIn />}
         </AbstractPage>
