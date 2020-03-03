@@ -3,7 +3,7 @@ import { firebaseAuth } from "../configuration";
 import { useReducer } from "react";
 
 const initialAuthState = {
-    authInProgress: false,
+    authInProgress: true,
     authError: null,
     user: null
 };

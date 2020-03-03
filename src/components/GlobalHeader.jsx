@@ -1,18 +1,13 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { css } from "@emotion/core";
-import { useForm } from "react-hook-form";
 import { useAuthSession } from "../hooks";
 import { Spinner } from "./ui/general";
-import { TextField, Button } from "./ui/controls";
-import { BUTTON_TYPE, BUTTON_COLOR } from "./ui/controls/Button";
+import { Button } from "./ui/controls";
 
 export const GlobalHeader = () => {
-    const { register, handleSubmit, errors } = useForm();
     const { user, authInProgress, signIn, signOut } = useAuthSession();
-
-    const handleSignIn = ({ email, password }) => signIn(email, password);
-    const handleSignOut = () => signOut();
+    const history = useHistory();
 
     const headerStyle = css`
         display: grid;
@@ -67,6 +62,16 @@ export const GlobalHeader = () => {
         );
     };
 
+    const handleSignIn = () => history.push("/login");
+    const signInButton = () => {
+        return (
+            <Button name="signIn" onClick={handleSignIn}>
+                Sign In
+            </Button>
+        );
+    };
+
+    const handleSignOut = () => signOut();
     const signOutButton = () => {
         return (
             <Button name="signOut" onClick={handleSignOut}>
@@ -75,41 +80,10 @@ export const GlobalHeader = () => {
         );
     };
 
-    const signInForm = () => {
-        return (
-            <form css={formStyle} onSubmit={handleSubmit(handleSignIn)}>
-                <TextField
-                    type="text"
-                    placeholder="Email"
-                    name="email"
-                    defaultValue="domminischetti@gmail.com"
-                    ref={register({
-                        required: true,
-                        pattern: /^\S+@\S+$/i
-                    })}
-                />
-                <TextField
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    defaultValue="password"
-                    ref={register({ required: true })}
-                />
-                <Button
-                    name="signIn"
-                    type={BUTTON_TYPE.SUBMIT}
-                    color={BUTTON_COLOR.GREEN}
-                >
-                    Sign In
-                </Button>
-            </form>
-        );
-    };
-
     const authPanel = () => {
         return (
             <div css={authPanelStyle}>
-                {user ? signOutButton() : signInForm()}
+                {user ? signOutButton() : signInButton()}
             </div>
         );
     };

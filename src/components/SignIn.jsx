@@ -4,10 +4,11 @@ import { BUTTON_TYPE, BUTTON_COLOR } from "./ui/controls/Button";
 import { TextField, Button } from "./ui/controls";
 import { css } from "@emotion/core";
 import { useAuth } from "../hooks/useAuth";
+import { useAuthSession } from "../hooks";
 
 export function SignIn() {
     const { register, handleSubmit, errors } = useForm();
-    const { authState, signIn, signOut } = useAuth();
+    const { user, signIn, signOut } = useAuthSession();
 
     const handleSignIn = ({ email, password }) => {
         signIn(email, password);
