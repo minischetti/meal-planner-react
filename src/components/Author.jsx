@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiBaseUrl } from "../configuration";
+import { LinkWrapper } from "./ui/controls";
 
 export const Author = ({ id, role }) => {
     const [profile, setProfile] = useState({});
@@ -18,9 +19,9 @@ export const Author = ({ id, role }) => {
 
     if (profile) {
         return (
-            <React.Fragment>
+            <LinkWrapper to={`/profiles/${id}`}>
                 <div>{profile.firstName}</div>
-            </React.Fragment>
+            </LinkWrapper>
         )
     }
 
