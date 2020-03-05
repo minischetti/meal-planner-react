@@ -1,13 +1,17 @@
 import React from "react";
-import { ComposableRecipe, GlobalHeader } from "../components";
+import { ComposableRecipe } from "../components";
 import { AbstractPage } from "../containers";
 import { PageHeader } from "../components/ui/page";
 
 export const NewRecipePage = () => {
     return (
         <AbstractPage>
-            <PageHeader title="New Recipe"/>
-            <ComposableRecipe />
+            <PageSection area={PAGE_SECTION_AREA.HEADER}>
+                <PageHeader title="New Recipe" />
+            </PageSection>
+            <PageSection area={PAGE_SECTION_AREA.MAIN}>
+                <ComposableRecipe />
+            </PageSection>
         </AbstractPage>
-    )
-}
+    );
+};

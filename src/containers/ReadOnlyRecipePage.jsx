@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../configuration";
-import { GlobalHeader, Recipe, EditRecipeButton } from "../components";
+import { Recipe, EditRecipeButton } from "../components";
 import { Spinner } from "../components/ui/general";
-import { PageHeader } from "../components/ui/page";
+import {
+    PageHeader,
+    PageSection,
+    PAGE_SECTION_AREA
+} from "../components/ui/page";
 import { AbstractPage } from "../containers";
 import { useAuthSession } from "../hooks/useAuthSession";
 
-export const RecipePage = () => {
+export const ReadOnlyRecipePage = () => {
     const { user } = useAuthSession();
     const [recipe, setRecipe] = useState({});
     const [waiting, setWaiting] = useState(true);
@@ -45,21 +49,27 @@ export const RecipePage = () => {
 
     return (
         <AbstractPage>
-            <PageHeader title="Recipe">
-                {canEditRecipe() ? <EditRecipeButton id={recipe.id} /> : null}
-            </PageHeader>
-            {waiting ? (
-                <Spinner />
-            ) : (
-                <Recipe
-                    name={recipe.name}
-                    prepTime={recipe.prepTime}
-                    cookTime={recipe.cookTime}
-                    authors={recipe.members}
-                    ingredients={recipe.ingredients}
-                    instructions={recipe.instructions}
-                />
-            )}
+            <PageSection area={PAGE_SECTION_AREA.HEADER}>
+                <PageHeader title="Recipe">
+                    {canEditRecipe() ? (
+                        <EditRecipeButton id={recipe.id} />
+                    ) : null}
+                </PageHeader>
+            </PageSection>
+            <PageSection area={PAGE_SECTION_AREA.MAIN}>
+                {waiting ? (
+                    <Spinner />
+                ) : (
+                    <Recipe
+                        name={recipe.name}
+                        prepTime={recipe.prepTime}
+                        cookTime={recipe.cookTime}
+                        authors={recipe.members}
+                        ingredients={recipe.ingredients}
+                        instructions={recipe.instructions}
+                    />
+                )}
+            </PageSection>
         </AbstractPage>
     );
 };

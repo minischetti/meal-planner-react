@@ -8,21 +8,24 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // Containers
 import {
-    HomePage,
-    ProfilePage,
-    RecipeListPage,
-    RecipePage,
+    // Common
+    SignInPage,
+    ReadOnlyRecipePage,
     NewRecipePage,
     EditRecipePage,
-    GroupListPage,
-    GroupPage,
-    SignInPage
+    // Group
+    GroupHomePage,
+    GroupMemberListPage,
+    GroupRecipeListPage,
+    // User
+    UserHomePage,
+    UserProfilePage,
+    UserRecipeListPage,
+    UserGroupListPage,
 } from "./containers";
 
 // Authentication
 import { useAuth } from "./hooks/useAuth";
-import { GroupRecipeListPage } from "./containers/GroupRecipeListPage";
-import { GroupMemberListPage } from "./containers/GroupMemberListPage";
 
 const AuthenticatedRoute = ({ children }) => {
     const { user } = useContext(authContext);
@@ -50,27 +53,27 @@ function App() {
                         <Route
                             exact
                             path="/profiles/:profileId"
-                            component={ProfilePage}
+                            component={UserProfilePage}
                         />
                         <Route
                             exact
                             path="/profiles/:profileId/recipes"
-                            component={RecipeListPage}
+                            component={UserRecipeListPage}
                         />
                         <Route
                             exact
                             path="/recipes/:recipeId"
-                            component={RecipePage}
+                            component={ReadOnlyRecipePage}
                         />
                         <Route
                             exact
                             path="/profiles/:profileId/groups"
-                            component={GroupListPage}
+                            component={UserGroupListPage}
                         />
                         <Route
                             exact
                             path="/groups/:groupId"
-                            component={GroupPage}
+                            component={GroupHomePage}
                         />
                         <Route
                             exact
@@ -83,7 +86,7 @@ function App() {
                             component={GroupMemberListPage}
                         />
                         <AuthenticatedRoute>
-                            <Route exact path="/" component={HomePage} />
+                            <Route exact path="/" component={UserHomePage} />
                             <Route
                                 exact
                                 path="/recipe/new"

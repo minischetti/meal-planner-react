@@ -43,12 +43,6 @@ export const GlobalHeader = () => {
         text-decoration: none;
     `;
 
-    const formStyle = css`
-        display: grid;
-        grid-auto-flow: column;
-        gap: 10px;
-    `;
-
     const linkContainer = () => {
         return (
             <div css={linkContainerStyle}>
