@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { css } from "@emotion/core";
 import { useAuthSession } from "../hooks";
 import { Spinner } from "./ui/general";
-import { Button } from "./ui/controls";
+import { Button, NavLinkWrapper } from "./ui/controls";
 
 export const GlobalHeader = () => {
     const { user, authInProgress, signIn, signOut } = useAuthSession();
@@ -46,15 +46,23 @@ export const GlobalHeader = () => {
     const linkContainer = () => {
         return (
             <div css={linkContainerStyle}>
-                <Link css={link} to={`/profiles/${user.uid}`}>
+                <NavLinkWrapper exact css={link} to={`/profiles/${user.uid}`}>
                     My Profile
-                </Link>
-                <Link css={link} to={`/profiles/${user.uid}/recipes/`}>
-                    My Recipes
-                </Link>
-                <Link css={link} to={`/profiles/${user.uid}/groups/`}>
+                </NavLinkWrapper>
+                <NavLinkWrapper
+                    exact
+                    css={link}
+                    to={`/profiles/${user.uid}/groups/`}
+                >
                     My Groups
-                </Link>
+                </NavLinkWrapper>
+                <NavLinkWrapper
+                    exact
+                    css={link}
+                    to={`/profiles/${user.uid}/recipes/`}
+                >
+                    My Recipes
+                </NavLinkWrapper>
             </div>
         );
     };

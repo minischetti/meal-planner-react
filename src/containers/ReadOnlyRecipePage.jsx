@@ -49,14 +49,12 @@ export const ReadOnlyRecipePage = () => {
 
     return (
         <AbstractPage>
-            <PageSection area={PAGE_SECTION_AREA.HEADER}>
+            <PageSection area={PAGE_SECTION_AREA.MAIN}>
                 <PageHeader title="Recipe">
                     {canEditRecipe() ? (
                         <EditRecipeButton id={recipe.id} />
                     ) : null}
                 </PageHeader>
-            </PageSection>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
                 {waiting ? (
                     <Spinner />
                 ) : (

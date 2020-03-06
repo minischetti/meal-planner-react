@@ -1,14 +1,21 @@
 import React, { useEffect } from "react";
-import { AbstractPage } from "../../containers";
-import { Button, BUTTON_COLOR, LinkWrapper } from "../../components/ui/controls";
+import { AbstractUserPage } from "../../containers";
+import {
+    Button,
+    BUTTON_COLOR,
+    LinkWrapper
+} from "../../components/ui/controls";
 import { List, ListItemLink } from "../../components/ui/list";
 import { Spinner } from "../../components/ui/general";
-import { PageHeader, PageSection, PAGE_SECTION_AREA } from "../../components/ui/page";
+import {
+    PageHeader,
+    PageSection,
+    PAGE_SECTION_AREA
+} from "../../components/ui/page";
 import { useParams } from "react-router";
 import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
-import { Bar, BarSection } from "../../components/ui/bar";
 
 export const UserRecipeListPage = () => {
     const { profileId } = useParams();
@@ -60,31 +67,9 @@ export const UserRecipeListPage = () => {
     };
 
     return (
-        <AbstractPage>
-            {/* Page Header */}
-            <PageSection area={PAGE_SECTION_AREA.HEADER}>
-                <PageHeader title="Recipes">{newRecipeButton()}</PageHeader>
-            </PageSection>
-
-            {/* Navigation */}
-            <PageSection area={PAGE_SECTION_AREA.RIGHT}>
-                <Bar>
-                    <BarSection title="Navigation">
-                        <LinkWrapper to={`/profiles/${profileId}`}>
-                            Profile
-                        </LinkWrapper>
-                        <LinkWrapper to={`/profiles/${profileId}/groups`}>
-                            Groups
-                        </LinkWrapper>
-                        <LinkWrapper to={`/profiles/${profileId}/recipes`}>
-                            Recipes
-                        </LinkWrapper>
-                    </BarSection>
-                </Bar>
-            </PageSection>
-
-            {/* Main */}
+        <AbstractUserPage>
             <PageSection area={PAGE_SECTION_AREA.MAIN}>
+                <PageHeader title="Recipes">{newRecipeButton()}</PageHeader>
                 {waiting ? (
                     <Spinner />
                 ) : (
@@ -93,6 +78,6 @@ export const UserRecipeListPage = () => {
                     </List>
                 )}
             </PageSection>
-        </AbstractPage>
+        </AbstractUserPage>
     );
 };

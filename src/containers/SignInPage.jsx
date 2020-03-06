@@ -14,11 +14,9 @@ export const SignInPage = () => {
     }
 
     return (
-        <AbstractPage disableHeader={true}>
-            <PageSection area={PAGE_SECTION_AREA.HEADER}>
-                <PageHeader title="Sign In" />
-            </PageSection>
+        <AbstractPage disableGlobalHeader={true}>
             <PageSection area={PAGE_SECTION_AREA.MAIN}>
+                <PageHeader title="Sign In" />
                 {authInProgress ? <Spinner /> : <SignIn />}
             </PageSection>
         </AbstractPage>

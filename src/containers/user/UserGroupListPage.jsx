@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { AbstractPage } from "../../containers";
+import { AbstractUserPage } from "../../containers";
 import { GroupListItem } from "../../components";
 import {
     Button,
@@ -13,7 +13,6 @@ import {
     PageSection,
     PAGE_SECTION_AREA
 } from "../../components/ui/page";
-import { Bar, BarSection } from "../../components/ui/bar";
 import { useParams } from "react-router";
 import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
@@ -68,33 +67,11 @@ export const UserGroupListPage = () => {
     };
 
     return (
-        <AbstractPage>
-            {/* Header */}
-            <PageSection area={PAGE_SECTION_AREA.HEADER}>
-                <PageHeader title="Groups">{newGroupButton()}</PageHeader>
-            </PageSection>
-
-            {/* Navigation */}
-            <PageSection area={PAGE_SECTION_AREA.RIGHT}>
-                <Bar>
-                    <BarSection title="Navigation">
-                        <LinkWrapper to={`/profiles/${profileId}`}>
-                            Profile
-                        </LinkWrapper>
-                        <LinkWrapper to={`/profiles/${profileId}/groups`}>
-                            Groups
-                        </LinkWrapper>
-                        <LinkWrapper to={`/profiles/${profileId}/recipes`}>
-                            Recipes
-                        </LinkWrapper>
-                    </BarSection>
-                </Bar>
-            </PageSection>
-
-            {/* Main */}
+        <AbstractUserPage>
             <PageSection area={PAGE_SECTION_AREA.MAIN}>
+                <PageHeader title="Groups">{newGroupButton()}</PageHeader>
                 {waiting ? <Spinner /> : <List>{groupListItems()}</List>}
             </PageSection>
-        </AbstractPage>
+        </AbstractUserPage>
     );
 };

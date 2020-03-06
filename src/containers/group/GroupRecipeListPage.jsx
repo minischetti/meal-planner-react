@@ -13,6 +13,7 @@ import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
 import { LinkWrapper } from "../../components/ui/controls";
+import { AbstractGroupPage } from "./AbstractGroupPage";
 
 export const GroupRecipeListPage = () => {
     const { groupId } = useParams();
@@ -64,31 +65,9 @@ export const GroupRecipeListPage = () => {
     // };
 
     return (
-        <AbstractPage>
-            {/* Header */}
-            <PageSection area={PAGE_SECTION_AREA.HEADER}>
-                <PageHeader title="Group Recipes"></PageHeader>
-            </PageSection>
-
-            {/* Navigation */}
-            <PageSection area={PAGE_SECTION_AREA.RIGHT}>
-                <Bar>
-                    <BarSection title="Navigation">
-                        <LinkWrapper to={`/groups/${groupId}`}>
-                            Profile
-                        </LinkWrapper>
-                        <LinkWrapper to={`/groups/${groupId}/members`}>
-                            Members
-                        </LinkWrapper>
-                        <LinkWrapper to={`/groups/${groupId}/recipes`}>
-                            Recipes
-                        </LinkWrapper>
-                    </BarSection>
-                </Bar>
-            </PageSection>
-
-            {/* Main */}
+        <AbstractGroupPage>
             <PageSection area={PAGE_SECTION_AREA.MAIN}>
+                <PageHeader title="Group Recipes"></PageHeader>
                 {waiting ? (
                     <Spinner />
                 ) : (
@@ -97,6 +76,6 @@ export const GroupRecipeListPage = () => {
                     </List>
                 )}
             </PageSection>
-        </AbstractPage>
+        </AbstractGroupPage>
     );
 };

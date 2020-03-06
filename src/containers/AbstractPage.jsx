@@ -1,34 +1,32 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { GlobalHeader } from "../components/GlobalHeader";
-import { PageSection, PAGE_SECTION_AREA } from "../components/ui/page";
+import { PAGE_SECTION_AREA } from "../components/ui/page";
 
-export const AbstractPage = ({ children, disableHeader = false }) => {
+export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
     const pageStyle = css`
         font-family: "Lato", sans-serif;
         transition: 0.5s all ease-in-out;
         display: grid;
+        grid-auto-flow: row;
         gap: 20px;
-        grid-template-areas:
-            "${PAGE_SECTION_AREA.GLOBAL} ${PAGE_SECTION_AREA.GLOBAL} ${PAGE_SECTION_AREA.GLOBAL}"
-            "${PAGE_SECTION_AREA.HEADER} ${PAGE_SECTION_AREA.HEADER} ${PAGE_SECTION_AREA.HEADER}"
-            "${PAGE_SECTION_AREA.MAIN} ${PAGE_SECTION_AREA.MAIN} ${PAGE_SECTION_AREA.RIGHT}";
-        grid-template-columns: 1fr 2fr 1fr;
+    `;
 
+    const pageContentStyle = css`
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-areas: "${PAGE_SECTION_AREA.LEFT} ${PAGE_SECTION_AREA.MAIN} ${PAGE_SECTION_AREA.MAIN}";
         @media (min-width: 375px) {
-            width: 75%;
+            width: 60%;
             margin: 0 auto;
         }
     `;
 
     return (
         <div css={pageStyle}>
-            {disableHeader ? null : (
-                <PageSection area={PAGE_SECTION_AREA.GLOBAL}>
-                    <GlobalHeader />
-                </PageSection>
-            )}
-            {children}
+            {disableGlobalHeader ? null : <GlobalHeader />}
+            <div css={pageContentStyle}>{children}</div>
         </div>
     );
 };

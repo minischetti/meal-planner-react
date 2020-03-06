@@ -32,11 +32,8 @@ export const EditRecipePage = () => {
 
     return (
         <AbstractPage>
-            <PageSection area={PAGE_SECTION_AREA.HEADER}>
-
-            <PageHeader title="Edit Recipe" />
-            </PageSection>
             <PageSection area={PAGE_SECTION_AREA.MAIN}>
+                <PageHeader title="Edit Recipe" />
                 {waiting ? (
                     <Spinner />
                 ) : (

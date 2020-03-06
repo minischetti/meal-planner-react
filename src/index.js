@@ -9,19 +9,21 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 // Containers
 import {
     // Common
+    HomePage,
     SignInPage,
     ReadOnlyRecipePage,
     NewRecipePage,
     EditRecipePage,
     // Group
     GroupHomePage,
+    GroupProfilePage,
     GroupMemberListPage,
     GroupRecipeListPage,
     // User
     UserHomePage,
     UserProfilePage,
     UserRecipeListPage,
-    UserGroupListPage,
+    UserGroupListPage
 } from "./containers";
 
 // Authentication
@@ -53,6 +55,11 @@ function App() {
                         <Route
                             exact
                             path="/profiles/:profileId"
+                            component={UserHomePage}
+                        />
+                        <Route
+                            exact
+                            path="/profiles/:profileId/profile"
                             component={UserProfilePage}
                         />
                         <Route
@@ -77,6 +84,11 @@ function App() {
                         />
                         <Route
                             exact
+                            path="/groups/:groupId/profile"
+                            component={GroupProfilePage}
+                        />
+                        <Route
+                            exact
                             path="/groups/:groupId/recipes"
                             component={GroupRecipeListPage}
                         />
@@ -86,7 +98,7 @@ function App() {
                             component={GroupMemberListPage}
                         />
                         <AuthenticatedRoute>
-                            <Route exact path="/" component={UserHomePage} />
+                            <Route exact path="/" component={HomePage} />
                             <Route
                                 exact
                                 path="/recipe/new"

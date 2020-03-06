@@ -19,7 +19,7 @@ export const BarSection = ({ children, title }) => {
 
     return (
         <div css={barSectionStyle}>
-            <div css={barSectionTitleStyle}>{title}</div>
+            {title ? <div css={barSectionTitleStyle}>{title}</div> : null}
             <div css={barSectionContentStyle}>{children}</div>
         </div>
     );
