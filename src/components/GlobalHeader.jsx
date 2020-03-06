@@ -47,6 +47,9 @@ export const GlobalHeader = () => {
         return (
             <div css={linkContainerStyle}>
                 <NavLinkWrapper exact css={link} to={`/profiles/${user.uid}`}>
+                    My Home
+                </NavLinkWrapper>
+                <NavLinkWrapper exact css={link} to={`/profiles/${user.uid}/profile`}>
                     My Profile
                 </NavLinkWrapper>
                 <NavLinkWrapper

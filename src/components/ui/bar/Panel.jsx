@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const BarPanel = ({ children, title, count }) => {
+export const Panel = ({ children, title, count }) => {
     const containerStyle = css`
         display: grid;
         gap: 10px;

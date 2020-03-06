@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const BarSection = ({ children, title }) => {
+export const Section = ({ children, title }) => {
     const barSectionStyle = css`
         display: grid;
         gap: 10px;

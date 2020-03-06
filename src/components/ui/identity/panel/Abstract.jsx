@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const UserPanel = ({ image, name }) => {
+export const Abstract = ({ image, name, children }) => {
     const containerStyle = css`
         display: grid;
         grid-auto-flow: column;
@@ -19,7 +19,7 @@ export const UserPanel = ({ image, name }) => {
 
     return (
         <div css={containerStyle}>
-            <ion-icon name="person-circle" />
+            {children}
             <span css={nameStyle}>{name}</span>
         </div>
     );

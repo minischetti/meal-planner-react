@@ -1,14 +1,13 @@
 import React from "react";
 import { AbstractPage } from "../../containers";
 import { PAGE_SECTION_AREA, PageSection } from "../../components/ui/page";
-import { Bar, BarSection, BarHeader, BarPanel } from "../../components/ui/bar";
 import { NavLinkWrapper } from "../../components/ui/controls";
 import { useParams } from "react-router";
 import { useState } from "react";
 import { Spinner } from "../../components/ui/general";
 import { useEffect } from "react";
 import { apiBaseUrl } from "../../configuration/api";
-import { UserPanel } from "../../components/ui";
+import { Bar, IdentityPanel } from "../../components";
 
 export const AbstractUserPage = ({ children }) => {
     const { profileId } = useParams();
@@ -36,19 +35,17 @@ export const AbstractUserPage = ({ children }) => {
         <AbstractPage>
             {/* Profile and Navigation */}
             <PageSection area={PAGE_SECTION_AREA.LEFT}>
-                <Bar>
-                    {waiting ? (
-                        <Spinner />
-                    ) : (
-                        <BarSection>
-                            <UserPanel
+                <Bar.Container>
+                    <Bar.Section>
+                        {waiting ? (
+                            <Spinner />
+                        ) : (
+                            <IdentityPanel.User
                                 name={`${profile.firstName} ${profile.lastName}`}
                             />
-                        </BarSection>
-                    )}
-                </Bar>
-                <Bar>
-                    <BarSection title="Navigation">
+                        )}
+                    </Bar.Section>
+                    <Bar.Section title="Navigation">
                         <NavLinkWrapper exact to={`/profiles/${profileId}`}>
                             Home
                         </NavLinkWrapper>
@@ -70,8 +67,8 @@ export const AbstractUserPage = ({ children }) => {
                         >
                             Recipes
                         </NavLinkWrapper>
-                    </BarSection>
-                </Bar>
+                    </Bar.Section>
+                </Bar.Container>
             </PageSection>
             {children}
         </AbstractPage>

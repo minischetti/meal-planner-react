@@ -10,3 +10,10 @@ export { Recipe } from "./components/Recipe";
 export { EditRecipeButton } from "./components/EditRecipeButton";
 export { GroupListItem } from "./components/groups/GroupListItem";
 export { Group } from "./components/groups/Group";
+
+// Imports
+import * as Bar from "./components/ui/bar";
+import * as IdentityPanel from "./components/ui/identity/panel";
+
+// Exports
+export { IdentityPanel, Bar };
