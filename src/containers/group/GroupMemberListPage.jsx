@@ -47,7 +47,7 @@ export const GroupMemberListPage = () => {
         return members.map((member, index) => (
             <ListItemLink key={index} to={`/profiles/${member.id}`}>
                 <div>
-                    {member.firstName} {member.lastName}
+                    {member.name}
                 </div>
                 {/* <div>{member.role}</div> */}
             </ListItemLink>

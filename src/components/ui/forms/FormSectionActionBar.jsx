@@ -7,6 +7,7 @@ export const FormSectionActionBar = ({ children }) => {
         grid-auto-flow: column;
         gap: 20px;
         align-items: center;
+        grid-template-columns: 4fr auto 1fr;
     `;
 
     return (

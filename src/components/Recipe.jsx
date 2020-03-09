@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Author } from "../components";
 
-export const Recipe = ({ name, prepTime, cookTime, authors, ingredients, instructions }) => {
+export const Recipe = ({ name, prepTime, cookTime, recipeYield, description, ingredients, instructions }) => {
     const readOnlyListStyle = css`
         display: grid;
         gap: 10px;
@@ -20,13 +20,13 @@ export const Recipe = ({ name, prepTime, cookTime, authors, ingredients, instruc
         margin: 0;
     `;
 
-    const authorList = () => {
-        if (!authors || !authors.length) return <div>No authors</div>;
+    // const authorList = () => {
+    //     if (!authors || !authors.length) return <div>No authors</div>;
 
-        return authors.map(author => (
-            <Author key={author.id} id={author.id} role={author.role} />
-        ));
-    }
+    //     return authors.map(author => (
+    //         <Author key={author.id} id={author.id} role={author.role} />
+    //     ));
+    // }
 
     const ingredientList = () => {
         if (!ingredients || !ingredients.length) return <div>No ingredients</div>;
@@ -56,10 +56,12 @@ export const Recipe = ({ name, prepTime, cookTime, authors, ingredients, instruc
             <h2>{name}</h2>
             <div>Prep Time: {prepTime}</div>
             <div>Cook Time: {cookTime}</div>
-            <div css={readOnlyListStyle}>
+            <div>Yield: {recipeYield}</div>
+            <div>Description: {description}</div>
+            {/* <div css={readOnlyListStyle}>
                 <h3 css={readOnlyListHeaderStyle}>Authors</h3>
                 {authorList()}
-            </div>
+            </div> */}
             <div css={readOnlyListStyle}>
                 <h3 css={readOnlyListHeaderStyle}>Ingredients</h3>
                 {ingredientList()}

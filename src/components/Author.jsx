@@ -20,7 +20,7 @@ export const Author = ({ id, role }) => {
     if (profile) {
         return (
             <LinkWrapper to={`/profiles/${id}`}>
-                <div>{profile.firstName}</div>
+                <div>{profile.name}</div>
             </LinkWrapper>
         )
     }

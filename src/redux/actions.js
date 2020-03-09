@@ -141,7 +141,7 @@ export const deleteRecipeResponse = payload => {
 export const CREATE_RECIPE_REQUEST = "CREATE_RECIPE_REQUEST";
 export const createRecipe = payload => {
     return dispatch => {
-        return fetch(apiBaseUrl + "recipes", fetchConfig("POST", withProfileId(payload)))
+        return fetch(apiBaseUrl + "recipes", fetchConfig("POST", withCurrentUserId(payload)))
             .then(response => response.json())
             .then(response => dispatch(createRecipeResponse(response)))
             .catch(response => dispatch(createRecipeResponse(response)));
@@ -168,7 +168,7 @@ export const updateRecipe = payload => {
     return dispatch => {
         return fetch(
             apiBaseUrl + "recipes/" + payload.recipeId,
-            fetchConfig("PUT", withProfileId(payload))
+            fetchConfig("PUT", withCurrentUserId(payload))
         )
             .then(response => response.json())
             .then(data => dispatch(updateRecipeResponse(data)))
@@ -185,12 +185,12 @@ export const updateRecipeResponse = payload => {
 };
 
 /**
- * Adds the current user's profile id to a payload.
+ * Adds the current user's id to a payload.
  *
- * @param {Object} payload the payload to add the profile id to
- * @return {Object} the payload with the current user's profile id
+ * @param {Object} payload the payload to add the user's id to
+ * @return {Object} the payload with the current user's id
  */
-const withProfileId = payload => {
+const withCurrentUserId = payload => {
     const profileId = firebaseAuth.currentUser.uid;
 
     return {

@@ -62,7 +62,8 @@ export const ReadOnlyRecipePage = () => {
                         name={recipe.name}
                         prepTime={recipe.prepTime}
                         cookTime={recipe.cookTime}
-                        authors={recipe.members}
+                        recipeYield={recipe.recipeYield}
+                        description={recipe.description}
                         ingredients={recipe.ingredients}
                         instructions={recipe.instructions}
                     />

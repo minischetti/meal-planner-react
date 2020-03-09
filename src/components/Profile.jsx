@@ -1,10 +1,10 @@
 import React from "react";
 
-export function Profile({ profileId, firstName, lastName }) {
+export function Profile({ profileId, name }) {
     return (
         <React.Fragment>
             <div>
-                {firstName} {lastName}
+                {name}
             </div>
         </React.Fragment>
     );

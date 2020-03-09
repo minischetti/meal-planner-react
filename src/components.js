@@ -14,6 +14,7 @@ export { Group } from "./components/groups/Group";
 // Imports
 import * as Bar from "./components/ui/bar";
 import * as IdentityPanel from "./components/ui/identity/panel";
+import * as Control from "./components/ui/controls";
 
 // Exports
-export { IdentityPanel, Bar };
+export { IdentityPanel, Bar, Control };

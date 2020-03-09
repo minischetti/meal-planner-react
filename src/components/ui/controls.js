@@ -3,3 +3,4 @@ export { Checkbox } from "./controls/Checkbox";
 export { LinkWrapper } from "./controls/LinkWrapper";
 export { NavLinkWrapper } from "./controls/NavLinkWrapper";
 export { TextField } from "./controls/TextField";
+export { TextArea } from "./controls/TextArea";

@@ -14,13 +14,7 @@ import {
 } from "../redux/selectors";
 import { useEffect } from "react";
 import { Spinner } from "./ui/general";
-import {
-    Button,
-    BUTTON_TYPE,
-    BUTTON_COLOR,
-    Checkbox,
-    TextField
-} from "./ui/controls";
+import { Control } from "../components";
 import {
     FormContainer,
     FormSection,
@@ -62,7 +56,8 @@ export const ComposableRecipe = ({
     initialName = "",
     initialPrepTime = "",
     initialCookTime = "",
-    initialContributors = [],
+    initialRecipeYield = "",
+    initialDescription = "",
     initialIngredients = [],
     initialInstructions = [],
     mode = COMPOSABLE_RECIPE_MODE.CREATE
@@ -81,14 +76,11 @@ export const ComposableRecipe = ({
     // New Recipe Cook Time
     const [cookTime, setCookTime] = useState(initialCookTime);
 
-    // New Contributor State
-    const [contributor, setContributor] = useState({});
+    // New Recipe Yield
+    const [recipeYield, setRecipeYield] = useState(initialRecipeYield);
 
-    // Contributor List Reducer
-    const [contributors, dispatchContributorAction] = useReducer(
-        reducer,
-        initialContributors
-    );
+    // New Recipe Description
+    const [description, setDescription] = useState(initialDescription);
 
     // New Ingredient State
     const [ingredientName, setIngredientName] = useState("");
@@ -123,6 +115,8 @@ export const ComposableRecipe = ({
             name: recipeName,
             prepTime,
             cookTime,
+            recipeYield,
+            description,
             ingredients,
             instructions
         };
@@ -231,7 +225,7 @@ export const ComposableRecipe = ({
                     <FormSectionContent
                         style={FORM_SECTION_CONTENT_STYLE.NO_BORDER}
                     >
-                        <TextField
+                        <Control.TextField
                             value={recipeName}
                             placeholder="Name"
                             onChange={event =>
@@ -239,112 +233,38 @@ export const ComposableRecipe = ({
                             }
                         />
                         <FormFieldGroup>
-                            <TextField
+                            <Control.TextField
                                 value={prepTime}
                                 placeholder="Prep Time"
                                 onChange={event =>
                                     setPrepTime(event.target.value)
                                 }
                             />
-                            <TextField
+                            <Control.TextField
                                 value={cookTime}
                                 placeholder="Cook Time"
                                 onChange={event =>
                                     setCookTime(event.target.value)
                                 }
                             />
-                        </FormFieldGroup>
-                    </FormSectionContent>
-                </FormSection>
-
-                {/* Contributor Form Section */}
-                {/*
-                <FormSection>
-                    <FormSectionHeader>
-                        <FormSectionTitle>
-                            Contributors
-                            {contributors.length ? (
-                                <span css={itemCount}>
-                                    ({contributors.length})
-                                </span>
-                            ) : (
-                                ""
-                            )}
-                        </FormSectionTitle>
-                        <FormSectionActionBar>
-                            <TextField
-                                name="contributorName"
-                                placeholder="Contributor"
-                                value={contributor}
+                            <Control.TextField
+                                value={recipeYield}
+                                placeholder="Yield"
                                 onChange={event =>
-                                    setContributor(event.target.value)
+                                    setRecipeYield(event.target.value)
                                 }
                             />
-                            <Button
-                                type={BUTTON_TYPE.BUTTON}
-                                onClick={() =>
-                                    dispatchContributorAction({
-                                        type: ACTION.ADD,
-                                        value: {
-                                            id: contributor,
-                                        }
-                                    })
-                                }
-                            >
-                                Add
-                                <ion-icon name="add-circle-outline"></ion-icon>
-                            </Button>
-                        </FormSectionActionBar>
-                    </FormSectionHeader>
-                    <FormSectionContent>
-                        <FormList>
-                            <FormListHeader>
-                                <div>Number</div>
-                                <div>Description</div>
-                                <div>Optional</div>
-                                <div></div>
-                            </FormListHeader>
-                            <FormListContent>
-                                {!ingredients.length ? (
-                                    <div css={emptyListText}>
-                                        Ingredients will appear in this list.
-                                    </div>
-                                ) : (
-                                    ingredients.map((ingredient, index) => {
-                                        return (
-                                            <FormListRow key={index}>
-                                                <div>{index + 1}</div>
-                                                <div>
-                                                    {ingredient.description}
-                                                </div>
-                                                <div>
-                                                    {ingredient.optional
-                                                        ? "Yes"
-                                                        : "No"}
-                                                </div>
-                                                <div css={rowIcon}>
-                                                    <ion-icon
-                                                        onClick={() =>
-                                                            dispatchIngredientAction(
-                                                                {
-                                                                    type:
-                                                                        ACTION.REMOVE,
-                                                                    value: index
-                                                                }
-                                                            )
-                                                        }
-                                                        name="trash-outline"
-                                                    />
-                                                </div>
-                                            </FormListRow>
-                                        );
-                                    })
-                                )}
-                            </FormListContent>
-                        </FormList>
+                        </FormFieldGroup>
+                        <Control.TextArea
+                            name="description"
+                            value={description}
+                            placeholder="Description"
+                            onChange={event =>
+                                setDescription(event.target.value)
+                            }
+                        />
                     </FormSectionContent>
                 </FormSection>
-                */}
 
                 {/* Ingredients Form Section */}
                 <FormSection>
@@ -360,7 +280,7 @@ export const ComposableRecipe = ({
                             )}
                         </FormSectionTitle>
                         <FormSectionActionBar>
-                            <TextField
+                            <Control.TextField
                                 name="ingredientName"
                                 placeholder="Ingredient"
                                 value={ingredientName}
@@ -368,18 +288,18 @@ export const ComposableRecipe = ({
                                     setIngredientName(event.target.value)
                                 }
                             />
-                            <Checkbox
+                            <Control.Checkbox
                                 label="Optional"
                                 checked={isIngredientOptional}
                                 checkedCallback={setIsIngredientOptional}
                             />
-                            <Button
-                                type={BUTTON_TYPE.BUTTON}
+                            <Control.Button
+                                type={Control.BUTTON_TYPE.BUTTON}
                                 onClick={handleAddIngredient}
                             >
                                 Add
                                 <ion-icon name="add-circle-outline"></ion-icon>
-                            </Button>
+                            </Control.Button>
                         </FormSectionActionBar>
                     </FormSectionHeader>
                     <FormSectionContent>
@@ -445,7 +365,7 @@ export const ComposableRecipe = ({
                             )}
                         </FormSectionTitle>
                         <FormSectionActionBar>
-                            <TextField
+                            <Control.TextArea
                                 name="instructionName"
                                 placeholder="Instruction"
                                 value={instructionName}
@@ -453,18 +373,18 @@ export const ComposableRecipe = ({
                                     setInstructionName(event.target.value)
                                 }
                             />
-                            <Checkbox
+                            <Control.Checkbox
                                 label="Optional"
                                 checked={isInstructionOptional}
                                 checkedCallback={setIsInstructionOptional}
                             />
-                            <Button
-                                type={BUTTON_TYPE.BUTTON}
+                            <Control.Button
+                                type={Control.BUTTON_TYPE.BUTTON}
                                 onClick={handleAddInstruction}
                             >
                                 Add
                                 <ion-icon name="add-circle-outline" />
-                            </Button>
+                            </Control.Button>
                         </FormSectionActionBar>
                     </FormSectionHeader>
                     <FormSectionContent>
@@ -519,24 +439,30 @@ export const ComposableRecipe = ({
                 <div css={buttonActionBarStyle}>
                     {/* Show the delete recipe button if this recipe is being edited */}
                     {mode === COMPOSABLE_RECIPE_MODE.UPDATE ? (
-                        <Button color={BUTTON_COLOR.RED} onClick={onDelete}>
+                        <Control.Button
+                            color={Control.BUTTON_COLOR.RED}
+                            onClick={onDelete}
+                        >
                             Delete
                             <ion-icon name="trash-outline" />
-                        </Button>
+                        </Control.Button>
                     ) : (
                         ""
                     )}
-                    <Button color={BUTTON_COLOR.BLUE} onClick={onCancel}>
+                    <Control.Button
+                        color={Control.BUTTON_COLOR.BLUE}
+                        onClick={onCancel}
+                    >
                         Cancel
                         <ion-icon name="arrow-back-outline" />
-                    </Button>
-                    <Button
-                        type={BUTTON_TYPE.SUBMIT}
-                        color={BUTTON_COLOR.GREEN}
+                    </Control.Button>
+                    <Control.Button
+                        type={Control.BUTTON_TYPE.SUBMIT}
+                        color={Control.BUTTON_COLOR.GREEN}
                     >
                         Save
                         <ion-icon name="save-outline" />
-                    </Button>
+                    </Control.Button>
                 </div>
             </FormContainer>
         </Fragment>

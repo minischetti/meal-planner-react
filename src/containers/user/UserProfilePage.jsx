@@ -40,11 +40,7 @@ export const UserProfilePage = () => {
                 {waiting ? (
                     <Spinner />
                 ) : (
-                    <Profile
-                        profileId={profile.id}
-                        firstName={profile.firstName}
-                        lastName={profile.lastName}
-                    />
+                    <Profile profileId={profile.id} name={profile.name} />
                 )}
             </PageSection>
         </AbstractUserPage>

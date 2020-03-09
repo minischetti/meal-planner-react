@@ -33,7 +33,8 @@ export const UserRecipeListPage = () => {
             .then(data => {
                 setRecipes(data);
                 setWaiting(false);
-            });
+            })
+            .catch(setWaiting(false));
 
         return () => {
             abortController.abort();
@@ -56,6 +57,7 @@ export const UserRecipeListPage = () => {
         if (!user || !user.uid === profileId) {
             return null;
         }
+
         return (
             <LinkWrapper to="/recipe/new">
                 <Button color={BUTTON_COLOR.GREEN}>

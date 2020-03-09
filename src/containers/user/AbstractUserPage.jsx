@@ -40,9 +40,7 @@ export const AbstractUserPage = ({ children }) => {
                         {waiting ? (
                             <Spinner />
                         ) : (
-                            <IdentityPanel.User
-                                name={`${profile.firstName} ${profile.lastName}`}
-                            />
+                            <IdentityPanel.User name={profile.name} />
                         )}
                     </Bar.Section>
                     <Bar.Section title="Navigation">
