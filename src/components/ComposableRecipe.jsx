@@ -159,6 +159,38 @@ export const ComposableRecipe = ({
         history.push("/recipes");
     };
 
+    const resetIngredientForm = () => {
+        setIngredientName("");
+        setIsIngredientOptional(false);
+    };
+
+    const handleAddIngredient = () => {
+        dispatchIngredientAction({
+            type: ACTION.ADD,
+            value: {
+                description: ingredientName,
+                optional: isIngredientOptional
+            }
+        });
+        resetIngredientForm();
+    };
+
+    const resetInstructionForm = () => {
+        setInstructionName("");
+        setIsInstructionOptional(false);
+    };
+
+    const handleAddInstruction = () => {
+        dispatchInstructionAction({
+            type: ACTION.ADD,
+            value: {
+                description: instructionName,
+                optional: isInstructionOptional
+            }
+        });
+        resetInstructionForm();
+    };
+
     const buttonActionBarStyle = css`
         display: grid;
         gap: 10px;
@@ -343,15 +375,7 @@ export const ComposableRecipe = ({
                             />
                             <Button
                                 type={BUTTON_TYPE.BUTTON}
-                                onClick={() =>
-                                    dispatchIngredientAction({
-                                        type: ACTION.ADD,
-                                        value: {
-                                            description: ingredientName,
-                                            optional: isIngredientOptional
-                                        }
-                                    })
-                                }
+                                onClick={handleAddIngredient}
                             >
                                 Add
                                 <ion-icon name="add-circle-outline"></ion-icon>
@@ -436,15 +460,7 @@ export const ComposableRecipe = ({
                             />
                             <Button
                                 type={BUTTON_TYPE.BUTTON}
-                                onClick={() =>
-                                    dispatchInstructionAction({
-                                        type: ACTION.ADD,
-                                        value: {
-                                            description: instructionName,
-                                            optional: isInstructionOptional
-                                        }
-                                    })
-                                }
+                                onClick={handleAddInstruction}
                             >
                                 Add
                                 <ion-icon name="add-circle-outline" />
