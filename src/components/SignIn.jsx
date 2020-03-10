@@ -37,8 +37,8 @@ export function SignIn() {
             />
             <Control.Button
                 name="signIn"
-                type={Control.Button.CONFIGURATION.TYPE.SUBMIT}
-                color={Control.Button.CONFIGURATION.COLOR.GREEN}
+                type={Control.BUTTON_CONFIGURATION.TYPE.SUBMIT}
+                color={Control.BUTTON_CONFIGURATION.COLOR.GREEN}
             >
                 Sign in
             </Control.Button>

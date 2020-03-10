@@ -3,9 +3,9 @@ import { css } from "@emotion/core";
 
 export const Button = ({
     children,
-    type,
+    type = BUTTON_CONFIGURATION.TYPE.BUTTON,
     onClick,
-    color = Button.CONFIGURATION.COLOR.DEFAULT
+    color = BUTTON_CONFIGURATION.COLOR.DEFAULT
 }) => {
     const buttonStyle = css`
         display: flex;
@@ -39,7 +39,7 @@ export const Button = ({
     );
 };
 
-Button.CONFIGURATION = {
+export const BUTTON_CONFIGURATION = {
     TYPE: {
         BUTTON: "button",
         SUBMIT: "submit"

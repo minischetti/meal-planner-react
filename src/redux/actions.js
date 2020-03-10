@@ -141,7 +141,10 @@ export const deleteRecipeResponse = payload => {
 export const CREATE_RECIPE_REQUEST = "CREATE_RECIPE_REQUEST";
 export const createRecipe = payload => {
     return dispatch => {
-        return fetch(apiBaseUrl + "recipes", fetchConfig("POST", withCurrentUserId(payload)))
+        return fetch(
+            apiBaseUrl + "recipes",
+            fetchConfig(FETCH_METHOD.POST, withCurrentUserId(payload))
+        )
             .then(response => response.json())
             .then(response => dispatch(createRecipeResponse(response)))
             .catch(response => dispatch(createRecipeResponse(response)));
@@ -181,6 +184,48 @@ export const updateRecipeResponse = payload => {
     return {
         type: UPDATE_RECIPE_RESPONSE,
         payload
+    };
+};
+
+export const CREATE_GROUP_REQUEST = "CREATE_GROUP_REQUEST";
+export const createGroup = payload => {
+    return dispatch => {
+        return fetch(
+            apiBaseUrl + "groups",
+            fetchConfig(FETCH_METHOD.POST, withCurrentUserId(payload))
+        )
+            .then(response => response.json())
+            .then(data => {
+                const payload = {
+                    error: false,
+                    groupId: data.groupId
+                };
+
+                return dispatch(createGroupResponse(payload));
+            })
+            .catch(error => {
+                const payload = {
+                    error: true,
+                    groupId: null
+                };
+
+                return dispatch(createGroupResponse(payload));
+            });
+    };
+};
+
+export const CREATE_GROUP_RESPONSE = "CREATE_GROUP_RESPONSE";
+export const createGroupResponse = payload => {
+    return {
+        type: CREATE_GROUP_RESPONSE,
+        ...payload
+    };
+};
+
+export const RESET_CREATE_GROUP_STATUS = "RESET_CREATE_GROUP_STATUS";
+export const resetCreateGroupStatus = () => {
+    return {
+        type: RESET_CREATE_GROUP_STATUS
     };
 };
 

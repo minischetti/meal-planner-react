@@ -50,7 +50,7 @@ export const UserRecipeListPage = () => {
 
         return (
             <Control.LinkWrapper to="/recipe/new">
-                <Control.Button color={Control.Button.CONFIGURATION.COLOR.GREEN}>
+                <Control.Button color={Control.BUTTON_CONFIGURATION.COLOR.GREEN}>
                     New Recipe
                     <ion-icon name="add-circle-outline" />
                 </Control.Button>

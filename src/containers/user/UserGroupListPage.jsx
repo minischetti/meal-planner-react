@@ -49,7 +49,7 @@ export const UserGroupListPage = () => {
         return (
             <Control.LinkWrapper to="/group/new">
                 <Control.Button
-                    color={Control.Button.CONFIGURATION.COLOR.DEFAULT}
+                    color={Control.BUTTON_CONFIGURATION.COLOR.DEFAULT}
                 >
                     New Group
                     <ion-icon name="add-circle-outline" />

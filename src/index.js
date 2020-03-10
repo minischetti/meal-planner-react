@@ -112,7 +112,7 @@ function App() {
                             />
                            <Route
                                 exact
-                                path="/groups/new"
+                                path="/group/new"
                                 component={NewGroupPage}
                             />
                         </AuthenticatedRoute>

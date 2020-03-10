@@ -207,9 +207,7 @@ export const ComposableRecipe = ({
                     <Form.Section.Header>
                         <Form.Section.Title>Details</Form.Section.Title>
                     </Form.Section.Header>
-                    <Form.Section.Container
-                        style={FORM_SECTION_CONTENT_STYLE.NO_BORDER}
-                    >
+                    <Form.Section.Content style={Form.Section.Content.CONFIGURATION.STYLE.NO_BORDER}>
                         <Control.TextField
                             value={recipeName}
                             placeholder="Name"
@@ -248,7 +246,7 @@ export const ComposableRecipe = ({
                                 setDescription(event.target.value)
                             }
                         />
-                    </Form.Section.Container>
+                    </Form.Section.Content>
                 </Form.Section>
 
                 {/* Ingredients Form Section */}
@@ -425,7 +423,7 @@ export const ComposableRecipe = ({
                     {/* Show the delete recipe button if this recipe is being edited */}
                     {mode === COMPOSABLE_RECIPE_MODE.UPDATE ? (
                         <Control.Button
-                            color={Control.BUTTON_COLOR.RED}
+                            color={Control.BUTTON_CONFIGURATION.COLOR.RED}
                             onClick={onDelete}
                         >
                             Delete
@@ -435,15 +433,15 @@ export const ComposableRecipe = ({
                         ""
                     )}
                     <Control.Button
-                        color={Control.BUTTON_COLOR.BLUE}
+                        color={Control.BUTTON_CONFIGURATION.COLOR.BLUE}
                         onClick={onCancel}
                     >
                         Cancel
                         <ion-icon name="arrow-back-outline" />
                     </Control.Button>
                     <Control.Button
-                        type={Control.BUTTON_TYPE.SUBMIT}
-                        color={Control.BUTTON_COLOR.GREEN}
+                        type={Control.BUTTON_CONFIGURATION.TYPE.SUBMIT}
+                        color={Control.BUTTON_CONFIGURATION.COLOR.GREEN}
                     >
                         Save
                         <ion-icon name="save-outline" />

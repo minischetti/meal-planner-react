@@ -1,4 +1,4 @@
-export { Button } from "./control/Button";
+export { Button, BUTTON_CONFIGURATION } from "./control/Button";
 export { Checkbox } from "./control/Checkbox";
 export { LinkWrapper } from "./control/LinkWrapper";
 export { NavLinkWrapper } from "./control/NavLinkWrapper";
