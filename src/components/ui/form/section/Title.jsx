@@ -1,8 +1,8 @@
 import React from "react";
-import { css } from "@emotion/core"
+import { css } from "@emotion/core";
 
-export const FormSectionTitle = ({ children }) => {
-    const headerStyle = css`
+export const Title = ({ children }) => {
+    const style = css`
         font-family: "Barlow", sans-serif;
         display: grid;
         grid-auto-flow: column;
@@ -11,9 +11,5 @@ export const FormSectionTitle = ({ children }) => {
         margin: 0;
     `;
 
-    return (
-        <h2 css={headerStyle}>
-            {children}
-        </h2>
-    )
-}
+    return <h2 css={style}>{children}</h2>;
+};

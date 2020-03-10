@@ -1,7 +1,7 @@
-import { LinkWrapper } from "../controls/LinkWrapper";
+import { Control } from "../../../components";
 import { css } from "@emotion/core";
 
-export const ListItemLink = ({ to, children }) => {
+export const Link = ({ to, children }) => {
     const containerStyle = css`
         display: flex;
         justify-content: space-between;
@@ -20,7 +20,7 @@ export const ListItemLink = ({ to, children }) => {
     `;
 
     return (
-        <LinkWrapper to={to}>
+        <Control.LinkWrapper to={to}>
             <div css={containerStyle}>
                 {children}
                 <ion-icon
@@ -28,6 +28,6 @@ export const ListItemLink = ({ to, children }) => {
                     css={iconStyle}
                 ></ion-icon>
             </div>
-        </LinkWrapper>
+        </Control.LinkWrapper>
     );
 };

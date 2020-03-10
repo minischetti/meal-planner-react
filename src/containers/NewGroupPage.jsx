@@ -1,13 +1,14 @@
 import React from "react";
-import { ComposableRecipe, Page } from "../components";
 import { AbstractPage } from "../containers";
+import { Page } from "../components";
+import { ComposableGroup } from "../components/ComposableGroup";
 
-export const NewRecipePage = () => {
+export const NewGroupPage = () => {
     return (
         <AbstractPage>
             <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
-                <Page.Header title="New Recipe" />
-                <ComposableRecipe />
+                <Page.Header title="New Group" />
+                <ComposableGroup></ComposableGroup>
             </Page.Section>
         </AbstractPage>
     );

@@ -1,8 +1,8 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const FormListHeader = ({ children }) => {
-    const formListHeaderStyle = css`
+export const Header = ({ children }) => {
+    const style = css`
         display: grid;
         grid-auto-flow: column;
         grid-template-columns: 1fr 2fr 1fr 1fr;
@@ -13,9 +13,5 @@ export const FormListHeader = ({ children }) => {
         padding-bottom: 20px;
     `;
 
-    return (
-        <div css={formListHeaderStyle}>
-            {children}
-        </div>
-    )
-}
+    return <div css={style}>{children}</div>;
+};

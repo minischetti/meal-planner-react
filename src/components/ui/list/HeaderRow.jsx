@@ -1,8 +1,8 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const ListHeaderRow = ({ children }) => {
-    const headerStyle = css`
+export const HeaderRow = ({ children }) => {
+    const style = css`
         display: grid;
         grid-template-columns: 1fr 4fr 1fr 1fr;
         gap: 20px;
@@ -15,7 +15,5 @@ export const ListHeaderRow = ({ children }) => {
         border-bottom: 1px solid #ddd;
     `;
 
-    return (
-        <div css={headerStyle}>{children}</div>
-    )
-}
+    return <div css={style}>{children}</div>;
+};

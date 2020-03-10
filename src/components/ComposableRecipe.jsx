@@ -13,22 +13,7 @@ import {
     getRecipeErrorStatusFrom
 } from "../redux/selectors";
 import { useEffect } from "react";
-import { Spinner } from "./ui/general";
-import { Control } from "../components";
-import {
-    FormContainer,
-    FormSection,
-    FormSectionHeader,
-    FormSectionContent,
-    FormSectionActionBar,
-    FormListRow,
-    FormListHeader,
-    FormSectionTitle,
-    FormList,
-    FormListContent,
-    FormFieldGroup,
-    FORM_SECTION_CONTENT_STYLE
-} from "./ui/forms";
+import { Control, Form, Loading } from "../components";
 
 const ACTION = {
     ADD: "ADD",
@@ -209,7 +194,7 @@ export const ComposableRecipe = ({
     `;
 
     if (waiting) {
-        return <Spinner />;
+        return <Loading.Spinner />;
     }
 
     return (
@@ -217,12 +202,12 @@ export const ComposableRecipe = ({
             {hasError
                 ? "There was an error creating this recipe. Please try again."
                 : ""}
-            <FormContainer onSubmit={onSubmit}>
-                <FormSection>
-                    <FormSectionHeader>
-                        <FormSectionTitle>Details</FormSectionTitle>
-                    </FormSectionHeader>
-                    <FormSectionContent
+            <Form.Container onSubmit={onSubmit}>
+                <Form.Section>
+                    <Form.Section.Header>
+                        <Form.Section.Title>Details</Form.Section.Title>
+                    </Form.Section.Header>
+                    <Form.Section.Container
                         style={FORM_SECTION_CONTENT_STYLE.NO_BORDER}
                     >
                         <Control.TextField
@@ -232,7 +217,7 @@ export const ComposableRecipe = ({
                                 setRecipeName(event.target.value)
                             }
                         />
-                        <FormFieldGroup>
+                        <Form.FieldGroup>
                             <Control.TextField
                                 value={prepTime}
                                 placeholder="Prep Time"
@@ -254,7 +239,7 @@ export const ComposableRecipe = ({
                                     setRecipeYield(event.target.value)
                                 }
                             />
-                        </FormFieldGroup>
+                        </Form.FieldGroup>
                         <Control.TextArea
                             name="description"
                             value={description}
@@ -263,13 +248,13 @@ export const ComposableRecipe = ({
                                 setDescription(event.target.value)
                             }
                         />
-                    </FormSectionContent>
-                </FormSection>
+                    </Form.Section.Container>
+                </Form.Section>
 
                 {/* Ingredients Form Section */}
-                <FormSection>
-                    <FormSectionHeader>
-                        <FormSectionTitle>
+                <Form.Section>
+                    <Form.Section.Header>
+                        <Form.Section.Title>
                             Ingredients
                             {ingredients.length ? (
                                 <span css={itemCount}>
@@ -278,8 +263,8 @@ export const ComposableRecipe = ({
                             ) : (
                                 ""
                             )}
-                        </FormSectionTitle>
-                        <FormSectionActionBar>
+                        </Form.Section.Title>
+                        <Form.Section.ActionBar>
                             <Control.TextField
                                 name="ingredientName"
                                 placeholder="Ingredient"
@@ -300,17 +285,17 @@ export const ComposableRecipe = ({
                                 Add
                                 <ion-icon name="add-circle-outline"></ion-icon>
                             </Control.Button>
-                        </FormSectionActionBar>
-                    </FormSectionHeader>
-                    <FormSectionContent>
-                        <FormList>
-                            <FormListHeader>
+                        </Form.Section.ActionBar>
+                    </Form.Section.Header>
+                    <Form.Section.Content>
+                        <Form.List.Container>
+                            <Form.List.Header>
                                 <div>Number</div>
                                 <div>Description</div>
                                 <div>Optional</div>
                                 <div></div>
-                            </FormListHeader>
-                            <FormListContent>
+                            </Form.List.Header>
+                            <Form.List.Content>
                                 {!ingredients.length ? (
                                     <div css={emptyListText}>
                                         Ingredients will appear in this list.
@@ -318,7 +303,7 @@ export const ComposableRecipe = ({
                                 ) : (
                                     ingredients.map((ingredient, index) => {
                                         return (
-                                            <FormListRow key={index}>
+                                            <Form.List.Row key={index}>
                                                 <div>{index + 1}</div>
                                                 <div>
                                                     {ingredient.description}
@@ -342,19 +327,19 @@ export const ComposableRecipe = ({
                                                         name="remove-circle-outline"
                                                     />
                                                 </div>
-                                            </FormListRow>
+                                            </Form.List.Row>
                                         );
                                     })
                                 )}
-                            </FormListContent>
-                        </FormList>
-                    </FormSectionContent>
-                </FormSection>
+                            </Form.List.Content>
+                        </Form.List.Container>
+                    </Form.Section.Content>
+                </Form.Section>
 
                 {/* Instructions Form Section */}
-                <FormSection>
-                    <FormSectionHeader>
-                        <FormSectionTitle>
+                <Form.Section>
+                    <Form.Section.Header>
+                        <Form.Section.Title>
                             Instructions
                             {instructions.length ? (
                                 <span css={itemCount}>
@@ -363,8 +348,8 @@ export const ComposableRecipe = ({
                             ) : (
                                 ""
                             )}
-                        </FormSectionTitle>
-                        <FormSectionActionBar>
+                        </Form.Section.Title>
+                        <Form.Section.ActionBar>
                             <Control.TextArea
                                 name="instructionName"
                                 placeholder="Instruction"
@@ -385,17 +370,17 @@ export const ComposableRecipe = ({
                                 Add
                                 <ion-icon name="add-circle-outline" />
                             </Control.Button>
-                        </FormSectionActionBar>
-                    </FormSectionHeader>
-                    <FormSectionContent>
-                        <FormList>
-                            <FormListHeader>
+                        </Form.Section.ActionBar>
+                    </Form.Section.Header>
+                    <Form.Section.Content>
+                        <Form.List>
+                            <Form.List.Header>
                                 <div>Number</div>
                                 <div>Description</div>
                                 <div>Optional</div>
                                 <div></div>
-                            </FormListHeader>
-                            <FormListContent>
+                            </Form.List.Header>
+                            <Form.List.Content>
                                 {!instructions.length ? (
                                     <div css={emptyListText}>
                                         Instructions will appear in this list.
@@ -431,10 +416,10 @@ export const ComposableRecipe = ({
                                         );
                                     })
                                 )}
-                            </FormListContent>
-                        </FormList>
-                    </FormSectionContent>
-                </FormSection>
+                            </Form.List.Content>
+                        </Form.List>
+                    </Form.Section.Content>
+                </Form.Section>
                 {/* Cancel and Save */}
                 <div css={buttonActionBarStyle}>
                     {/* Show the delete recipe button if this recipe is being edited */}
@@ -464,7 +449,7 @@ export const ComposableRecipe = ({
                         <ion-icon name="save-outline" />
                     </Control.Button>
                 </div>
-            </FormContainer>
+            </Form.Container>
         </Fragment>
     );
 };

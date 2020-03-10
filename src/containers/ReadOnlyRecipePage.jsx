@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../configuration";
-import { Recipe, EditRecipeButton } from "../components";
-import { Spinner } from "../components/ui/general";
-import {
-    PageHeader,
-    PageSection,
-    PAGE_SECTION_AREA
-} from "../components/ui/page";
+import { Recipe, EditRecipeButton, Page, Loading } from "../components";
 import { AbstractPage } from "../containers";
 import { useAuthSession } from "../hooks/useAuthSession";
 
@@ -49,14 +43,14 @@ export const ReadOnlyRecipePage = () => {
 
     return (
         <AbstractPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Recipe">
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Recipe">
                     {canEditRecipe() ? (
                         <EditRecipeButton id={recipe.id} />
                     ) : null}
-                </PageHeader>
+                </Page.Header>
                 {waiting ? (
-                    <Spinner />
+                    <Loading.Spinner />
                 ) : (
                     <Recipe
                         name={recipe.name}
@@ -68,7 +62,7 @@ export const ReadOnlyRecipePage = () => {
                         instructions={recipe.instructions}
                     />
                 )}
-            </PageSection>
+            </Page.Section>
         </AbstractPage>
     );
 };

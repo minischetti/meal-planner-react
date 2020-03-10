@@ -1,9 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { AbstractPage } from "../containers";
-import { SignIn } from "../components";
-import { PageHeader, PageSection, PAGE_SECTION_AREA } from "../components/ui/page";
-import { Spinner } from "../components/ui/general";
+import { SignIn, Page, Loading} from "../components";
 import { useAuthSession } from "../hooks";
 
 export const SignInPage = () => {
@@ -15,10 +13,10 @@ export const SignInPage = () => {
 
     return (
         <AbstractPage disableGlobalHeader={true}>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Sign In" />
-                {authInProgress ? <Spinner /> : <SignIn />}
-            </PageSection>
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Sign In" />
+                {authInProgress ? <Loading.Spinner /> : <SignIn />}
+            </Page.Section>
         </AbstractPage>
     );
 };

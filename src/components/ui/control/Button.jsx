@@ -1,19 +1,12 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const BUTTON_TYPE = {
-    BUTTON: "button",
-    SUBMIT: "submit"
-}
-
-export const BUTTON_COLOR = {
-    RED: "#ff4040",
-    BLUE: "#40b5ff",
-    GREEN: "#40ffbf",
-    DEFAULT: "#e5e5e5"
-}
-
-export const Button = ({children, type, onClick, color = BUTTON_COLOR.DEFAULT}) => {
+export const Button = ({
+    children,
+    type,
+    onClick,
+    color = Button.CONFIGURATION.COLOR.DEFAULT
+}) => {
     const buttonStyle = css`
         display: flex;
         justify-content: center;
@@ -27,7 +20,7 @@ export const Button = ({children, type, onClick, color = BUTTON_COLOR.DEFAULT}) 
         border-radius: 200px;
         color: black;
         font-size: 14px;
-        transition: .15s all ease-in-out;
+        transition: 0.15s all ease-in-out;
         & ion-icon {
             margin-left: 5px;
             color: black;
@@ -35,11 +28,27 @@ export const Button = ({children, type, onClick, color = BUTTON_COLOR.DEFAULT}) 
         }
         &:hover {
             transform: scale(1.025);
-            box-shadow: 0 0 20px rgba(0,0,0,.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
     `;
 
     return (
-        <button css={buttonStyle} type={type} onClick={onClick}>{children}</button>
-    )
-}
+        <button css={buttonStyle} type={type} onClick={onClick}>
+            {children}
+        </button>
+    );
+};
+
+Button.CONFIGURATION = {
+    TYPE: {
+        BUTTON: "button",
+        SUBMIT: "submit"
+    },
+
+    COLOR: {
+        RED: "#ff4040",
+        BLUE: "#40b5ff",
+        GREEN: "#40ffbf",
+        DEFAULT: "#e5e5e5"
+    }
+};

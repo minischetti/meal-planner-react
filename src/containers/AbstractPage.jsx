@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { GlobalHeader } from "../components/GlobalHeader";
-import { PAGE_SECTION_AREA } from "../components/ui/page";
+import { Page } from "../components";
 
 export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
     const container = css`
@@ -15,7 +15,7 @@ export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
     const content = css`
         display: grid;
         gap: 20px;
-        grid-template-areas: "${PAGE_SECTION_AREA.MAIN}";
+        grid-template-areas: "${Page.Section.CONFIGURATION.POSITION.MAIN}";
         @media (min-width: 375px) {
             width: 60%;
             margin: 0 auto;
@@ -24,7 +24,7 @@ export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
 
     const trifold = css`
         grid-template-columns: 1fr 2fr 1fr;
-        grid-template-areas: "${PAGE_SECTION_AREA.LEFT} ${PAGE_SECTION_AREA.MAIN} ${PAGE_SECTION_AREA.MAIN}";
+        grid-template-areas: "${Page.Section.CONFIGURATION.POSITION.LEFT} ${Page.Section.CONFIGURATION.POSITION.MAIN} ${Page.Section.CONFIGURATION.POSITION.MAIN}";
     `;
 
     const getContentStyles = () => {
@@ -34,10 +34,8 @@ export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
             styles.push(trifold);
         }
 
-        console.log(styles);
-
         return styles;
-    }
+    };
 
     return (
         <div css={container}>

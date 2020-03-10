@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../../configuration";
-import { AbstractPage } from "../../containers";
-import { useAuthSession } from "../../hooks/useAuthSession";
-import { Spinner } from "../../components/ui/general";
-import {
-    PageHeader,
-    PAGE_SECTION_AREA,
-    PageSection
-} from "../../components/ui/page";
-import { LinkWrapper } from "../../components/ui/controls";
-import { Bar, BarSection } from "../../components/ui/bar";
+import { Page, Loading } from "../../components";
 import { AbstractGroupPage } from "./AbstractGroupPage";
 
 export const GroupProfilePage = () => {
-    const { user } = useAuthSession();
     const [group, setGroup] = useState({});
     const [waiting, setWaiting] = useState(true);
     let { groupId } = useParams();
@@ -36,25 +26,12 @@ export const GroupProfilePage = () => {
         };
     }, []);
 
-    // const canEditGroup = () => {
-    //     if (!user || !group?.members) {
-    //         return false;
-    //     }
-
-    //     return group.members.find(member => {
-    //         return (
-    //             (member.role === "owner" || member.role === "contributor") &&
-    //             member.id === user.uid
-    //         );
-    //     });
-    // };
-
     return (
         <AbstractGroupPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader subTitle={group.name} title="Group Profile" />
-                {waiting ? <Spinner /> : <div>Group profile page</div>}
-            </PageSection>
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header subTitle={group.name} title="Group Profile" />
+                {waiting ? <Loading.Spinner /> : <div>Group profile page</div>}
+            </Page.Section>
         </AbstractGroupPage>
     );
 };

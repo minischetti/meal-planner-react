@@ -1,12 +1,10 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const FORM_SECTION_CONTENT_STYLE = {
-    BORDER: "BORDER",
-    NO_BORDER: "NO_BORDER"
-}
-
-export const FormSectionContent = ({ children, style = FORM_SECTION_CONTENT_STYLE.BORDER }) => {
+export const Content = ({
+    children,
+    style = Content.CONFIGURATION.STYLE.BORDER
+}) => {
     const base = css`
         display: grid;
         gap: 20px;
@@ -21,16 +19,19 @@ export const FormSectionContent = ({ children, style = FORM_SECTION_CONTENT_STYL
     const getStyles = () => {
         let styles = [base];
 
-        if (style === FORM_SECTION_CONTENT_STYLE.BORDER) {
+        if (style === Content.CONFIGURATION.STYLE.BORDER) {
             styles.push(withBorder);
         }
 
         return styles;
-    }
+    };
 
-    return (
-        <div css={getStyles}>
-            {children}
-        </div>
-    )
-}
+    return <div css={getStyles}>{children}</div>;
+};
+
+Content.CONFIGURATION = {
+    STYLE: {
+        BORDER: "BORDER",
+        NO_BORDER: "NO_BORDER"
+    }
+};

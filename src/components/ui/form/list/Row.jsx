@@ -1,8 +1,8 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const FormListRow = ({ children }) => {
-    const listRowStyle = css`
+export const Row = ({ children }) => {
+    const style = css`
         display: grid;
         grid-template-columns: 1fr 2fr 1fr 1fr;
         align-items: center;
@@ -13,9 +13,5 @@ export const FormListRow = ({ children }) => {
         }
     `;
 
-    return (
-        <div css={listRowStyle}>
-            {children}
-        </div>
-    )
-}
+    return <div css={style}>{children}</div>;
+};

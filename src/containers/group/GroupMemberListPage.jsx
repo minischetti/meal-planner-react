@@ -1,26 +1,14 @@
 import React, { useEffect } from "react";
-import { AbstractPage } from "../../containers";
-import { GlobalHeader } from "../../components";
-import { List, ListItemLink } from "../../components/ui/list";
-import { Spinner } from "../../components/ui/general";
-import {
-    PageHeader,
-    PageSection,
-    PAGE_SECTION_AREA
-} from "../../components/ui/page";
+import { List, Loading, Page } from "../../components";
 import { useParams } from "react-router";
-import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
-import { Bar, BarSection } from "../../components/ui/bar";
-import { LinkWrapper } from "../../components/ui/controls";
 import { AbstractGroupPage } from "./AbstractGroupPage";
 
 export const GroupMemberListPage = () => {
     const { groupId } = useParams();
     const [members, setMembers] = useState([]);
     const [waiting, setWaiting] = useState(true);
-    const { user } = useAuthSession();
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -45,41 +33,26 @@ export const GroupMemberListPage = () => {
         }
 
         return members.map((member, index) => (
-            <ListItemLink key={index} to={`/profiles/${member.id}`}>
+            <List.Link key={index} to={`/profiles/${member.id}`}>
                 <div>
                     {member.name}
                 </div>
-                {/* <div>{member.role}</div> */}
-            </ListItemLink>
+            </List.Link>
         ));
     };
 
-    // const newRecipeButton = () => {
-    //     if (!user || !user.uid === profileId) {
-    //         return null;
-    //     }
-    //     return (
-    //         <LinkWrapper to="/recipe/new">
-    //             <Button color={BUTTON_COLOR.GREEN}>
-    //                 New Recipe
-    //                 <ion-icon name="add-circle-outline" />
-    //             </Button>
-    //         </LinkWrapper>
-    //     );
-    // };
-
     return (
         <AbstractGroupPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Group Members" />
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Group Members" />
                 {waiting ? (
-                    <Spinner />
+                    <Loading.Spinner />
                 ) : (
-                    <List emptyText="Members will appear in this list.">
+                    <List.Container emptyText="Members will appear in this list.">
                         {memberListItems()}
-                    </List>
+                    </List.Container>
                 )}
-            </PageSection>
+            </Page.Section>
         </AbstractGroupPage>
     );
 };

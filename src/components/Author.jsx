@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiBaseUrl } from "../configuration";
-import { LinkWrapper } from "./ui/controls";
+import { LinkWrapper } from "./ui/control";
 
 export const Author = ({ id, role }) => {
     const [profile, setProfile] = useState({});

@@ -1,18 +1,6 @@
 import React, { useEffect } from "react";
 import { AbstractUserPage } from "../../containers";
-import { GroupListItem } from "../../components";
-import {
-    Button,
-    BUTTON_COLOR,
-    LinkWrapper
-} from "../../components/ui/controls";
-import { List } from "../../components/ui/list";
-import { Spinner } from "../../components/ui/general";
-import {
-    PageHeader,
-    PageSection,
-    PAGE_SECTION_AREA
-} from "../../components/ui/page";
+import { List, Loading, Page, Control } from "../../components";
 import { useParams } from "react-router";
 import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
@@ -47,7 +35,9 @@ export const UserGroupListPage = () => {
         }
 
         return groups.map(group => (
-            <GroupListItem key={group.id} name={group.name} id={group.id} />
+            <List.Link key={group.id} to={`/groups/${group.id}`}>
+                {group.name}
+            </List.Link>
         ));
     };
 
@@ -57,21 +47,27 @@ export const UserGroupListPage = () => {
         }
 
         return (
-            <LinkWrapper to="/group/new">
-                <Button color={BUTTON_COLOR.GREEN}>
+            <Control.LinkWrapper to="/group/new">
+                <Control.Button
+                    color={Control.Button.CONFIGURATION.COLOR.DEFAULT}
+                >
                     New Group
                     <ion-icon name="add-circle-outline" />
-                </Button>
-            </LinkWrapper>
+                </Control.Button>
+            </Control.LinkWrapper>
         );
     };
 
     return (
         <AbstractUserPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Groups">{newGroupButton()}</PageHeader>
-                {waiting ? <Spinner /> : <List>{groupListItems()}</List>}
-            </PageSection>
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Groups">{newGroupButton()}</Page.Header>
+                {waiting ? (
+                    <Loading.Spinner />
+                ) : (
+                    <List.Container>{groupListItems()}</List.Container>
+                )}
+            </Page.Section>
         </AbstractUserPage>
     );
 };

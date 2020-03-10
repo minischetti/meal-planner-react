@@ -1,13 +1,10 @@
 import React from "react";
 import { AbstractPage } from "../../containers";
-import { PAGE_SECTION_AREA, PageSection } from "../../components/ui/page";
-import { NavLinkWrapper } from "../../components/ui/controls";
 import { useParams } from "react-router";
 import { useState } from "react";
-import { Spinner } from "../../components/ui/general";
 import { useEffect } from "react";
 import { apiBaseUrl } from "../../configuration/api";
-import { Bar, IdentityPanel } from "../../components";
+import { Bar, IdentityPanel, Loading, Control, Page } from "../../components";
 
 export const AbstractUserPage = ({ children }) => {
     const { profileId } = useParams();
@@ -34,40 +31,43 @@ export const AbstractUserPage = ({ children }) => {
     return (
         <AbstractPage>
             {/* Profile and Navigation */}
-            <PageSection area={PAGE_SECTION_AREA.LEFT}>
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.LEFT}>
                 <Bar.Container>
                     <Bar.Section>
                         {waiting ? (
-                            <Spinner />
+                            <Loading.Spinner />
                         ) : (
                             <IdentityPanel.User name={profile.name} />
                         )}
                     </Bar.Section>
                     <Bar.Section title="Navigation">
-                        <NavLinkWrapper exact to={`/profiles/${profileId}`}>
+                        <Control.NavLinkWrapper
+                            exact
+                            to={`/profiles/${profileId}`}
+                        >
                             Home
-                        </NavLinkWrapper>
-                        <NavLinkWrapper
+                        </Control.NavLinkWrapper>
+                        <Control.NavLinkWrapper
                             exact
                             to={`/profiles/${profileId}/profile`}
                         >
                             Profile
-                        </NavLinkWrapper>
-                        <NavLinkWrapper
+                        </Control.NavLinkWrapper>
+                        <Control.NavLinkWrapper
                             exact
                             to={`/profiles/${profileId}/groups`}
                         >
                             Groups
-                        </NavLinkWrapper>
-                        <NavLinkWrapper
+                        </Control.NavLinkWrapper>
+                        <Control.NavLinkWrapper
                             exact
                             to={`/profiles/${profileId}/recipes`}
                         >
                             Recipes
-                        </NavLinkWrapper>
+                        </Control.NavLinkWrapper>
                     </Bar.Section>
                 </Bar.Container>
-            </PageSection>
+            </Page.Section>
             {children}
         </AbstractPage>
     );

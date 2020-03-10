@@ -28,6 +28,7 @@ import {
 
 // Authentication
 import { useAuth } from "./hooks/useAuth";
+import { NewGroupPage } from "./containers/NewGroupPage";
 
 const AuthenticatedRoute = ({ children }) => {
     const { user } = useContext(authContext);
@@ -108,6 +109,11 @@ function App() {
                                 exact
                                 path="/recipes/:recipeId/edit"
                                 component={EditRecipePage}
+                            />
+                           <Route
+                                exact
+                                path="/groups/new"
+                                component={NewGroupPage}
                             />
                         </AuthenticatedRoute>
                     </Switch>

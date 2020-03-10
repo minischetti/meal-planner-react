@@ -1,17 +1,13 @@
 import React from "react";
-import {
-    PageHeader,
-    PAGE_SECTION_AREA,
-    PageSection
-} from "../../components/ui/page";
+import { Page } from "../../components";
 import { AbstractGroupPage } from "./AbstractGroupPage";
 
 export const GroupHomePage = () => {
     return (
         <AbstractGroupPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Group Home" />
-            </PageSection>
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Group Home" />
+            </Page.Section>
             {/* Recent Activity */}
         </AbstractGroupPage>
     );

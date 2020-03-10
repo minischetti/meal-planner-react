@@ -2,8 +2,9 @@ import React, { Fragment } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { css } from "@emotion/core";
 import { useAuthSession } from "../hooks";
-import { Spinner } from "./ui/general";
-import { Button, NavLinkWrapper } from "./ui/controls";
+import { Spinner } from "./ui/loading";
+import { Button, NavLinkWrapper } from "./ui/control";
+import {Control, Loading} from "../components";
 
 export const GlobalHeader = () => {
     const { user, authInProgress, signIn, signOut } = useAuthSession();
@@ -46,26 +47,26 @@ export const GlobalHeader = () => {
     const linkContainer = () => {
         return (
             <div css={linkContainerStyle}>
-                <NavLinkWrapper exact css={link} to={`/profiles/${user.uid}`}>
+                <Control.NavLinkWrapper exact css={link} to={`/profiles/${user.uid}`}>
                     My Home
-                </NavLinkWrapper>
-                <NavLinkWrapper exact css={link} to={`/profiles/${user.uid}/profile`}>
+                </Control.NavLinkWrapper>
+                <Control.NavLinkWrapper exact css={link} to={`/profiles/${user.uid}/profile`}>
                     My Profile
-                </NavLinkWrapper>
-                <NavLinkWrapper
+                </Control.NavLinkWrapper>
+                <Control.NavLinkWrapper
                     exact
                     css={link}
                     to={`/profiles/${user.uid}/groups/`}
                 >
                     My Groups
-                </NavLinkWrapper>
-                <NavLinkWrapper
+                </Control.NavLinkWrapper>
+                <Control.NavLinkWrapper
                     exact
                     css={link}
                     to={`/profiles/${user.uid}/recipes/`}
                 >
                     My Recipes
-                </NavLinkWrapper>
+                </Control.NavLinkWrapper>
             </div>
         );
     };
@@ -73,20 +74,20 @@ export const GlobalHeader = () => {
     const handleSignIn = () => history.push("/login");
     const signInButton = () => {
         return (
-            <Button name="signIn" onClick={handleSignIn}>
+            <Control.Button name="signIn" onClick={handleSignIn}>
                 Sign In
                 <ion-icon name="log-in-outline"></ion-icon>
-            </Button>
+            </Control.Button>
         );
     };
 
     const handleSignOut = () => signOut();
     const signOutButton = () => {
         return (
-            <Button name="signOut" onClick={handleSignOut}>
+            <Control.Button name="signOut" onClick={handleSignOut}>
                 Sign Out
                 <ion-icon name="log-out-outline"></ion-icon>
-            </Button>
+            </Control.Button>
         );
     };
 
@@ -101,12 +102,12 @@ export const GlobalHeader = () => {
     return (
         <div css={headerStyle}>
             {authInProgress ? (
-                <Spinner />
+                <Loading.Spinner />
             ) : (
                 <Fragment>
-                    <Link css={[link, titleStyle]} to="/">
+                    <Control.LinkWrapper css={[link, titleStyle]} to="/">
                         Meal Planner
-                    </Link>
+                    </Control.LinkWrapper>
                     {user ? linkContainer() : null}
                     {authPanel()}
                 </Fragment>

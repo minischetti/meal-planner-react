@@ -1,2 +1,2 @@
-export { PageHeader } from "./page/PageHeader";
-export { PageSection, PAGE_SECTION_AREA } from "./page/PageSection";
+export { Header } from "./page/Header";
+export { Section } from "./page/Section";

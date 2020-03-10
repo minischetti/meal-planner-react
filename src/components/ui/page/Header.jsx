@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const PageHeader = ({ title, children }) => {
+export const Header = ({ title, children }) => {
     const headerStyle = css`
         display: flex;
         justify-content: space-between;

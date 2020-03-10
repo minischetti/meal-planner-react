@@ -1,21 +1,11 @@
 import React, { useEffect } from "react";
 import { AbstractUserPage } from "../../containers";
-import {
-    Button,
-    BUTTON_COLOR,
-    LinkWrapper
-} from "../../components/ui/controls";
-import { List, ListItemLink } from "../../components/ui/list";
-import { Spinner } from "../../components/ui/general";
-import {
-    PageHeader,
-    PageSection,
-    PAGE_SECTION_AREA
-} from "../../components/ui/page";
 import { useParams } from "react-router";
 import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
+
+import {Control, List, Loading, Page} from "../../components";
 
 export const UserRecipeListPage = () => {
     const { profileId } = useParams();
@@ -47,9 +37,9 @@ export const UserRecipeListPage = () => {
         }
 
         return recipes.map(recipe => (
-            <ListItemLink key={recipe.id} to={`/recipes/${recipe.id}`}>
+            <List.Link key={recipe.id} to={`/recipes/${recipe.id}`}>
                 <div>{recipe.name}</div>
-            </ListItemLink>
+            </List.Link>
         ));
     };
 
@@ -59,27 +49,27 @@ export const UserRecipeListPage = () => {
         }
 
         return (
-            <LinkWrapper to="/recipe/new">
-                <Button color={BUTTON_COLOR.GREEN}>
+            <Control.LinkWrapper to="/recipe/new">
+                <Control.Button color={Control.Button.CONFIGURATION.COLOR.GREEN}>
                     New Recipe
                     <ion-icon name="add-circle-outline" />
-                </Button>
-            </LinkWrapper>
+                </Control.Button>
+            </Control.LinkWrapper>
         );
     };
 
     return (
         <AbstractUserPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Recipes">{newRecipeButton()}</PageHeader>
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Recipes">{newRecipeButton()}</Page.Header>
                 {waiting ? (
-                    <Spinner />
+                    <Loading.Spinner />
                 ) : (
-                    <List emptyText="Recipes will appear in this list.">
+                    <List.Container emptyText="Recipes will appear in this list.">
                         {recipeListItems()}
-                    </List>
+                    </List.Container>
                 )}
-            </PageSection>
+            </Page.Section>
         </AbstractUserPage>
     );
 };

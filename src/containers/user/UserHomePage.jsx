@@ -1,13 +1,15 @@
 import * as React from "react";
-import { PageHeader, PageSection, PAGE_SECTION_AREA } from "../../components/ui/page";
+import { Page } from "../../components";
 import { AbstractUserPage } from "../../containers";
 
 export const UserHomePage = () => {
+    const { POSITION } = Page.Section.CONFIGURATION;
+
     return (
         <AbstractUserPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Home" />
-            </PageSection>
+            <Page.Section position={POSITION.MAIN}>
+                <Page.Header title="Home" />
+            </Page.Section>
             {/* Recent Activity */}
         </AbstractUserPage>
     );

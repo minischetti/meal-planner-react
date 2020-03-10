@@ -1,1 +1,0 @@
-export { Spinner } from "./general/Spinner";

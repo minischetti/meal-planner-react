@@ -1,13 +1,13 @@
 import * as React from "react";
 import { AbstractPage } from "./AbstractPage";
-import { PageSection, PageHeader, PAGE_SECTION_AREA } from "../components/ui/page";
+import { Page } from "../components";
 
 export const HomePage = () => {
     return (
         <AbstractPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Home" />
-            </PageSection>
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Home" />
+            </Page.Section>
             {/* Recent Activity */}
         </AbstractPage>
     );

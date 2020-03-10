@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { AbstractPage } from "../containers";
-import { ComposableRecipe, COMPOSABLE_RECIPE_MODE } from "../components";
-import { PageHeader, PageSection, PAGE_SECTION_AREA } from "../components/ui/page";
-import { Spinner } from "../components/ui/general";
+import {
+    ComposableRecipe,
+    COMPOSABLE_RECIPE_MODE,
+    Page,
+    Loading
+} from "../components";
 import { apiBaseUrl } from "../configuration";
 
 export const EditRecipePage = () => {
@@ -32,10 +35,10 @@ export const EditRecipePage = () => {
 
     return (
         <AbstractPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Edit Recipe" />
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Edit Recipe" />
                 {waiting ? (
-                    <Spinner />
+                    <Loading.Spinner />
                 ) : (
                     <ComposableRecipe
                         recipeId={recipe.id}
@@ -48,7 +51,7 @@ export const EditRecipePage = () => {
                         mode={COMPOSABLE_RECIPE_MODE.UPDATE}
                     />
                 )}
-            </PageSection>
+            </Page.Section>
         </AbstractPage>
     );
 };

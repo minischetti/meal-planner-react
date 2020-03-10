@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
-import { Profile } from "../../components";
-import {
-    PageHeader,
-    PageSection,
-    PAGE_SECTION_AREA
-} from "../../components/ui/page";
+import { Profile, Page, Loading } from "../../components";
 import { AbstractUserPage } from "../../containers";
 import { useState } from "react";
-import { Spinner } from "../../components/ui/general";
 import { useParams } from "react-router";
 import { apiBaseUrl } from "../../configuration";
 
@@ -35,14 +29,14 @@ export const UserProfilePage = () => {
 
     return (
         <AbstractUserPage>
-            <PageSection area={PAGE_SECTION_AREA.MAIN}>
-                <PageHeader title="Profile" />
+            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+                <Page.Header title="Profile" />
                 {waiting ? (
-                    <Spinner />
+                    <Loading.Spinner />
                 ) : (
                     <Profile profileId={profile.id} name={profile.name} />
                 )}
-            </PageSection>
+            </Page.Section>
         </AbstractUserPage>
     );
 };
