@@ -73,26 +73,6 @@ export const logout = () => {
     };
 };
 
-export const REQUEST_RECIPES = "REQUEST_RECIPES";
-export const requestRecipes = userId => {
-    return dispatch => {
-        return fetch(apiBaseUrl + "people/" + userId + "/recipes")
-            .then(response => response.json())
-            .then(recipes => {
-                const payload = { profileId: userId, recipes };
-                dispatch(recieveRecipes(payload));
-            });
-    };
-};
-
-export const RECIEVE_RECIPES = "RECIEVE_RECIPES";
-export const recieveRecipes = payload => {
-    return {
-        type: RECIEVE_RECIPES,
-        payload
-    };
-};
-
 export const EDIT_RECIPE_NAME_REQUEST = "EDIT_RECIPE_NAME_REQUEST";
 export function editRecipeName({ recipeId, newRecipeName }) {
     return dispatch => {
@@ -196,20 +176,10 @@ export const createGroup = payload => {
         )
             .then(response => response.json())
             .then(data => {
-                const payload = {
-                    error: false,
-                    groupId: data.groupId
-                };
-
-                return dispatch(createGroupResponse(payload));
+                return dispatch(createGroupResponse(data));
             })
             .catch(error => {
-                const payload = {
-                    error: true,
-                    groupId: null
-                };
-
-                return dispatch(createGroupResponse(payload));
+                return dispatch(createGroupResponse(data));
             });
     };
 };
@@ -240,6 +210,7 @@ const withCurrentUserId = payload => {
 
     return {
         profileId,
+        userId: profileId,
         ...payload
     };
 };

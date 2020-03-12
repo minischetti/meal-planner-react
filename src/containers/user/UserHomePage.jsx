@@ -3,7 +3,7 @@ import { Page } from "../../components";
 import { AbstractUserPage } from "../../containers";
 
 export const UserHomePage = () => {
-    const { POSITION } = Page.Section.CONFIGURATION;
+    const { POSITION } = Page.SECTION_CONFIGURATION;
 
     return (
         <AbstractUserPage>

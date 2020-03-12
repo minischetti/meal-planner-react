@@ -1,3 +1,4 @@
+import React from "react";
 import { css } from "@emotion/core";
 
 export const Section = ({ position, children }) => {
@@ -11,7 +12,7 @@ export const Section = ({ position, children }) => {
     return <div css={style}>{children}</div>;
 };
 
-Section.CONFIGURATION = {
+export const SECTION_CONFIGURATION = {
     POSITION: {
         GLOBAL: "global",
         HEADER: "header",

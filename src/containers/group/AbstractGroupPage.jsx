@@ -1,6 +1,6 @@
 import React from "react";
 import { AbstractPage } from "../../containers";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { apiBaseUrl } from "../../configuration/api";
 import { Bar, IdentityPanel, Loading, Page, Control } from "../../components";
@@ -29,7 +29,7 @@ export const AbstractGroupPage = ({ children }) => {
     return (
         <AbstractPage>
             {/* Navigation */}
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.LEFT}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.LEFT}>
                 <Bar.Container>
                     <Bar.Section>
                         {waiting ? (

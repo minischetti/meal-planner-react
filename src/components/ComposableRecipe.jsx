@@ -7,7 +7,7 @@ import {
     resetRecipeResponse,
     updateRecipe
 } from "../redux/actions";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import {
     getRecipeWaitingStatusFrom,
     getRecipeErrorStatusFrom
@@ -45,6 +45,7 @@ export const ComposableRecipe = ({
     initialDescription = "",
     initialIngredients = [],
     initialInstructions = [],
+    initialContributors=[],
     mode = COMPOSABLE_RECIPE_MODE.CREATE
 }) => {
     const dispatch = useDispatch();
@@ -203,11 +204,15 @@ export const ComposableRecipe = ({
                 ? "There was an error creating this recipe. Please try again."
                 : ""}
             <Form.Container onSubmit={onSubmit}>
-                <Form.Section>
+                <Form.Section.Container>
                     <Form.Section.Header>
                         <Form.Section.Title>Details</Form.Section.Title>
                     </Form.Section.Header>
-                    <Form.Section.Content style={Form.Section.Content.CONFIGURATION.STYLE.NO_BORDER}>
+                    <Form.Section.Content
+                        style={
+                            Form.Section.CONTENT_CONFIGURATION.STYLE.NO_BORDER
+                        }
+                    >
                         <Control.TextField
                             value={recipeName}
                             placeholder="Name"
@@ -247,10 +252,10 @@ export const ComposableRecipe = ({
                             }
                         />
                     </Form.Section.Content>
-                </Form.Section>
+                </Form.Section.Container>
 
                 {/* Ingredients Form Section */}
-                <Form.Section>
+                <Form.Section.Container>
                     <Form.Section.Header>
                         <Form.Section.Title>
                             Ingredients
@@ -276,10 +281,7 @@ export const ComposableRecipe = ({
                                 checked={isIngredientOptional}
                                 checkedCallback={setIsIngredientOptional}
                             />
-                            <Control.Button
-                                type={Control.BUTTON_TYPE.BUTTON}
-                                onClick={handleAddIngredient}
-                            >
+                            <Control.Button onClick={handleAddIngredient}>
                                 Add
                                 <ion-icon name="add-circle-outline"></ion-icon>
                             </Control.Button>
@@ -332,10 +334,10 @@ export const ComposableRecipe = ({
                             </Form.List.Content>
                         </Form.List.Container>
                     </Form.Section.Content>
-                </Form.Section>
+                </Form.Section.Container>
 
                 {/* Instructions Form Section */}
-                <Form.Section>
+                <Form.Section.Container>
                     <Form.Section.Header>
                         <Form.Section.Title>
                             Instructions
@@ -361,17 +363,14 @@ export const ComposableRecipe = ({
                                 checked={isInstructionOptional}
                                 checkedCallback={setIsInstructionOptional}
                             />
-                            <Control.Button
-                                type={Control.BUTTON_TYPE.BUTTON}
-                                onClick={handleAddInstruction}
-                            >
+                            <Control.Button onClick={handleAddInstruction}>
                                 Add
                                 <ion-icon name="add-circle-outline" />
                             </Control.Button>
                         </Form.Section.ActionBar>
                     </Form.Section.Header>
                     <Form.Section.Content>
-                        <Form.List>
+                        <Form.List.Container>
                             <Form.List.Header>
                                 <div>Number</div>
                                 <div>Description</div>
@@ -386,7 +385,7 @@ export const ComposableRecipe = ({
                                 ) : (
                                     instructions.map((instruction, index) => {
                                         return (
-                                            <FormListRow key={index}>
+                                            <Form.List.Row key={index}>
                                                 <div>{index + 1}</div>
                                                 <div>
                                                     {instruction.description}
@@ -410,14 +409,15 @@ export const ComposableRecipe = ({
                                                         name="remove-circle-outline"
                                                     />
                                                 </div>
-                                            </FormListRow>
+                                            </Form.List.Row>
                                         );
                                     })
                                 )}
                             </Form.List.Content>
-                        </Form.List>
+                        </Form.List.Container>
                     </Form.Section.Content>
-                </Form.Section>
+                </Form.Section.Container>
+
                 {/* Cancel and Save */}
                 <div css={buttonActionBarStyle}>
                     {/* Show the delete recipe button if this recipe is being edited */}

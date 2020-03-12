@@ -15,7 +15,7 @@ export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
     const content = css`
         display: grid;
         gap: 20px;
-        grid-template-areas: "${Page.Section.CONFIGURATION.POSITION.MAIN}";
+        grid-template-areas: "${Page.SECTION_CONFIGURATION.POSITION.MAIN}";
         @media (min-width: 375px) {
             width: 60%;
             margin: 0 auto;
@@ -24,7 +24,7 @@ export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
 
     const trifold = css`
         grid-template-columns: 1fr 2fr 1fr;
-        grid-template-areas: "${Page.Section.CONFIGURATION.POSITION.LEFT} ${Page.Section.CONFIGURATION.POSITION.MAIN} ${Page.Section.CONFIGURATION.POSITION.MAIN}";
+        grid-template-areas: "${Page.SECTION_CONFIGURATION.POSITION.LEFT} ${Page.SECTION_CONFIGURATION.POSITION.MAIN} ${Page.SECTION_CONFIGURATION.POSITION.MAIN}";
     `;
 
     const getContentStyles = () => {

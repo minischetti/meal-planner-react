@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { AbstractPage } from "../containers";
 import {
     ComposableRecipe,
@@ -35,7 +35,7 @@ export const EditRecipePage = () => {
 
     return (
         <AbstractPage>
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header title="Edit Recipe" />
                 {waiting ? (
                     <Loading.Spinner />

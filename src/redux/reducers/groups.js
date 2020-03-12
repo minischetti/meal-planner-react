@@ -3,10 +3,7 @@ import { CREATE_GROUP_REQUEST, CREATE_GROUP_RESPONSE, RESET_CREATE_GROUP_STATUS 
 const initialState = {
     groups: [],
     waiting: false,
-    response: {
-        error: false,
-        groupId: null
-    }
+    response: null
 };
 
 export function groups(previousState = initialState, action) {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { AbstractUserPage } from "../../containers";
 import { List, Loading, Page, Control } from "../../components";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
@@ -60,7 +60,7 @@ export const UserGroupListPage = () => {
 
     return (
         <AbstractUserPage>
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header title="Groups">{newGroupButton()}</Page.Header>
                 {waiting ? (
                     <Loading.Spinner />

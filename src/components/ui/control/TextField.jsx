@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { css } from "@emotion/core";
 
-export const TextField = forwardRef(({ name, placeholder, value, defaultValue, onChange }, ref) => {
+export const TextField = forwardRef(({ name, placeholder, value, defaultValue, onChange }, ref = null) => {
     const inputStyle = css`
         display: flex;
         -webkit-appearance: none;
@@ -13,6 +13,6 @@ export const TextField = forwardRef(({ name, placeholder, value, defaultValue, o
     `;
 
     return (
-        <input css={inputStyle} type="text" name={name} placeholder={placeholder} value={value} onChange={onChange} defaultValue={defaultValue} ref={ref} />
+        <input css={inputStyle} type="text" name={name} placeholder={placeholder} value={value} onChange={onChange} defaultValue={defaultValue} ref={ref}></input>
     )
 });

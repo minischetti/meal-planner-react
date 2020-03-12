@@ -1,16 +1,22 @@
 import React, { useState, Fragment } from "react";
 import { Form, Control } from "../components";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createGroup } from "../redux/actions";
-import { getCreateGroupResponseFrom } from "../redux/selectors";
+import {
+    getCreateGroupResponseFrom,
+    getCreateGroupErrorStatusFrom
+} from "../redux/selectors";
 
 export const ComposableGroup = () => {
-    const [groupName, setGroupName] = useState();
+    const [groupName, setGroupName] = useState("");
     const history = useHistory();
     const dispatch = useDispatch();
     const createGroupResponse = useSelector(state =>
         getCreateGroupResponseFrom(state)
+    );
+    const hasError = useSelector(state =>
+        getCreateGroupErrorStatusFrom(state)
     );
 
     const onSubmit = event => {
@@ -21,7 +27,9 @@ export const ComposableGroup = () => {
 
         dispatch(createGroup(payload));
 
-        if (!createGroupResponse.error) {
+        console.log("createGroupResponse", createGroupResponse);
+
+        if (!hasError) {
             history.push(`/groups/${createGroupResponse.groupId}`);
         }
     };
@@ -32,21 +40,28 @@ export const ComposableGroup = () => {
 
     return (
         <Fragment>
-            {createGroupResponse.error
+            {hasError
                 ? "There was an error creating this group. Please try again."
                 : ""}
 
             <Form.Container onSubmit={onSubmit}>
-                <Form.Section>
-                    <Form.Section.Content>
+                <Form.Section.Container>
+                    <Form.Section.Header>
+                        <Form.Section.Title>Details</Form.Section.Title>
+                    </Form.Section.Header>
+                    <Form.Section.Content
+                        style={
+                            Form.Section.CONTENT_CONFIGURATION.STYLE.NO_BORDER
+                        }
+                    >
                         <Control.TextField
                             value={groupName}
-                            placeholder={groupName}
+                            placeholder="Group Name"
                             onChange={event => setGroupName(event.target.value)}
                         />
                     </Form.Section.Content>
-                </Form.Section>
-                <Form.Footer>
+                </Form.Section.Container>
+                <Form.Footer.Container>
                     <Control.Button
                         color={Control.BUTTON_CONFIGURATION.COLOR.BLUE}
                         onClick={onCancel}
@@ -61,7 +76,7 @@ export const ComposableGroup = () => {
                         Create
                         <ion-icon name="save-outline" />
                     </Control.Button>
-                </Form.Footer>
+                </Form.Footer.Container>
             </Form.Container>
         </Fragment>
     );

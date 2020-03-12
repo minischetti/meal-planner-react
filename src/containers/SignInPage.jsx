@@ -13,7 +13,7 @@ export const SignInPage = () => {
 
     return (
         <AbstractPage disableGlobalHeader={true}>
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header title="Sign In" />
                 {authInProgress ? <Loading.Spinner /> : <SignIn />}
             </Page.Section>

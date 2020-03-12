@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
@@ -42,7 +42,7 @@ export const GroupRecipeListPage = () => {
 
     return (
         <AbstractGroupPage>
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header title="Group Recipes" />
                 {waiting ? (
                     <Loading.Spinner />

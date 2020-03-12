@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { apiBaseUrl } from "../configuration";
 import { Recipe, EditRecipeButton, Page, Loading } from "../components";
 import { AbstractPage } from "../containers";
@@ -43,7 +43,7 @@ export const ReadOnlyRecipePage = () => {
 
     return (
         <AbstractPage>
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header title="Recipe">
                     {canEditRecipe() ? (
                         <EditRecipeButton id={recipe.id} />

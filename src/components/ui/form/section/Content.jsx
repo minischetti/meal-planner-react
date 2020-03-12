@@ -3,7 +3,7 @@ import { css } from "@emotion/core";
 
 export const Content = ({
     children,
-    style = Content.CONFIGURATION.STYLE.BORDER
+    style = CONTENT_CONFIGURATION.STYLE.BORDER
 }) => {
     const base = css`
         display: grid;
@@ -19,17 +19,17 @@ export const Content = ({
     const getStyles = () => {
         let styles = [base];
 
-        if (style === Content.CONFIGURATION.STYLE.BORDER) {
+        if (style === CONTENT_CONFIGURATION.STYLE.BORDER) {
             styles.push(withBorder);
         }
 
         return styles;
     };
 
-    return <div css={getStyles}>{children}</div>;
+    return <div css={getStyles()}>{children}</div>;
 };
 
-Content.CONFIGURATION = {
+export const CONTENT_CONFIGURATION = {
     STYLE: {
         BORDER: "BORDER",
         NO_BORDER: "NO_BORDER"

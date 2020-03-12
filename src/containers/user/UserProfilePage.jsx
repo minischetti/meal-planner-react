@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Profile, Page, Loading } from "../../components";
 import { AbstractUserPage } from "../../containers";
 import { useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { apiBaseUrl } from "../../configuration";
 
 export const UserProfilePage = () => {
@@ -29,7 +29,7 @@ export const UserProfilePage = () => {
 
     return (
         <AbstractUserPage>
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header title="Profile" />
                 {waiting ? (
                     <Loading.Spinner />

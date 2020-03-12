@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { apiBaseUrl } from "../../configuration";
 import { Page, Loading } from "../../components";
 import { AbstractGroupPage } from "./AbstractGroupPage";
@@ -28,7 +28,7 @@ export const GroupProfilePage = () => {
 
     return (
         <AbstractGroupPage>
-            <Page.Section position={Page.Section.CONFIGURATION.POSITION.MAIN}>
+            <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header subTitle={group.name} title="Group Profile" />
                 {waiting ? <Loading.Spinner /> : <div>Group profile page</div>}
             </Page.Section>

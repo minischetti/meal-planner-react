@@ -2,10 +2,10 @@ import React from "react";
 import { css } from "@emotion/core";
 
 export const Container = ({ children }) => {
-    const container = css`
+    const style = css`
         display: grid;
         gap: 20px;
     `;
 
-    return <div css={container}>{children}</div>;
+    return <div css={style}>{children}</div>;
 };
