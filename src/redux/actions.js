@@ -179,7 +179,7 @@ export const createGroup = payload => {
                 return dispatch(createGroupResponse(data));
             })
             .catch(error => {
-                return dispatch(createGroupResponse(data));
+                return dispatch(createGroupResponse(error));
             });
     };
 };
@@ -188,7 +188,7 @@ export const CREATE_GROUP_RESPONSE = "CREATE_GROUP_RESPONSE";
 export const createGroupResponse = payload => {
     return {
         type: CREATE_GROUP_RESPONSE,
-        ...payload
+        payload
     };
 };
 

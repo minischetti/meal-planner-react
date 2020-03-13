@@ -27,9 +27,7 @@ export const ComposableGroup = () => {
 
         dispatch(createGroup(payload));
 
-        console.log("createGroupResponse", createGroupResponse);
-
-        if (!hasError) {
+        if (!hasError && createGroupResponse && createGroupResponse.groupId) {
             history.push(`/groups/${createGroupResponse.groupId}`);
         }
     };

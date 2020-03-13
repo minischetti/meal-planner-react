@@ -8,6 +8,6 @@ export const getRecipeResponseFrom = state => state.recipes.response;
 export const getRecipeErrorStatusFrom = state => (state?.recipes?.response) ? state.recipes.response.result !== "success" : false;
 
 // Groups
-export const getCreateGroupResponseFrom = state => (state?.groups?.response) ? state.groups.response : null;
+export const getCreateGroupResponseFrom = state => state && state.groups && state.groups.response ? state.groups.response : null;
 
-export const getCreateGroupErrorStatusFrom = state => (state?.groups?.response) ? state.groups.response.result !== "success" : false;
+export const getCreateGroupErrorStatusFrom = state => state && state.groups && state.groups.response && state.groups.response.hasError;
