@@ -19,4 +19,6 @@ import * as Form from "./components/ui/form";
 import * as Page from "./components/ui/page";
 import * as List from "./components/ui/list";
 import * as Loading from "./components/ui/loading";
-export { IdentityPanel, Bar, Control, Form, Page, List, Loading };
+import * as Modal from "./components/ui/modal";
+
+export { IdentityPanel, Bar, Control, Form, Page, List, Loading, Modal };
