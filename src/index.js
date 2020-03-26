@@ -4,7 +4,13 @@ import { render } from "react-dom";
 import { Provider as StoreProvider } from "react-redux";
 import { authContext } from "./context";
 import store from "./redux/store";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import {
+    BrowserRouter,
+    Route,
+    Switch,
+    Redirect,
+    useHistory
+} from "react-router-dom";
 
 // Containers
 import {
@@ -29,14 +35,25 @@ import {
 // Authentication
 import { useAuth } from "./hooks/useAuth";
 import { NewGroupPage } from "./containers/NewGroupPage";
+import { LoadingPage } from "./containers/LoadingPage";
 
 const AuthenticatedRoute = ({ children }) => {
     const { user } = useContext(authContext);
+    const history = useHistory();
     const isAuthenticated = !!user;
 
     return (
         <React.Fragment>
-            {isAuthenticated ? children : <Redirect to="/sign-in" />}
+            {isAuthenticated ? (
+                children
+            ) : (
+                <Redirect
+                    to={{
+                        pathname: "/sign-in",
+                        state: { referrer: history.location }
+                    }}
+                />
+            )}
         </React.Fragment>
     );
 };
@@ -44,6 +61,10 @@ const AuthenticatedRoute = ({ children }) => {
 function App() {
     const { authState, signIn, signOut } = useAuth();
     const { user, authInProgress, authError } = authState;
+
+    if (authInProgress) {
+        return <LoadingPage />
+    }
 
     return (
         <authContext.Provider
@@ -110,7 +131,7 @@ function App() {
                                 path="/recipes/:recipeId/edit"
                                 component={EditRecipePage}
                             />
-                           <Route
+                            <Route
                                 exact
                                 path="/group/new"
                                 component={NewGroupPage}

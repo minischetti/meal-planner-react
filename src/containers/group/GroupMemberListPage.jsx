@@ -41,6 +41,23 @@ export const GroupMemberListPage = () => {
         ));
     };
 
+    const addMemberButton = () => {
+        if (!user || !user.uid === profileId) {
+            return null;
+        }
+
+        return (
+            <Control.LinkWrapper to="/group/new">
+                <Control.Button
+                    color={Control.BUTTON_CONFIGURATION.COLOR.DEFAULT}
+                >
+                    New Group
+                    <ion-icon name="add-circle-outline" />
+                </Control.Button>
+            </Control.LinkWrapper>
+        );
+    };
+
     return (
         <AbstractGroupPage>
             <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>

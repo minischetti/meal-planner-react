@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { css } from "@emotion/core";
-import { useAuth } from "../hooks/useAuth";
 import { useAuthSession } from "../hooks";
 import { Control } from "../components";
 

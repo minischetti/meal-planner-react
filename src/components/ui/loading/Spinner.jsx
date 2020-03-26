@@ -5,6 +5,7 @@ export const Spinner = () => {
     const spinnerStyle = css`
         justify-self: center;
         align-self: center;
+        margin: auto;
     `;
 
     return (
@@ -17,7 +18,7 @@ export const Spinner = () => {
             stroke="#000"
         >
             <g fill="none" fillRule="evenodd">
-                <g transform="translate(1 1)" strokeWidth="2">
+                <g transform="translate(1 1)" strokeWidth="1">
                     <circle strokeOpacity=".25" cx="18" cy="18" r="18" />
                     <path d="M36 18c0-9.94-8.06-18-18-18">
                         <animateTransform

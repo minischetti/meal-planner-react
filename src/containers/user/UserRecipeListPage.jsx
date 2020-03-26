@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import { useAuthSession } from "../../hooks/useAuthSession";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
+import { motion, AnimatePresence } from "framer-motion";
 
-import {Control, List, Loading, Page} from "../../components";
+import { Control, List, Loading, Page } from "../../components";
 
 export const UserRecipeListPage = () => {
     const { profileId } = useParams();
@@ -32,15 +33,24 @@ export const UserRecipeListPage = () => {
     }, []);
 
     const recipeListItems = () => {
-        if (!recipes || !recipes.length) {
-            return null;
-        }
-
-        return recipes.map(recipe => (
-            <List.Link key={recipe.id} to={`/recipes/${recipe.id}`}>
-                <div>{recipe.name}</div>
-            </List.Link>
-        ));
+        return (
+            <AnimatePresence>
+                {!recipes || !recipes.length
+                    ? null
+                    : recipes.map(recipe => (
+                          <motion.li
+                              key={recipe.id}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                          >
+                              <List.Link to={`/recipes/${recipe.id}`}>
+                                  <div>{recipe.name}</div>
+                              </List.Link>
+                          </motion.li>
+                      ))}
+            </AnimatePresence>
+        );
     };
 
     const newRecipeButton = () => {
@@ -50,7 +60,9 @@ export const UserRecipeListPage = () => {
 
         return (
             <Control.LinkWrapper to="/recipe/new">
-                <Control.Button color={Control.BUTTON_CONFIGURATION.COLOR.GREEN}>
+                <Control.Button
+                    color={Control.BUTTON_CONFIGURATION.COLOR.GREEN}
+                >
                     New Recipe
                     <ion-icon name="add-circle-outline" />
                 </Control.Button>
@@ -65,9 +77,18 @@ export const UserRecipeListPage = () => {
                 {waiting ? (
                     <Loading.Spinner />
                 ) : (
-                    <List.Container emptyText="Recipes will appear in this list.">
-                        {recipeListItems()}
-                    </List.Container>
+                    <motion.ul
+                        initial={false}
+                        animate={{
+                            opacity: 1,
+                            transition: { staggerChildren: 1 }
+                        }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <List.Container emptyText="">
+                            {recipeListItems()}
+                        </List.Container>
+                    </motion.ul>
                 )}
             </Page.Section>
         </AbstractUserPage>
