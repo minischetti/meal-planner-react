@@ -1,6 +1,6 @@
 import { firebaseAuth, apiBaseUrl } from "../configuration";
 
-const FETCH_METHOD = {
+export const FETCH_METHOD = {
     GET: "GET",
     POST: "POST",
     PUT: "PUT",
@@ -15,7 +15,7 @@ const FETCH_METHOD = {
  *
  * @return {object} fetch configuration
  */
-const fetchConfig = (method, body) => {
+export const fetchConfig = (method, body) => {
     let fetchBody = typeof body === "string" ? body : JSON.stringify(body);
     return {
         method: method,

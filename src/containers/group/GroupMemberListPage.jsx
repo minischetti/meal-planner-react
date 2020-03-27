@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { List, Loading, Page, Control, Modal } from "../../components";
+import { List, Loading, Page, Control, Modal, Form } from "../../components";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
@@ -10,7 +10,9 @@ export const UserSearch = () => {
     const [query, setQuery] = useState("");
     const [waiting, setWaiting] = useState(false);
     const [hasError, setHasError] = useState(false);
-    const [results, setResults] = useState([{name: "Dominic Minischetti", id: "0"}, {name: "Laura Bailey", id: "1"}]);
+    const [results, setResults] = useState([]);
+    const [inviteRecipients, setInviteRecipients] = useState([]);
+    const searchAbortController = new AbortController();
 
     const resultListItems = () => {
         if (!results || !results.length) {
@@ -18,25 +20,52 @@ export const UserSearch = () => {
         }
 
         return results.map((result, index) => (
-            <List.Link key={index} to={`/profiles/${result.id}`}>
+            <List.CheckableItem key={index}>
                 <div>{result.name}</div>
-            </List.Link>
+                <ion-icon name="checkmark-circle-outline" />
+            </List.CheckableItem>
         ));
     };
 
+    useEffect(() => {
+        return () => {
+            searchAbortController.abort();
+        };
+    });
+
     const search = () => {
         setWaiting(true);
-        fetch(apiBaseUrl + "people/search?query=" + query)
-            .then(response => response.json())
-            .then(data => {
-                setResults(data);
-                setWaiting(false);
-            })
-            .catch(error => {
-                setResults([]);
-                setWaiting(false);
-                setError(error);
-            });
+
+        // fetch(apiBaseUrl + "people/search?query=" + query, {
+        //     signal: searchAbortController.signal
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setResults(data);
+        //         setWaiting(false);
+        //     })
+        //     .catch(error => {
+        //         setResults([]);
+        //         setWaiting(false);
+        //         setError(error);
+        // });
+
+        const people = [
+            { name: "Dominic Minischetti", id: "0" },
+            { name: "Alexandria Grisdale", id: "1" },
+            { name: "Laura Bailey", id: "2" },
+            { name: "Patrick Squidlerson", id: "3" },
+            { name: "Mariah Barrey", id: "4" }
+        ];
+
+        const results = people.filter(person =>
+            person.name.toLowerCase().includes(query.toLowerCase())
+        );
+
+        setTimeout(() => {
+            setResults(results);
+            setWaiting(false);
+        }, 1000);
     };
 
     const searchIcon = <ion-icon name="add-circle-outline" />;
@@ -65,7 +94,7 @@ export const UserSearch = () => {
                     icon={searchIcon}
                 />
             </div>
-            <List.Container>{resultListItems()}</List.Container>
+            <form>{resultListItems()}</form>
         </div>
     );
 };
@@ -128,7 +157,7 @@ export const GroupMemberListPage = () => {
 
     const handleInviteButtonClick = () => {
         setShowModal(true);
-    }
+    };
 
     const memberInviteModal = () => {
         return (
