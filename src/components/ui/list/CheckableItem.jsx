@@ -3,27 +3,23 @@ import { css } from "@emotion/core";
 import { List } from "../../../components";
 
 export const CheckableItem = ({ label, onClick, checked = false }) => {
-    const containerStyle = css`
+    const contentStyle = css`
         display: flex;
         justify-content: space-between;
-        padding: 20px;
-        border: 1px solid ${checked ? "#25b95a" : "#ddd"};
-        border-radius: 8px;
-        &:hover {
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-        }
-        & ion-icon {
+        ion-icon {
             width: 24px;
             height: 24px;
         }
     `;
 
     const checkedStyle = css`
-        border-color: #25b95a;
+        ion-icon {
+            color: #25b95a;
+        }
     `;
 
-    const getStyles = () => {
-        let styles = [containerStyle];
+    const getContentStyles = () => {
+        let styles = [contentStyle];
 
         if (checked) {
             styles.push(checkedStyle);
@@ -33,8 +29,11 @@ export const CheckableItem = ({ label, onClick, checked = false }) => {
     };
 
     return (
-        <List.Item>
-            <div css={getStyles} onClick={onClick}>
+        <List.Item
+            style={List.ITEM_CONFIGURATION.STYLE.BACKGROUND}
+            onClick={onClick}
+        >
+            <div css={getContentStyles}>
                 {label}
                 <ion-icon name="checkmark-circle-outline" />
             </div>

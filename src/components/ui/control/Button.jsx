@@ -73,7 +73,7 @@ export const BUTTON_CONFIGURATION = {
         RED: "#ff4040",
         BLUE: "#40b5ff",
         GREEN: "#40ffbf",
-        DEFAULT: "#e5e5e5"
+        DEFAULT: "#ececec"
     },
     ICON: {
         POSITION: {

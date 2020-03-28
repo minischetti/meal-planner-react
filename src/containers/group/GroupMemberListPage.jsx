@@ -19,11 +19,13 @@ export const UserSearch = () => {
             return null;
         }
 
-        return results.map((result, index) => (
-            <List.CheckableItem key={index}>
-                <div>{result.name}</div>
-                <ion-icon name="checkmark-circle-outline" />
-            </List.CheckableItem>
+        return results.map(result => (
+            <List.CheckableItem
+                key={result.id}
+                label={result.name}
+                onClick={() => toggleRecipientInviteStatus(result.id)}
+                checked={isPersonInvited(result.id)}
+            />
         ));
     };
 
@@ -33,42 +35,62 @@ export const UserSearch = () => {
         };
     });
 
+    const isPersonInvited = recipientId => {
+        return !!inviteRecipients.find(id => id === recipientId);
+    };
+
+    const toggleRecipientInviteStatus = recipientId => {
+        return isPersonInvited(recipientId)
+            ? uninviteRecipient(recipientId)
+            : inviteRecipient(recipientId);
+    };
+
+    const inviteRecipient = recipientId => {
+        return setInviteRecipients([...inviteRecipients, recipientId]);
+    };
+
+    const uninviteRecipient = recipientId => {
+        return setInviteRecipients([
+            ...inviteRecipients.filter(id => id !== recipientId)
+        ]);
+    };
+
     const search = () => {
         setWaiting(true);
 
-        // fetch(apiBaseUrl + "people/search?query=" + query, {
-        //     signal: searchAbortController.signal
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setResults(data);
-        //         setWaiting(false);
-        //     })
-        //     .catch(error => {
-        //         setResults([]);
-        //         setWaiting(false);
-        //         setError(error);
-        // });
+        fetch(apiBaseUrl + "people/search?query=" + query, {
+            signal: searchAbortController.signal
+        })
+            .then(response => response.json())
+            .then(data => {
+                setResults(data);
+                setWaiting(false);
+            })
+            .catch(error => {
+                setResults([]);
+                setWaiting(false);
+                setHasError(error);
+        });
 
-        const people = [
-            { name: "Dominic Minischetti", id: "0" },
-            { name: "Alexandria Grisdale", id: "1" },
-            { name: "Laura Bailey", id: "2" },
-            { name: "Patrick Squidlerson", id: "3" },
-            { name: "Mariah Barrey", id: "4" }
-        ];
+        // const people = [
+        //     { name: "Dominic Minischetti", id: "0" },
+        //     { name: "Alexandria Grisdale", id: "1" },
+        //     { name: "Laura Bailey", id: "2" },
+        //     { name: "Patrick Squidlerson", id: "3" },
+        //     { name: "Mariah Barey", id: "4" }
+        // ];
 
-        const results = people.filter(person =>
-            person.name.toLowerCase().includes(query.toLowerCase())
-        );
+        // const results = people.filter(person =>
+        //     person.name.toLowerCase().includes(query.toLowerCase())
+        // );
 
-        setTimeout(() => {
-            setResults(results);
-            setWaiting(false);
-        }, 1000);
+        // setTimeout(() => {
+        //     setResults(results);
+        //     setWaiting(false);
+        // }, 500);
     };
 
-    const searchIcon = <ion-icon name="add-circle-outline" />;
+    const searchIcon = <ion-icon name="search-outline" />;
 
     const containerStyle = css`
         display: grid;
@@ -83,6 +105,7 @@ export const UserSearch = () => {
 
     return (
         <div css={containerStyle}>
+            {hasError ? <div>An error has occurred. Please try again.</div> : ""}
             <div css={formStyle}>
                 <Control.TextField
                     defaultValue={query}
@@ -94,7 +117,7 @@ export const UserSearch = () => {
                     icon={searchIcon}
                 />
             </div>
-            <form>{resultListItems()}</form>
+            {waiting ? <Loading.Spinner /> : <List.Container>{resultListItems()}</List.Container>}
         </div>
     );
 };
@@ -132,23 +155,6 @@ export const GroupMemberListPage = () => {
                 <div>{member.name}</div>
             </List.Link>
         ));
-    };
-
-    const addMemberButton = () => {
-        if (!user || !user.uid === profileId) {
-            return null;
-        }
-
-        return (
-            <Control.LinkWrapper to="/group/new">
-                <Control.Button
-                    color={Control.BUTTON_CONFIGURATION.COLOR.DEFAULT}
-                >
-                    New Group
-                    <ion-icon name="add-circle-outline" />
-                </Control.Button>
-            </Control.LinkWrapper>
-        );
     };
 
     const onCancelModal = () => {
