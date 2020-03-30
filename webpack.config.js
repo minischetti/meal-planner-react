@@ -1,19 +1,21 @@
-var path = require('path');
+var path = require("path");
 
 module.exports = {
     mode: "development",
+
+    stats: "errors-only",
 
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
 
     resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: [".js", ".jsx"],
         alias: {
-            "@meal-planner/store": path.resolve(__dirname, 'src/store/'),
-            "@meal-planner/hooks": path.resolve(__dirname, 'src/hooks/'),
-            "@meal-planner/context": path.resolve(__dirname, 'src/context/'),
-            "@meal-planner/configuration": path.resolve(__dirname, 'src/configuration/'),
-            "@meal-planner/components": path.resolve(__dirname, 'src/components/'),
+            "@meal-planner/store": path.resolve(__dirname, "src/store/"),
+            "@meal-planner/hooks": path.resolve(__dirname, "src/hooks/"),
+            "@meal-planner/context": path.resolve(__dirname, "src/context/"),
+            "@meal-planner/configuration": path.resolve(__dirname, "src/configuration/"),
+            "@meal-planner/components": path.resolve(__dirname, "src/components/")
         }
     },
 
@@ -42,12 +44,12 @@ module.exports = {
     // This is important because it allows us to avoid bundling all of our
     // dependencies, which allows browsers to cache those libraries between builds.
     externals: {
-        "react": "React",
+        react: "React",
         "react-dom": "ReactDOM"
     },
 
     output: {
-        filename: 'main.js'
+        filename: "main.js"
     },
 
     devServer: {
@@ -56,7 +58,8 @@ module.exports = {
         inline: false,
         liveReload: false,
         lazy: true,
-        filename: 'main.js'
+        filename: "main.js",
+        stats: "errors-only"
     }
 
     // devServer: {

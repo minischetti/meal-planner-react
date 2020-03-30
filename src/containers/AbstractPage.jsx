@@ -2,7 +2,6 @@ import React from "react";
 import { css } from "@emotion/core";
 import { GlobalHeader } from "../components/GlobalHeader";
 import { Page } from "../components";
-import { Default as Theme } from "../themes";
 
 export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
     const container = css`
@@ -15,9 +14,9 @@ export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
 
     const content = css`
         display: grid;
-        gap: ${Theme.gap.medium}px;
+        gap: 20px;
         grid-template-areas: "${Page.SECTION_CONFIGURATION.POSITION.MAIN}";
-        margin: 0 ${Theme.margin.medium}px;
+        margin: 0 20px;
         @media (min-width: 1024px) {
             width: 60%;
             margin: 0 auto;

@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/core";
 import { List } from "../../../components";
-import { Default } from "../../../themes";
+import { Checkbox } from "../control/Checkbox";
 
-export const CheckableItem = ({ label, onClick, checked = false, disabled = false }) => {
+export const CheckableItem = ({ label, checked = false, checkedCallback, disabled }) => {
+    const [isChecked, setChecked] = useState(checked);
+
     const contentStyle = css`
         display: flex;
         justify-content: space-between;
         ion-icon {
-            width: ${Default.icon.size.medium};
-            height: ${Default.icon.size.medium};
+            width: 24px;
+            height: 24px;
         }
     `;
 
@@ -20,9 +22,16 @@ export const CheckableItem = ({ label, onClick, checked = false, disabled = fals
     `;
 
     const disabledStyle = css`
-        color: ${Default.color};
-        background-color: ${Default.backgroundColor.grayLight};
+        color: #ccc;
+        background-color: #ececec;
     `;
+
+    const handleClick = () => {
+        const newCheckStatus = !isChecked;
+
+        setChecked(newCheckStatus);
+        checkedCallback(newCheckStatus);
+    };
 
     // const styles = {
     //     list: [
@@ -49,11 +58,13 @@ export const CheckableItem = ({ label, onClick, checked = false, disabled = fals
     };
 
     return (
-        <List.Item style={List.ITEM_CONFIGURATION.STYLE.BACKGROUND} onClick={onClick}>
-            <div css={getContentStyles}>
-                {label}
-                <ion-icon name="checkmark-circle-outline" />
-            </div>
-        </List.Item>
+        <div onClick={handleClick}>
+            <List.Item style={List.ITEM_CONFIGURATION.STYLE.BACKGROUND}>
+                <div css={getContentStyles()}>
+                    {label}
+                    <ion-icon name="checkmark-circle-outline" />
+                </div>
+            </List.Item>
+        </div>
     );
 };

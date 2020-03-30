@@ -69,7 +69,11 @@ export const GroupMemberListPage = () => {
         ));
     };
 
-    const toggleSelected = index => (results[index].selected = !results[index].selected);
+    // const toggleSelected = index => (results[index].selected = !results[index].selected);
+    const toggleSelected = index => {
+        results[index].selected = !results[index].selected;
+        console.log(results[index].selected);
+    };
 
     const searchIcon = <ion-icon name="search-outline" />;
 
@@ -92,6 +96,7 @@ export const GroupMemberListPage = () => {
         gap: 20px;
         grid-template-columns: 1fr 1fr;
     `;
+
     const onCancelModal = () => {
         setShowModal(false);
     };
@@ -141,38 +146,40 @@ export const GroupMemberListPage = () => {
     };
 
     const unselectedListItems = () => {
+        const emptyList = <div>...</div>;
+
         if (!results?.length) {
-            return <div>No results.</div>;
+            return emptyList;
         }
 
         const unselectedResults = results.filter(result => !result.selected);
-
-        if (!unselectedResults?.length) {
-            return <div>...</div>;
-        }
-
         console.log("unselectedResults", unselectedResults);
 
+        if (!unselectedResults?.length) {
+            return emptyList;
+        }
+
         return unselectedResults.map((result, index) => (
-            <List.CheckableItem key={index} label={result.name} onClick={() => toggleSelected(index)} checked={result.selected} />
+            <List.CheckableItem key={index} label={result.name} checkedCallback={() => toggleSelected(index)} checked={result.selected} />
         ));
     };
 
     const selectedListItems = () => {
+        const emptyList = <div>...</div>;
+
         if (!results?.length) {
-            return <div>Nobody selected to invite yet.</div>;
+            return emptyList;
         }
 
         const selectedResults = results.filter(result => result.selected);
-
-        if (!selectedResults?.length) {
-            return <div>...</div>;
-        }
-
         console.log("selectedResults", selectedResults);
 
+        if (!selectedResults?.length) {
+            return emptyList;
+        }
+
         return selectedResults.map((result, index) => (
-            <List.CheckableItem key={index} label={result.name} onClick={() => toggleSelected(index)} checked={result.selected} />
+            <List.CheckableItem key={index} label={result.name} checkedCallback={() => toggleSelected(index)} checked={result.selected} />
         ));
     };
 

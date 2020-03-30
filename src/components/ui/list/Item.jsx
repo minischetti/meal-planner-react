@@ -1,13 +1,12 @@
 import React from "react";
 import { css } from "@emotion/core";
-import { Default } from "../../../themes";
 
-export const Item = ({ children, onClick, style = ITEM_CONFIGURATION.STYLE.BORDER }) => {
+export const Item = ({ children, style = ITEM_CONFIGURATION.STYLE.BORDER }) => {
     const containerStyle = css`
-        padding: ${Default.padding.medium}px;
-        border-radius: ${Default.borderRadius.medium}px;
+        padding: 20px;
+        border-radius: 8px;
         &:hover {
-            box-shadow: 0 0 ${Default.boxShadow.size.medium} ${Default.boxShadow.color.light};
+            box-shadow: 0 0 20px #00000003;
         }
     `;
 
@@ -16,7 +15,7 @@ export const Item = ({ children, onClick, style = ITEM_CONFIGURATION.STYLE.BORDE
     `;
 
     const addBackground = css`
-        background-color: ${Default.backgroundColor.grayLight};
+        background-color: #ececec;
     `;
 
     const getStyles = () => {
@@ -35,11 +34,7 @@ export const Item = ({ children, onClick, style = ITEM_CONFIGURATION.STYLE.BORDE
         return styles;
     };
 
-    return (
-        <div css={getStyles} onClick={onClick}>
-            {children}
-        </div>
-    );
+    return <div css={getStyles()}>{children}</div>;
 };
 
 export const ITEM_CONFIGURATION = {
