@@ -1,11 +1,12 @@
-import React from "react";
 import { css } from "@emotion/core";
+import { Default as Theme } from "../../../themes";
 
 export const Header = ({ title }) => {
     const titleStyle = css`
         font-family: "Barlow", sans-serif;
-        margin: 0;
+        font-size: ${Theme.fontSize.large}px;
+        font-weight: bold;
     `;
 
-    return <h2 css={titleStyle}>{title}</h2>;
+    return <div css={titleStyle}>{title}</div>;
 };

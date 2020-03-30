@@ -1,132 +1,19 @@
 import React, { useEffect } from "react";
-import { List, Loading, Page, Control, Modal, Form } from "../../components";
+import { List, Loading, Page, Control, Modal, Section, Text } from "../../components";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { apiBaseUrl } from "../../configuration";
 import { AbstractGroupPage } from "./AbstractGroupPage";
 import { css } from "@emotion/core";
 
-export const UserSearch = () => {
-    const [query, setQuery] = useState("");
-    const [waiting, setWaiting] = useState(false);
-    const [hasError, setHasError] = useState(false);
-    const [results, setResults] = useState([]);
-    const [inviteRecipients, setInviteRecipients] = useState([]);
-    const searchAbortController = new AbortController();
-
-    const resultListItems = () => {
-        if (!results || !results.length) {
-            return null;
-        }
-
-        return results.map(result => (
-            <List.CheckableItem
-                key={result.id}
-                label={result.name}
-                onClick={() => toggleRecipientInviteStatus(result.id)}
-                checked={isPersonInvited(result.id)}
-            />
-        ));
-    };
-
-    useEffect(() => {
-        return () => {
-            searchAbortController.abort();
-        };
-    });
-
-    const isPersonInvited = recipientId => {
-        return !!inviteRecipients.find(id => id === recipientId);
-    };
-
-    const toggleRecipientInviteStatus = recipientId => {
-        return isPersonInvited(recipientId)
-            ? uninviteRecipient(recipientId)
-            : inviteRecipient(recipientId);
-    };
-
-    const inviteRecipient = recipientId => {
-        return setInviteRecipients([...inviteRecipients, recipientId]);
-    };
-
-    const uninviteRecipient = recipientId => {
-        return setInviteRecipients([
-            ...inviteRecipients.filter(id => id !== recipientId)
-        ]);
-    };
-
-    const search = () => {
-        setWaiting(true);
-
-        fetch(apiBaseUrl + "people/search?query=" + query, {
-            signal: searchAbortController.signal
-        })
-            .then(response => response.json())
-            .then(data => {
-                setResults(data);
-                setWaiting(false);
-            })
-            .catch(error => {
-                setResults([]);
-                setWaiting(false);
-                setHasError(error);
-        });
-
-        // const people = [
-        //     { name: "Dominic Minischetti", id: "0" },
-        //     { name: "Alexandria Grisdale", id: "1" },
-        //     { name: "Laura Bailey", id: "2" },
-        //     { name: "Patrick Squidlerson", id: "3" },
-        //     { name: "Mariah Barey", id: "4" }
-        // ];
-
-        // const results = people.filter(person =>
-        //     person.name.toLowerCase().includes(query.toLowerCase())
-        // );
-
-        // setTimeout(() => {
-        //     setResults(results);
-        //     setWaiting(false);
-        // }, 500);
-    };
-
-    const searchIcon = <ion-icon name="search-outline" />;
-
-    const containerStyle = css`
-        display: grid;
-        gap: 10px;
-    `;
-
-    const formStyle = css`
-        display: grid;
-        gap: 10px;
-        grid-auto-flow: column;
-    `;
-
-    return (
-        <div css={containerStyle}>
-            {hasError ? <div>An error has occurred. Please try again.</div> : ""}
-            <div css={formStyle}>
-                <Control.TextField
-                    defaultValue={query}
-                    onChange={event => setQuery(event.target.value)}
-                />
-                <Control.Button
-                    onClick={search}
-                    label="Search"
-                    icon={searchIcon}
-                />
-            </div>
-            {waiting ? <Loading.Spinner /> : <List.Container>{resultListItems()}</List.Container>}
-        </div>
-    );
-};
-
 export const GroupMemberListPage = () => {
     const { groupId } = useParams();
+    const [query, setQuery] = useState("");
     const [members, setMembers] = useState([]);
     const [waiting, setWaiting] = useState(true);
+    const [hasError, setHasError] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [results, setResults] = useState([]);
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -145,8 +32,33 @@ export const GroupMemberListPage = () => {
         };
     }, []);
 
-    const memberListItems = () => {
-        if (!members || !members.length) {
+    const search = () => {
+        setWaiting(true);
+
+        fetch(apiBaseUrl + "people/search?searchQuery=" + query)
+            .then(response => response.json())
+            .then(data => {
+                const results = data.map(result => ({ ...result, selected: false }));
+                setResults(results);
+                setHasError(false);
+            })
+            .catch(() => {
+                setResults([]);
+                setHasError(true);
+            })
+            .finally(() => {
+                setWaiting(false);
+            });
+    };
+
+    const invite = () => {
+        const recipients = results.filter(result => result.selected);
+        console.log("recipients", recipients);
+        // dispatch();
+    };
+
+    const groupMemberListItems = () => {
+        if (!members?.length) {
             return null;
         }
 
@@ -157,6 +69,29 @@ export const GroupMemberListPage = () => {
         ));
     };
 
+    const toggleSelected = index => (results[index].selected = !results[index].selected);
+
+    const searchIcon = <ion-icon name="search-outline" />;
+
+    const containerStyle = css`
+        display: grid;
+        gap: 10px;
+    `;
+
+    const formStyle = css`
+        display: grid;
+        gap: 10px;
+        grid-auto-flow: column;
+    `;
+
+    const headerStyle = css``;
+
+    const contentStyle = css`
+        display: grid;
+        grid-auto-flow: column;
+        gap: 20px;
+        grid-template-columns: 1fr 1fr;
+    `;
     const onCancelModal = () => {
         setShowModal(false);
     };
@@ -165,24 +100,38 @@ export const GroupMemberListPage = () => {
         setShowModal(true);
     };
 
-    const memberInviteModal = () => {
+    const inviteModal = () => {
         return (
             <Modal.Container>
-                <Modal.Header title="Invite Members" />
+                <Modal.Header title="Invite People" />
                 <Modal.Body>
-                    <UserSearch />
+                    <div css={containerStyle}>
+                        <div css={headerStyle}>
+                            {hasError ? <div>An error has occurred. Please try again.</div> : ""}
+                            <div css={formStyle}>
+                                <Control.TextField defaultValue={query} onChange={event => setQuery(event.target.value)} />
+                                <Control.Button onClick={search} label="Search" icon={searchIcon} />
+                            </div>
+                            {!hasError && results?.length ? <div>{results.length} Results</div> : null}
+                        </div>
+                        <div css={contentStyle}>
+                            <Section.Container>
+                                <Text.Header title="Not Invited" titleSize={Text.HEADER_TITLE_SIZE.MEDIUM} />
+                                <List.Container>{unselectedListItems()}</List.Container>
+                            </Section.Container>
+                            <Section.Container>
+                                <Text.Header title="Invited" titleSize={Text.HEADER_TITLE_SIZE.MEDIUM} />
+                                <List.Container>{selectedListItems()}</List.Container>
+                            </Section.Container>
+                        </div>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Control.Button
-                        color={Control.BUTTON_CONFIGURATION.COLOR.BLUE}
-                        onClick={onCancelModal}
-                    >
+                    <Control.Button color={Control.BUTTON_CONFIGURATION.COLOR.BLUE} onClick={onCancelModal}>
                         Cancel
                         <ion-icon name="arrow-back-outline" />
                     </Control.Button>
-                    <Control.Button
-                        color={Control.BUTTON_CONFIGURATION.COLOR.GREEN}
-                    >
+                    <Control.Button color={Control.BUTTON_CONFIGURATION.COLOR.GREEN} onClick={invite}>
                         Send
                         <ion-icon name="save-outline" />
                     </Control.Button>
@@ -191,24 +140,50 @@ export const GroupMemberListPage = () => {
         );
     };
 
+    const unselectedListItems = () => {
+        if (!results?.length) {
+            return <div>No results.</div>;
+        }
+
+        const unselectedResults = results.filter(result => !result.selected);
+
+        if (!unselectedResults?.length) {
+            return <div>...</div>;
+        }
+
+        console.log("unselectedResults", unselectedResults);
+
+        return unselectedResults.map((result, index) => (
+            <List.CheckableItem key={index} label={result.name} onClick={() => toggleSelected(index)} checked={result.selected} />
+        ));
+    };
+
+    const selectedListItems = () => {
+        if (!results?.length) {
+            return <div>Nobody selected to invite yet.</div>;
+        }
+
+        const selectedResults = results.filter(result => result.selected);
+
+        if (!selectedResults?.length) {
+            return <div>...</div>;
+        }
+
+        console.log("selectedResults", selectedResults);
+
+        return selectedResults.map((result, index) => (
+            <List.CheckableItem key={index} label={result.name} onClick={() => toggleSelected(index)} checked={result.selected} />
+        ));
+    };
+
     return (
         <AbstractGroupPage>
-            {showModal ? memberInviteModal() : null}
+            {showModal ? inviteModal() : null}
             <Page.Section position={Page.SECTION_CONFIGURATION.POSITION.MAIN}>
                 <Page.Header title="Group Members">
-                    <Control.Button
-                        label="Invite Member"
-                        icon={<ion-icon name="add-circle-outline" />}
-                        onClick={handleInviteButtonClick}
-                    />
+                    <Control.Button label="Invite Member" icon={<ion-icon name="add-circle-outline" />} onClick={handleInviteButtonClick} />
                 </Page.Header>
-                {waiting ? (
-                    <Loading.Spinner />
-                ) : (
-                    <List.Container emptyText="Members will appear in this list.">
-                        {memberListItems()}
-                    </List.Container>
-                )}
+                {waiting ? <Loading.Spinner /> : <List.Container emptyText="Group members will appear in this list.">{groupMemberListItems()}</List.Container>}
             </Page.Section>
         </AbstractGroupPage>
     );

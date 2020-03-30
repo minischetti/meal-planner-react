@@ -15,8 +15,13 @@ export const FETCH_METHOD = {
  *
  * @return {object} fetch configuration
  */
-export const fetchConfig = (method, body) => {
+export const fetchConfig = (method, body, withCurrentUserId = false) => {
     let fetchBody = typeof body === "string" ? body : JSON.stringify(body);
+
+    if (withCurrentUserId) {
+        fetchBody.profileId = firebaseAuth.currentUser.uid;
+    }
+
     return {
         method: method,
         headers: {
@@ -73,29 +78,6 @@ export const logout = () => {
     };
 };
 
-export const EDIT_RECIPE_NAME_REQUEST = "EDIT_RECIPE_NAME_REQUEST";
-export function editRecipeName({ recipeId, newRecipeName }) {
-    return dispatch => {
-        dispatch(requestRecipeNameEdit());
-        const profileId = firebaseAuth.currentUser.uid;
-
-        return fetch(
-            apiBaseUrl + "recipes/" + recipeId + "/name",
-            fetchConfig("PUT", { profileId, newRecipeName: newRecipeName })
-        )
-            .then(response => response.json())
-            .then(data => dispatch(recipeNameEditResponse(data)));
-    };
-}
-
-export const EDIT_RECIPE_NAME_RESPONSE = "EDIT_RECIPE_NAME_RESPONSE";
-export const recipeNameEditResponse = payload => {
-    return {
-        type: EDIT_RECIPE_NAME_RESPONSE,
-        payload
-    };
-};
-
 export const DELETE_RECIPE_REQUEST = "DELETE_RECIPE_REQUEST";
 export const deleteRecipe = recipeId => {
     return dispatch => {
@@ -123,7 +105,7 @@ export const createRecipe = payload => {
     return dispatch => {
         return fetch(
             apiBaseUrl + "recipes",
-            fetchConfig(FETCH_METHOD.POST, withCurrentUserId(payload))
+            fetchConfig(FETCH_METHOD.POST, payload, true)
         )
             .then(response => response.json())
             .then(response => dispatch(createRecipeResponse(response)))
@@ -151,7 +133,7 @@ export const updateRecipe = payload => {
     return dispatch => {
         return fetch(
             apiBaseUrl + "recipes/" + payload.recipeId,
-            fetchConfig("PUT", withCurrentUserId(payload))
+            fetchConfig("PUT", payload, true)
         )
             .then(response => response.json())
             .then(data => dispatch(updateRecipeResponse(data)))
@@ -172,7 +154,7 @@ export const createGroup = payload => {
     return dispatch => {
         return fetch(
             apiBaseUrl + "groups",
-            fetchConfig(FETCH_METHOD.POST, withCurrentUserId(payload))
+            fetchConfig(FETCH_METHOD.POST, payload, true)
         )
             .then(response => response.json())
             .then(data => {
@@ -199,18 +181,38 @@ export const resetCreateGroupStatus = () => {
     };
 };
 
-/**
- * Adds the current user's id to a payload.
- *
- * @param {Object} payload the payload to add the user's id to
- * @return {Object} the payload with the current user's id
- */
-const withCurrentUserId = payload => {
-    const profileId = firebaseAuth.currentUser.uid;
+export const INVITE_TO_GROUP_REQUEST = "INVITE_TO_GROUP_REQUEST";
+export const inviteToGroup = payload => {
+    const requestPayload = {
+        sender: payload.profileId,
+        recipient
+    };
 
+    return async dispatch => {
+        try {
+            const response = await fetch(
+                apiBaseUrl + "groups" + payload.groupId + "/invite",
+                fetchConfig(FETCH_METHOD.POST, requestPayload, true)
+            );
+            const data = await response.json();
+            return dispatch(createGroupResponse(data));
+        } catch (error) {
+            return dispatch(createGroupResponse(error));
+        }
+    };
+};
+
+export const INVITE_TO_GROUP_RESPONSE = "INVITE_TO_GROUP_RESPONSE";
+export const inviteToGroupResponse = payload => {
     return {
-        profileId,
-        userId: profileId,
-        ...payload
+        type: INVITE_TO_GROUP_RESPONSE,
+        payload
+    };
+};
+
+export const RESET_INVITE_TO_GROUP_STATUS = "RESET_INVITE_TO_GROUP_STATUS";
+export const resetInviteToGroupStatus = () => {
+    return {
+        type: RESET_INVITE_TO_GROUP_STATUS
     };
 };

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "ClientApp/*": ["./ClientApp/*"],
+            "@meal-planner/store/*": ["./src/store/*"],
+            "@meal-planner/hooks/*": ["./src/hooks/*"],
+            "@meal-planner/context/*": ["./src/context/*"],
+            "@meal-planner/configuration/*": ["./src/configuration/*"],
+            "@meal-planner/components/*": ["./src/components/*"]
+        }
+    },
+    "exclude": ["node_modules", "dist"]
+}

@@ -6,12 +6,12 @@ import {
     deleteRecipe,
     resetRecipeResponse,
     updateRecipe
-} from "../redux/actions";
+} from "../store/actions";
 import { useHistory } from "react-router-dom";
 import {
     getRecipeWaitingStatusFrom,
     getRecipeErrorStatusFrom
-} from "../redux/selectors";
+} from "../store/selectors";
 import { useEffect } from "react";
 import { Control, Form, Loading } from "../components";
 

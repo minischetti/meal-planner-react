@@ -1,13 +1,11 @@
 import React, { Fragment } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { css } from "@emotion/core";
 import { useAuthSession } from "../hooks";
-import { Spinner } from "./ui/loading";
-import { Button, NavLinkWrapper } from "./ui/control";
-import {Control, Loading} from "../components";
+import { Control, Loading } from "../components";
 
 export const GlobalHeader = () => {
-    const { user, authInProgress, signIn, signOut } = useAuthSession();
+    const { user, authInProgress, signOut } = useAuthSession();
     const history = useHistory();
 
     const headerStyle = css`
@@ -53,18 +51,10 @@ export const GlobalHeader = () => {
                 <Control.NavLinkWrapper exact css={link} to={`/profiles/${user.uid}/profile`}>
                     My Profile
                 </Control.NavLinkWrapper>
-                <Control.NavLinkWrapper
-                    exact
-                    css={link}
-                    to={`/profiles/${user.uid}/groups/`}
-                >
+                <Control.NavLinkWrapper exact css={link} to={`/profiles/${user.uid}/groups/`}>
                     My Groups
                 </Control.NavLinkWrapper>
-                <Control.NavLinkWrapper
-                    exact
-                    css={link}
-                    to={`/profiles/${user.uid}/recipes/`}
-                >
+                <Control.NavLinkWrapper exact css={link} to={`/profiles/${user.uid}/recipes/`}>
                     My Recipes
                 </Control.NavLinkWrapper>
             </div>
@@ -92,11 +82,7 @@ export const GlobalHeader = () => {
     };
 
     const authPanel = () => {
-        return (
-            <div css={authPanelStyle}>
-                {user ? signOutButton() : signInButton()}
-            </div>
-        );
+        return <div css={authPanelStyle}>{user ? signOutButton() : signInButton()}</div>;
     };
 
     return (

@@ -2,8 +2,8 @@ import React, { useState, Fragment } from "react";
 import { Form, Control, Modal, IdentityPanel } from "../components";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createGroup } from "../redux/actions";
-import { getCreateGroupErrorStatusFrom } from "../redux/selectors";
+import { createGroup } from "../store/actions";
+import { getCreateGroupErrorStatusFrom } from "../store/selectors";
 
 export const ComposableGroup = () => {
     const [groupName, setGroupName] = useState("");

@@ -2,10 +2,11 @@ import React from "react";
 import { css } from "@emotion/core";
 import { GlobalHeader } from "../components/GlobalHeader";
 import { Page } from "../components";
+import { Default as Theme } from "../themes";
 
 export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
     const container = css`
-        font-family: "Lato", sans-serif;
+        font-family: system-ui, "Lato", sans-serif;
         transition: 0.5s all ease-in-out;
         display: grid;
         grid-auto-flow: row;
@@ -14,9 +15,10 @@ export const AbstractPage = ({ children, disableGlobalHeader = false }) => {
 
     const content = css`
         display: grid;
-        gap: 20px;
+        gap: ${Theme.gap.medium}px;
         grid-template-areas: "${Page.SECTION_CONFIGURATION.POSITION.MAIN}";
-        @media (min-width: 375px) {
+        margin: 0 ${Theme.margin.medium}px;
+        @media (min-width: 1024px) {
             width: 60%;
             margin: 0 auto;
         }

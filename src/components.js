@@ -1,9 +1,6 @@
 // Fragments (?...name pending: components that retrieve data but can be used anywhere)
 export { Author } from "./components/Author";
-export {
-    ComposableRecipe,
-    COMPOSABLE_RECIPE_MODE
-} from "./components/ComposableRecipe";
+export { ComposableRecipe, COMPOSABLE_RECIPE_MODE } from "./components/ComposableRecipe";
 export { ComposableGroup } from "./components/ComposableGroup";
 export { GlobalHeader } from "./components/GlobalHeader";
 export { SignIn } from "./components/SignIn";
@@ -20,5 +17,7 @@ import * as Page from "./components/ui/page";
 import * as List from "./components/ui/list";
 import * as Loading from "./components/ui/loading";
 import * as Modal from "./components/ui/modal";
+import * as Section from "./components/ui/section";
+import * as Text from "./components/ui/text";
 
-export { IdentityPanel, Bar, Control, Form, Page, List, Loading, Modal };
+export { IdentityPanel, Bar, Control, Form, Page, List, Loading, Modal, Section, Text };

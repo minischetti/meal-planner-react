@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { apiBaseUrl } from "../../configuration/api";
 import { Bar, IdentityPanel, Loading, Page, Control } from "../../components";
+
 export const AbstractGroupPage = ({ children }) => {
     const { groupId } = useParams();
     const [group, setGroup] = useState({});

@@ -1,7 +1,10 @@
 import {
     CREATE_GROUP_REQUEST,
     CREATE_GROUP_RESPONSE,
-    RESET_CREATE_GROUP_STATUS
+    RESET_CREATE_GROUP_STATUS,
+    INVITE_TO_GROUP_REQUEST,
+    INVITE_TO_GROUP_RESPONSE,
+    RESET_INVITE_TO_GROUP_STATUS
 } from "../actions";
 
 const initialState = {
@@ -28,6 +31,25 @@ export function groups(previousState = initialState, action) {
                 }
             };
         case RESET_CREATE_GROUP_STATUS:
+            return {
+                ...previousState,
+                waiting: false
+            };
+        case INVITE_TO_GROUP_REQUEST:
+            return {
+                ...previousState,
+                waiting: true
+            };
+        case INVITE_TO_GROUP_RESPONSE:
+            return {
+                ...previousState,
+                waiting: false,
+                response: {
+                    hasError: payload.result !== "success",
+                    groupId: payload.data.groupId
+                }
+            };
+        case RESET_INVITE_TO_GROUP_STATUS:
             return {
                 ...previousState,
                 waiting: false

@@ -7,7 +7,14 @@ module.exports = {
     devtool: "source-map",
 
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx'],
+        alias: {
+            "@meal-planner/store": path.resolve(__dirname, 'src/store/'),
+            "@meal-planner/hooks": path.resolve(__dirname, 'src/hooks/'),
+            "@meal-planner/context": path.resolve(__dirname, 'src/context/'),
+            "@meal-planner/configuration": path.resolve(__dirname, 'src/configuration/'),
+            "@meal-planner/components": path.resolve(__dirname, 'src/components/'),
+        }
     },
 
     module: {

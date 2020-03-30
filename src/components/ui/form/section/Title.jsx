@@ -3,7 +3,7 @@ import { css } from "@emotion/core";
 
 export const Title = ({ children }) => {
     const style = css`
-        font-family: "Barlow", sans-serif;
+        font-family: system-ui, "Barlow", sans-serif;
         display: grid;
         grid-auto-flow: column;
         grid-template-columns: max-content;
