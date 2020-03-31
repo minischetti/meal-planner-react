@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { css } from "@emotion/core";
 import { List } from "../../../components";
-import { Checkbox } from "../control/Checkbox";
 
 export const CheckableItem = ({ label, checked = false, checkedCallback, disabled }) => {
     const [isChecked, setChecked] = useState(checked);

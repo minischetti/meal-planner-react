@@ -48,6 +48,8 @@
     "@types/react-dom": "^16.9.5",
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.27",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
     "framer-motion": "^1.9.1",
     "prettier": "1.19.1",
     "redux-devtools": "^3.5.0",
