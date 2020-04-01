@@ -32,6 +32,9 @@ export const GroupMemberListPage = () => {
         };
     }, []);
 
+    /**
+     * XHR
+     */
     const search = () => {
         setWaiting(true);
 
@@ -51,12 +54,32 @@ export const GroupMemberListPage = () => {
             });
     };
 
+    /**
+     * Methods
+     */
     const invite = () => {
         const recipients = results.filter(result => result.selected);
         console.log("recipients", recipients);
-        // dispatch();
     };
 
+    const toggleSelected = index => {
+        const updatedResults = [...results];
+        updatedResults[index].selected = !results[index].selected;
+
+        setResults(updatedResults);
+    };
+
+    const onCancelModal = () => {
+        setShowModal(false);
+    };
+
+    const handleInviteButtonClick = () => {
+        setShowModal(true);
+    };
+
+    /**
+     * Templates
+     */
     const groupMemberListItems = () => {
         if (!members?.length) {
             return null;
@@ -69,69 +92,23 @@ export const GroupMemberListPage = () => {
         ));
     };
 
-    const toggleSelected = index => {
-        const updatedResults = [...results];
-        updatedResults[index].selected = !results[index].selected;
-
-        setResults(updatedResults);
-    };
-
-    const searchIcon = <ion-icon name="search-outline" />;
-
-    const containerStyle = css`
-        display: grid;
-        gap: 10px;
-    `;
-
-    const formStyle = css`
-        display: grid;
-        gap: 10px;
-        grid-auto-flow: column;
-        grid-template-columns: 1fr auto;
-    `;
-
-    const headerStyle = css`
-        display: grid;
-        gap: 10px;
-    `;
-
-    const contentStyle = css`
-        display: grid;
-        grid-auto-flow: column;
-        gap: 20px;
-        grid-template-columns: 1fr 1fr;
-    `;
-
-    const onCancelModal = () => {
-        setShowModal(false);
-    };
-
-    const handleInviteButtonClick = () => {
-        setShowModal(true);
-    };
-
     const inviteModal = () => {
         return (
             <Modal.Container>
                 <Modal.Header title="Invite People" />
                 <Modal.Body>
-                    <div css={containerStyle}>
-                        <div css={headerStyle}>
+                    <div css={styles.container}>
+                        <div css={styles.header}>
                             {hasError ? <div>An error has occurred. Please try again.</div> : ""}
-                            <div css={formStyle}>
+                            <div css={styles.form}>
                                 <Control.TextField defaultValue={query} onChange={event => setQuery(event.target.value)} />
                                 <Control.Button onClick={search} label="Search" icon={searchIcon} />
                             </div>
-                            {!hasError && results?.length ? <div>{results.length} Results</div> : null}
+                            {!hasError && results?.length ? <div>{`Result${results.length > 1 ? "s" : ""}`}</div> : null}
                         </div>
-                        <div css={contentStyle}>
+                        <div css={styles.container}>
                             <Section.Container>
-                                <Text.Header title="Not Invited" titleSize={Text.HEADER_TITLE_SIZE.MEDIUM} />
-                                <List.Container>{unselectedListItems()}</List.Container>
-                            </Section.Container>
-                            <Section.Container>
-                                <Text.Header title="Invited" titleSize={Text.HEADER_TITLE_SIZE.MEDIUM} />
-                                <List.Container>{selectedListItems()}</List.Container>
+                                <List.Container>{searchResultItems()}</List.Container>
                             </Section.Container>
                         </div>
                     </div>
@@ -150,48 +127,45 @@ export const GroupMemberListPage = () => {
         );
     };
 
-    const unselectedListItems = () => {
+    const searchResultItems = () => {
         const emptyList = <div>...</div>;
 
         if (!results?.length) {
             return emptyList;
         }
 
-        const unselectedResults = results.filter(result => !result.selected);
-        console.log("unselectedResults", unselectedResults);
-
-        if (!unselectedResults?.length) {
-            return emptyList;
-        }
-
-        return unselectedResults.map((result, index) => (
-            <List.CheckableItem
-                key={index}
-                label={result.name}
-                checkedCallback={() => toggleSelected(index)}
-                checked={result.selected}
-                disabled={!result.selected}
-            />
+        return results.map((result, index) => (
+            <List.CheckableItem key={index} label={result.name} checkedCallback={() => toggleSelected(index)} checked={result.selected} />
         ));
     };
 
-    const selectedListItems = () => {
-        const emptyList = <div>...</div>;
+    /**
+     * Icons
+     */
+    const searchIcon = <ion-icon name="search-outline" />;
 
-        if (!results?.length) {
-            return emptyList;
-        }
-
-        const selectedResults = results.filter(result => result.selected);
-        console.log("selectedResults", selectedResults);
-
-        if (!selectedResults?.length) {
-            return emptyList;
-        }
-
-        return selectedResults.map((result, index) => (
-            <List.CheckableItem key={index} label={result.name} checkedCallback={() => toggleSelected(index)} checked={result.selected} />
-        ));
+    /**
+     * Styles
+     */
+    const styles = {
+        container: css`
+            display: grid;
+            gap: 10px;
+        `,
+        form: css`
+            display: grid;
+            gap: 10px;
+            grid-auto-flow: column;
+            grid-template-columns: 1fr auto;
+        `,
+        header: css`
+            display: grid;
+            gap: 10px;
+        `,
+        content: css`
+            display: grid;
+            grid-auto-flow: column;
+        `
     };
 
     return (
