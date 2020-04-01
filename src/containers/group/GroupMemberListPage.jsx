@@ -69,10 +69,11 @@ export const GroupMemberListPage = () => {
         ));
     };
 
-    // const toggleSelected = index => (results[index].selected = !results[index].selected);
     const toggleSelected = index => {
-        results[index].selected = !results[index].selected;
-        console.log(results[index].selected);
+        const updatedResults = [...results];
+        updatedResults[index].selected = !results[index].selected;
+
+        setResults(updatedResults);
     };
 
     const searchIcon = <ion-icon name="search-outline" />;
@@ -86,9 +87,13 @@ export const GroupMemberListPage = () => {
         display: grid;
         gap: 10px;
         grid-auto-flow: column;
+        grid-template-columns: 1fr auto;
     `;
 
-    const headerStyle = css``;
+    const headerStyle = css`
+        display: grid;
+        gap: 10px;
+    `;
 
     const contentStyle = css`
         display: grid;
@@ -160,7 +165,13 @@ export const GroupMemberListPage = () => {
         }
 
         return unselectedResults.map((result, index) => (
-            <List.CheckableItem key={index} label={result.name} checkedCallback={() => toggleSelected(index)} checked={result.selected} />
+            <List.CheckableItem
+                key={index}
+                label={result.name}
+                checkedCallback={() => toggleSelected(index)}
+                checked={result.selected}
+                disabled={!result.selected}
+            />
         ));
     };
 
